@@ -1,5 +1,6 @@
 package model;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "customer")
+@Data
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;
@@ -25,27 +27,6 @@ public class Customer implements Serializable {
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 }
