@@ -36,7 +36,7 @@ dependencies {
 
 if (hasProperty('buildScan')) {
     buildScan {
-        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceUrl = 'https://gradle.com/terms-of-ar.edu.unq.desapp.grupoF012021.backenddesappapi.service'
         termsOfServiceAgree = 'yes'
     }
 }

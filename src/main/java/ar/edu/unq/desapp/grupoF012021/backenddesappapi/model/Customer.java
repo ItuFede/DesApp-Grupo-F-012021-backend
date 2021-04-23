@@ -1,4 +1,4 @@
-package model;
+package ar.edu.unq.desapp.grupoF012021.backenddesappapi.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

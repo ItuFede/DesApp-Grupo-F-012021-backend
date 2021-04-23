@@ -1,6 +1,6 @@
-package persistence;
+package ar.edu.unq.desapp.grupoF012021.backenddesappapi.persistence;
 
-import model.Customer;
+import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.Customer;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

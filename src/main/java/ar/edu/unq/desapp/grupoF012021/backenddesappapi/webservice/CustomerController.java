@@ -1,21 +1,23 @@
-package webservice;
+package ar.edu.unq.desapp.grupoF012021.backenddesappapi.webservice;
 
-import model.Customer;
+import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import persistence.CustomerRepository;
+import ar.edu.unq.desapp.grupoF012021.backenddesappapi.persistence.CustomerRepository;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("/customer/")
 public class CustomerController {
 
     @Autowired
     CustomerRepository repository;
 
-    @GetMapping("/bulkcreate")
+    @GetMapping("bulkcreate")
     public String bulkcreate(){
         repository.save(new Customer("Rajesh", "Bhojwani"));
 
@@ -27,9 +29,14 @@ public class CustomerController {
         return "Customers are created";
     }
 
-    @GetMapping("/findall")
+    @GetMapping("findall")
     public List<Customer> findAll() {
         List<Customer> customers = repository.findAll();
         return customers;
+    }
+
+    @GetMapping("hello")
+    public String helloWorld() {
+        return "Hello World!!!!!";
     }
 }
