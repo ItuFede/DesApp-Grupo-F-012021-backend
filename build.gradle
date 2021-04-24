@@ -34,6 +34,13 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 
+if (hasProperty('buildScan')) {
+    buildScan {
+		licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+		licenseAgree = 'yes'
+    }
+}
+
 test {
 	useJUnitPlatform()
 }
