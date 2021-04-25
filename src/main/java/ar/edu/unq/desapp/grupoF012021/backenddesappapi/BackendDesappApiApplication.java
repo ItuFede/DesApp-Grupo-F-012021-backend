@@ -11,13 +11,4 @@ public class BackendDesappApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BackendDesappApiApplication.class, args);
 	}
-
-}
-
-@RestController
-class HelloController {
-	@GetMapping("/")
-	String hello() {
-		return "Hello World";
-	}
 }
