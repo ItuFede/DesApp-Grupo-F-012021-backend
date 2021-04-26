@@ -51,4 +51,7 @@ public class Media implements Serializable {
 
     @ManyToMany
     private List<Genre> genres;
+
+    @OneToMany(mappedBy="review")
+    private List<Review> reviews;
 }
