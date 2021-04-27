@@ -56,14 +56,19 @@ public class UserIdentityController {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody @Valid UserCredentialsDto userLoginCredentialsDto) throws Exception {
         try {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userLoginCredentialsDto.getUsername(), userLoginCredentialsDto.getPassword())
-        );
-        final UserIdentity user = (UserIdentity) authenticate.getPrincipal();
-        return ResponseEntity.ok().header(
-                    HttpHeaders.AUTHORIZATION,
-                    jwtTokenUtil.generateToken(user)
-                ).body(user);
+            UserIdentity user = (UserIdentity) userIdentityService.loadUserByUsername(userLoginCredentialsDto.getUsername());
+            Authentication authenticated = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getAuthorities()
+                ) // aca falla
+            );
+            final UserIdentity authenticatedUser = (UserIdentity) authenticated.getPrincipal();
+            return ResponseEntity.ok().header(
+                        HttpHeaders.AUTHORIZATION,
+                        jwtTokenUtil.generateToken(authenticatedUser)
+                    ).body(authenticatedUser);
         } catch (Exception err) {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
         }

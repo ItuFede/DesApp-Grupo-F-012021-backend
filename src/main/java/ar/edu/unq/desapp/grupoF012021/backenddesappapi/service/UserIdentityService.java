@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.Optional;
 
@@ -16,15 +17,6 @@ public class UserIdentityService implements UserDetailsService {
 
     @Autowired
     private UserEntityService userEntityService;
-
-    public UserIdentity castUserIdentityByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> user = userEntityService.findByUsername(username);
-        if (user.isPresent()) {
-            return new UserIdentity(user.get());
-        } else {
-            throw new UsernameNotFoundException("User not found");
-        }
-    };
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,7 +28,12 @@ public class UserIdentityService implements UserDetailsService {
         }
     }
 
-    public String login(UserCredentialsDto userLoginCredentialsDto) {
-
+    public UserIdentity register(UserCredentialsDto userRegisterCredentialsDto) {
+        try {
+            userEntityService.saveUser(userRegisterCredentialsDto);
+            return (UserIdentity) this.loadUserByUsername(userRegisterCredentialsDto.getUsername());
+        } catch (Exception ex) {
+            throw new RuntimeException("Something went wrong, couldn't create user " + userRegisterCredentialsDto.getUsername());
+        }
     }
 }
