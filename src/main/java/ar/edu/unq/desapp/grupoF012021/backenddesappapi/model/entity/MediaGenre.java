@@ -12,10 +12,10 @@ public class MediaGenre {
     private MediaGenreKey id;
 
     @ManyToOne
-    @JoinColumn(name = "mediaId")
+    @JoinColumn(name = "mediaId", insertable = false, updatable = false)
     private Media media;
 
     @ManyToOne
-    @JoinColumn(name = "genreId")
+    @JoinColumn(name = "genreId", insertable = false, updatable = false)
     private Genre genre;
 }

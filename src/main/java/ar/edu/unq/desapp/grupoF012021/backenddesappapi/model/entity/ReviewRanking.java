@@ -24,5 +24,5 @@ public class ReviewRanking implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "idReview", referencedColumnName = "id")
-    private Review review;
+    private Review review_reviewRanking;
 }

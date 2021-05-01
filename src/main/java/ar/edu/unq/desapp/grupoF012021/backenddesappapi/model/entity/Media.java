@@ -46,12 +46,12 @@ public class Media implements Serializable {
     @Column(name = "mediaType")
     private MediaType mediaType;
 
-    @OneToMany(mappedBy="episode")
+    @OneToMany(mappedBy="tvSerieMedia")
     private List<Episode> episodes;
 
     @ManyToMany
     private List<Genre> genres;
 
-    @OneToMany(mappedBy="review")
+    @OneToMany(mappedBy="mediaReview")
     private List<Review> reviews;
 }

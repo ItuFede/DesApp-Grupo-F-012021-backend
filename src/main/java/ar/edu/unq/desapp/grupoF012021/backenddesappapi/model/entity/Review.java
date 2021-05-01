@@ -47,13 +47,13 @@ public class Review implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "idMedia", referencedColumnName = "id")
-    private Media media;
+    private Media mediaReview;
 
-    @OneToMany(mappedBy="reviewRanking")
-    private List<Review> rankings;
+    @OneToMany(mappedBy="review_reviewRanking")
+    private List<ReviewRanking> reviewRankings;
 
-    @OneToMany(mappedBy="reportMotive")
-    private List<ReportMotive> reports;
+    @OneToMany(mappedBy="reviewReportMotive")
+    private List<ReportMotive> reportMotives;
 
     @Nullable
     @Column(name = "hasSpoilers")

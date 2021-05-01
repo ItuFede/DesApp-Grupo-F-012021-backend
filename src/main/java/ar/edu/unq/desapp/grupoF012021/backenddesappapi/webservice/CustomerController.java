@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.desapp.grupoF012021.backenddesappapi.persistence.CustomerRepository;
 
@@ -35,7 +36,7 @@ public class CustomerController {
         return customers;
     }
 
-    @GetMapping("hello")
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String helloWorld() {
         return "Hello World!!!!!";
     }

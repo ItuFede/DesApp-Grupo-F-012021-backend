@@ -23,6 +23,6 @@ public class ReportMotive implements Serializable {
     private String motiveText;
 
     @ManyToOne
-    @JoinColumn(name = "idReview", referencedColumnName = "id")
-    private Review review;
+    @JoinColumn(name = "review_id", referencedColumnName = "id")
+    private Review reviewReportMotive;
 }
