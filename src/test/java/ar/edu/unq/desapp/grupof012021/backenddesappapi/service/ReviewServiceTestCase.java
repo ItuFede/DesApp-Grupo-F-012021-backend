@@ -44,4 +44,24 @@ public class ReviewServiceTestCase {
 
         Assertions.assertNotNull(review);
     }
+
+    @Test
+    public void reviewWithoutRanking_upvoteReview_reviewPositive()
+    {
+        Review review = new Review();
+
+        reviewService.upvoteReview(review);
+
+        Assertions.assertTrue(review.getReviewRankings().get(0).isPositiveVote());
+    }
+
+    @Test
+    public void reviewWithoutRanking_downvoteReview_reviewNegative()
+    {
+        Review review = new Review();
+
+        reviewService.downvoteReview(review);
+
+        Assertions.assertFalse(review.getReviewRankings().get(0).isPositiveVote());
+    }
 }

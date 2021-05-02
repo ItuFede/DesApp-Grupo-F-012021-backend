@@ -26,9 +26,16 @@ public class ReviewRanking implements Serializable {
 
     @NotNull
     @Column(name = "ranking")
-    private Double ranking;
+    private boolean isPositiveVote;
 
     @ManyToOne
     @JoinColumn(name = "idReview", referencedColumnName = "id")
     private Review review_reviewRanking;
+
+    public ReviewRanking(){}
+
+    public ReviewRanking(boolean isPositiveVote)
+    {
+        this.isPositiveVote = isPositiveVote;
+    }
 }

@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -69,4 +71,10 @@ public class Review implements Serializable {
     @Nullable
     @Column(name = "region")
     private String region; // EN_US, ES_AR
+
+    public Review()
+    {
+        this.reviewRankings = new ArrayList<ReviewRanking>();
+        this.reportMotives = new ArrayList<ReportMotive>();
+    }
 }
