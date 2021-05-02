@@ -8,7 +8,7 @@ plugins {
 compileJava.options.encoding = 'utf-8'
 compileTestJava.options.encoding = 'utf-8'
 
-group = 'ar.edu.unq.desapp.grupoF012021'
+group = 'ar.edu.unq.desapp.grupof012021'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
