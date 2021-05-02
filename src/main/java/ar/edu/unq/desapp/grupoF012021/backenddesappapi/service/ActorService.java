@@ -6,5 +6,6 @@ public interface ActorService
 {
     Actor getActorByName(String name);
 
-    void createNewActor(String name);
+    void saveActor(Actor anActor);
+
 }

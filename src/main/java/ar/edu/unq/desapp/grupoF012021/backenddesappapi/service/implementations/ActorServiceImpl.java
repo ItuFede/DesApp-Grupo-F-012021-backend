@@ -1,15 +1,22 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi.service;
+package ar.edu.unq.desapp.grupoF012021.backenddesappapi.service.implementations;
 
 import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity.Actor;
 import ar.edu.unq.desapp.grupoF012021.backenddesappapi.persistence.ActorRepository;
+import ar.edu.unq.desapp.grupoF012021.backenddesappapi.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("actorService")
-public class ActorServiceImpl implements ActorService{
+public class ActorServiceImpl implements ActorService {
 
     @Autowired
     private ActorRepository actorRepository;
+
+    public ActorServiceImpl() { }
+
+    public ActorServiceImpl(ActorRepository repositoryMock) {
+        this.actorRepository = repositoryMock;
+    }
 
     @Override
     public Actor getActorByName(String name) {
@@ -17,7 +24,8 @@ public class ActorServiceImpl implements ActorService{
     }
 
     @Override
-    public void createNewActor(String name) {
-        actorRepository.save(new Actor(name));
+    public void saveActor(Actor anActor) {
+        actorRepository.save(anActor);
     }
+
 }

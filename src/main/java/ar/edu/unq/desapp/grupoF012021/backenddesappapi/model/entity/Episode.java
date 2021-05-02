@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity;
 
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.enumeration.MediaType;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -8,7 +7,6 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Year;
 
 @Entity
 @Table(name = "episode")

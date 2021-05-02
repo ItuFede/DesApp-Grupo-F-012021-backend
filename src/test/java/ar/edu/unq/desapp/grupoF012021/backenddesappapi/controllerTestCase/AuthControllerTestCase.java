@@ -25,7 +25,7 @@ public class AuthControllerTestCase {
     {
         /*
         EXAMPLE:
-        
+
         User userTest = new User();
 
         List<Employee> allEmployees = Arrays.asList(alex);
