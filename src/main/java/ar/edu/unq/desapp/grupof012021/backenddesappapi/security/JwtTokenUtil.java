@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi.security;
+package ar.edu.unq.desapp.grupof012021.backenddesappapi.security;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,14 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity.UserIdentity;
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.service.UserIdentityService;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserIdentity;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import static io.jsonwebtoken.security.Keys.secretKeyFor;
 import static java.lang.String.format;
 
 @Component

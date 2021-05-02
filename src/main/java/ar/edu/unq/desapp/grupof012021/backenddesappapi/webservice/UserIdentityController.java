@@ -1,9 +1,9 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi.webservice;
+package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.dto.UserCredentialsDto;
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity.UserIdentity;
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.security.JwtTokenUtil;
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.service.UserIdentityService;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDto;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserIdentity;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.UserIdentityService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,7 +1,6 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi.persistence;
+package ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence;
 
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity.UserEntity;
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity.UserIdentity;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

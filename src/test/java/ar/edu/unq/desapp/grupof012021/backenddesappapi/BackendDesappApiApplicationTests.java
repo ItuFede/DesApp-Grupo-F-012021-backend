@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi;
+package ar.edu.unq.desapp.grupof012021.backenddesappapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

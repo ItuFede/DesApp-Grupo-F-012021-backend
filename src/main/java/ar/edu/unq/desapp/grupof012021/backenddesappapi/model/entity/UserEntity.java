@@ -1,6 +1,6 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.entity;
+package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
-import ar.edu.unq.desapp.grupoF012021.backenddesappapi.model.dto.UserCredentialsDto;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDto;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
