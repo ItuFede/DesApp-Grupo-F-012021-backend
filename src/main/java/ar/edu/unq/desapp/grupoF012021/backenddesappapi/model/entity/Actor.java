@@ -22,4 +22,9 @@ public class Actor implements Serializable {
     @NotNull
     @Column(name = "name")
     private String name;
+
+    public Actor(String name)
+    {
+        this.name = name;
+    }
 }
