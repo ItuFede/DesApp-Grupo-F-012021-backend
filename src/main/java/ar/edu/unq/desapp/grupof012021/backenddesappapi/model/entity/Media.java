@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 
 import java.io.Serializable;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -61,4 +62,17 @@ public class Media implements Serializable {
 
     @OneToMany(mappedBy="mediaReview")
     private List<Review> reviews;
+
+    public Media(String primaryTitle, String originalTitle, Year year,
+                 Year endYear, Integer runtimeMinutes, MediaType mediaType,
+                 List<Episode> episodes, List<Genre> genres) {
+        this.primaryTitle = primaryTitle;
+        this.originalTitle = originalTitle;
+        this.year = year;
+        this.endYear = year;
+        this.runtimeMinutes = runtimeMinutes;
+        this.mediaType = mediaType;
+        this.genres = genres;
+        this.reviews = new ArrayList<>();
+    }
 }

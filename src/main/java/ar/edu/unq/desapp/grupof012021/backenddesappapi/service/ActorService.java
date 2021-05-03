@@ -5,6 +5,4 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
 public interface ActorService
 {
     Actor getActorByName(String name);
-
-    void saveActor(Actor anActor);
 }

@@ -31,4 +31,8 @@ public class Genre implements Serializable {
 
     @ManyToMany
     private List<Media> mediaList;
+
+    public Genre(MediaGenreType genreName) {
+        this.genreName = genreName;
+    }
 }

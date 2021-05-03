@@ -15,7 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
 import java.util.ArrayList;
+<<<<<<< Updated upstream
 import java.util.Collection;
+=======
+>>>>>>> Stashed changes
 import java.util.Date;
 import java.util.List;
 
@@ -76,5 +79,25 @@ public class Review implements Serializable {
     {
         this.reviewRankings = new ArrayList<ReviewRanking>();
         this.reportMotives = new ArrayList<ReportMotive>();
+    }
+    
+    @NotNull
+    @Column(name = "score")
+    private Double score;
+
+    public Review(String shortText, String longText, Date date,
+                  String originalPlatform, String language, boolean isCritic,
+                  boolean hasSpoilers, String region, Double score) {
+        this.shortText = shortText;
+        this.longText = longText;
+        this.date = date;
+        this.originalPlatform = originalPlatform;
+        this.language = language;
+        this.isCritic = isCritic;
+        this.hasSpoilers = hasSpoilers;
+        this.region = region;
+        this.reportMotives = new ArrayList<ReportMotive>();
+        this.reviewRankings = new ArrayList<ReviewRanking>();
+        this.score = score;
     }
 }

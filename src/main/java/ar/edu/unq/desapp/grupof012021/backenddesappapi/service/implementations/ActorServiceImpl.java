@@ -22,10 +22,4 @@ public class ActorServiceImpl implements ActorService {
     public Actor getActorByName(String name) {
         return actorRepository.findByName(name);
     }
-
-    @Override
-    public void saveActor(Actor anActor) {
-        actorRepository.save(anActor);
-    }
-
 }

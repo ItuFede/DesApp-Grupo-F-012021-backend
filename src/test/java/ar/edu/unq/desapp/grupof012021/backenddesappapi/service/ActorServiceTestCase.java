@@ -26,23 +26,16 @@ public class ActorServiceTestCase {
     public void whenValidName_thenActorShouldBeFound() {
         String name = "Robert de niro";
         Actor anActor = new Actor(name);
-
-        actorService.saveActor(anActor);
-
         Mockito.when(repositoryMock.findByName(name)).thenReturn(anActor);
-
         Actor found = actorService.getActorByName(name);
-
         Assertions.assertThat(found.getName()).isEqualTo(name);
     }
 
     @Test
-    public void anActorNoExist_saveActor_anActorExist() throws Exception {
-        Actor anActor = new Actor("Robert de niro");
-
-        actorService.saveActor(anActor);
-
-        Mockito.verify(repositoryMock, times(1)).save(anActor);
+    public void whenInvalidName_thenActorShouldBeNull() {
+        String name = "Leonardo DiCaprio";
+        Mockito.when(repositoryMock.findByName(name)).thenReturn(null);
+        Actor anActor = actorService.getActorByName(name);
+        Assertions.assertThat(anActor).isEqualTo(null);
     }
-
 }
