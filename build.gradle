@@ -46,13 +46,25 @@ if (hasProperty('buildScan')) {
 jacoco {
 	toolVersion = "0.8.5"
 	reportsDir = file("$buildDir/jacoco")
+
 }
 
 test {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
+/*	jacoco {
+		exclude("ar.edu.unq.desapp.grupof012021.backenddesappapi.SecurityConfiguration")
+		exclude("ServletInitializer")
+		exclude("src/main/java/ar/edu/unq/desapp/grupof012021/backenddesappapi/BackendDesappApiApplication.java")
+	}*/
 }
 
 jacocoTestReport {
 	dependsOn test
+	classDirectories.setFrom(
+		fileTree(dir: "build/classes/java/main")
+			.filter({file -> !file.name.contains('BackendDesappApiApplication')})
+			.filter({file -> !file.name.contains('SecurityConfiguration')})
+			.filter({file -> !file.name.contains('ServletInitializer')})
+	)
 }

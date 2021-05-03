@@ -16,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "genre")
-@Data
 public class Genre implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;

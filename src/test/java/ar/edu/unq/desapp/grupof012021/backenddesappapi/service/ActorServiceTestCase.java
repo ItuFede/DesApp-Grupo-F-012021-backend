@@ -27,8 +27,8 @@ public class ActorServiceTestCase {
         String name = "Robert de niro";
         Actor anActor = new Actor(name);
         Mockito.when(repositoryMock.findByName(name)).thenReturn(anActor);
-        Actor found = actorService.getActorByName(name);
-        Assertions.assertThat(found.getName()).isEqualTo(name);
+        Actor actorByName = actorService.getActorByName(name);
+        Assertions.assertThat(actorByName.getName()).isEqualTo(name);
     }
 
     @Test

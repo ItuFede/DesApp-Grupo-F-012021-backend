@@ -16,7 +16,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "episode")
-@Data
 public class Episode implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;

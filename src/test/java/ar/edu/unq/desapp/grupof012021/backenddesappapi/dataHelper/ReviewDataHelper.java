@@ -12,7 +12,6 @@ public class ReviewDataHelper {
         Review review = new Review();
         review.setShortText("Good movie");
         review.setLongText("Like i said, gooooooood movie");
-        review.setDate(new Date());
         review.setOriginalPlatform("Netflix");
         review.setLanguage("ENGLISH");
         review.setCritic(true);

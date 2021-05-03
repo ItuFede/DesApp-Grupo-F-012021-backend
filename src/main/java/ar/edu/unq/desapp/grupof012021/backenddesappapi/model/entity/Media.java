@@ -3,6 +3,8 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.lang.Nullable;
 
@@ -21,13 +23,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "media")
-@Data
 public class Media implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;
+
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
+    @Setter
     private long id;
 
     @NotNull
@@ -61,6 +65,8 @@ public class Media implements Serializable {
     private List<Genre> genres;
 
     @OneToMany(mappedBy="mediaReview")
+    @Getter
+    @Setter
     private List<Review> reviews;
 
     public Media(){}

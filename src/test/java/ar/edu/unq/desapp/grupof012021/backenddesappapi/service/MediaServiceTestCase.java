@@ -1,20 +1,18 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.dataHelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ActorServiceImpl;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.MediaServiceImpl;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
@@ -26,6 +24,9 @@ public class MediaServiceTestCase {
     private static MediaService mediaService;
     private static MediaRepository repositoryMock;
     private static Media donnieDarko;
+
+    private static Review aReview;
+    private static Review anotherReview;
 
     @BeforeAll
     public static void setUp() {
@@ -48,6 +49,28 @@ public class MediaServiceTestCase {
         );
 
         donnieDarko.setId(1);
+
+        aReview = new Review(
+                "Buenardo",
+                "La verdad es que la peli está muy buena yo le doy 5 estrellas",
+                "Netflix",
+                "Spanish",
+                false,
+                false,
+                "ES_AR",
+                5.0
+        );
+
+        anotherReview = new Review(
+                "Malardo",
+                "La verdad es que la peli no me gusto para nada le doy un 1",
+                "Netflix",
+                "Spanish",
+                false,
+                false,
+                "ES_AR",
+                1.0
+        );
     }
 
     @Test
@@ -57,20 +80,9 @@ public class MediaServiceTestCase {
 
     @Test
     public void givenMedia_whenAddReviewById_mediaHasReview() {
-        Review aReview = new Review(
-                "Buenardo",
-                "La verdad es que la peli está muy buena yo le doy 5 estrellas",
-                new Date(),
-                "Netflix",
-                "Spanish",
-                false,
-                false,
-                "ES_AR",
-                5.0
-                );
-
+        Review unaReview = ReviewDataHelper.getReview();
         Mockito.when(repositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
-        mediaService.addReviewTo(donnieDarko.getId(), aReview);
+        mediaService.addReviewTo(donnieDarko.getId(), unaReview);
 
         Mockito.verify(repositoryMock, times(1)).save(donnieDarko);
         Assertions.assertThat(donnieDarko.getReviews().size()).isEqualTo(1);
@@ -78,6 +90,18 @@ public class MediaServiceTestCase {
 
     @Test
     public void givenMedia_whenSearchingForReviews_findAllReviewsByMediaId() {
+        Mockito.when(repositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
 
+        mediaService.addReviewTo(donnieDarko.getId(), aReview);
+        mediaService.addReviewTo(donnieDarko.getId(), anotherReview);
+
+        List<Review> allReviews = mediaService.findAllReviewsFrom(donnieDarko.getId());
+        Assertions.assertThat(allReviews.size()).isEqualTo(2);
+    }
+
+    @AfterEach
+    public void teardown() {
+        donnieDarko.setReviews(new ArrayList<Review>());
+        Mockito.reset(repositoryMock);
     }
 }

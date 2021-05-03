@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -15,7 +16,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "reviewRanking")
-@Data
 public class ReviewRanking implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;
@@ -26,6 +26,7 @@ public class ReviewRanking implements Serializable {
 
     @NotNull
     @Column(name = "ranking")
+    @Getter
     private boolean isPositiveVote;
 
     @ManyToOne

@@ -2,6 +2,8 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.lang.Nullable;
 
@@ -20,21 +22,23 @@ import java.util.List;
 
 @Entity
 @Table(name = "review")
-@Data
 public class Review implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private long id;
 
     @NotNull
     @Column(name = "shortText")
+    @Setter
     private String shortText;
 
     @NotNull
     @Column(name = "longText")
+    @Setter
     private String longText;
 
     @NotNull
@@ -43,21 +47,26 @@ public class Review implements Serializable {
 
     @NotNull
     @Column(name = "originalPlatform")
+    @Setter
     private String originalPlatform;
 
     @NotNull
     @Column(name = "language")
+    @Setter
     private String language;
 
     @NotNull
     @Column(name = "isCritic")
+    @Setter
     private boolean isCritic;
 
     @ManyToOne
     @JoinColumn(name = "idMedia", referencedColumnName = "id")
+    @Setter
     private Media mediaReview;
 
     @OneToMany(mappedBy="review_reviewRanking")
+    @Getter
     private List<ReviewRanking> reviewRankings;
 
     @OneToMany(mappedBy="reviewReportMotive")
@@ -65,10 +74,12 @@ public class Review implements Serializable {
 
     @Nullable
     @Column(name = "hasSpoilers")
+    @Setter
     private boolean hasSpoilers;
 
     @Nullable
     @Column(name = "region")
+    @Setter
     private String region; // EN_US, ES_AR
 
     public Review()
@@ -81,12 +92,12 @@ public class Review implements Serializable {
     @Column(name = "score")
     private Double score;
 
-    public Review(String shortText, String longText, Date date,
+    public Review(String shortText, String longText,
                   String originalPlatform, String language, boolean isCritic,
                   boolean hasSpoilers, String region, Double score) {
         this.shortText = shortText;
         this.longText = longText;
-        this.date = date;
+        this.date = new Date();
         this.originalPlatform = originalPlatform;
         this.language = language;
         this.isCritic = isCritic;

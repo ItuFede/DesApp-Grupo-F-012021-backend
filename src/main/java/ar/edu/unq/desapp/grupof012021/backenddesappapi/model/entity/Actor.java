@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -13,7 +14,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "actor")
-@Data
 public class Actor implements Serializable {
 
     private static final long serialVersionUID = -2343243243242432341L;
@@ -24,6 +24,7 @@ public class Actor implements Serializable {
 
     @NotNull
     @Column(name = "name")
+    @Getter
     private String name;
 
     public Actor(String name)
