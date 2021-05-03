@@ -63,6 +63,8 @@ public class Media implements Serializable {
     @OneToMany(mappedBy="mediaReview")
     private List<Review> reviews;
 
+    public Media(){}
+
     public Media(String primaryTitle, String originalTitle, Year year,
                  Year endYear, Integer runtimeMinutes, MediaType mediaType,
                  List<Episode> episodes, List<Genre> genres) {

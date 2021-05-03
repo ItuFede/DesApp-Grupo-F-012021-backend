@@ -15,10 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
 import java.util.ArrayList;
-<<<<<<< Updated upstream
-import java.util.Collection;
-=======
->>>>>>> Stashed changes
 import java.util.Date;
 import java.util.List;
 
