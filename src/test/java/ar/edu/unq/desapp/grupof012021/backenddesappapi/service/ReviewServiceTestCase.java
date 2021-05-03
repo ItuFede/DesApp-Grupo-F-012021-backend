@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.dataHelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
@@ -38,7 +39,7 @@ public class ReviewServiceTestCase {
     @Test
     public void review_findById_getTheReview()
     {
-        Review review = new Review();
+        Review review = ReviewDataHelper.getReview();
 
         Mockito.when(reviewRepositoryMock.findByIdReview(review.getId())).thenReturn(review);
 
@@ -48,20 +49,22 @@ public class ReviewServiceTestCase {
     @Test
     public void reviewWithoutRanking_upvoteReview_reviewPositive()
     {
-        Review review = new Review();
+        Review review = ReviewDataHelper.getReview();
 
         reviewService.upvoteReview(review);
 
+        Assertions.assertEquals(review.getReviewRankings().stream().count(), 1);
         Assertions.assertTrue(review.getReviewRankings().get(0).isPositiveVote());
     }
 
     @Test
     public void reviewWithoutRanking_downvoteReview_reviewNegative()
     {
-        Review review = new Review();
+        Review review = ReviewDataHelper.getReview();
 
         reviewService.downvoteReview(review);
 
+        Assertions.assertEquals(review.getReviewRankings().stream().count(), 1);
         Assertions.assertFalse(review.getReviewRankings().get(0).isPositiveVote());
     }
 }
