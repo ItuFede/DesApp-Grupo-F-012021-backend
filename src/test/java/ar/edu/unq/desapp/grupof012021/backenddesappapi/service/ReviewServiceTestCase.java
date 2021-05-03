@@ -41,7 +41,7 @@ public class ReviewServiceTestCase {
     {
         Review review = ReviewDataHelper.getReview();
 
-        Mockito.when(reviewRepositoryMock.findByIdReview(review.getId())).thenReturn(review);
+        Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
         Assertions.assertNotNull(review);
     }

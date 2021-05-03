@@ -21,9 +21,9 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepositoryMock;
     }
 
-    public Review getReviewById(Long reviewId)
+    public Review getReviewById(long reviewId)
     {
-        return reviewRepository.findByIdReview(reviewId);
+        return reviewRepository.findById(reviewId);
     }
 
     //For now we add N'times positive votes until we have the user id.
