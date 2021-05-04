@@ -13,7 +13,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.httpBasic()
             .and()
             .authorizeRequests()
-            .antMatchers("/", "/login", "/customer/hello") // URLs permitidas sin authentication
-            .permitAll().anyRequest().authenticated();
+            .antMatchers("/**").permitAll()
+            .anyRequest().authenticated();
     }
 }
