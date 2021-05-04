@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.ReviewRanking;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
@@ -10,13 +12,11 @@ import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import java.util.List;
 
-@Service("reviesService")
+@Service("reviewService")
 public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
-
-    public ReviewServiceImpl(){}
 
     public ReviewServiceImpl(ReviewRepository reviewRepositoryMock) {
         this.reviewRepository = reviewRepositoryMock;
@@ -41,5 +41,20 @@ public class ReviewServiceImpl implements ReviewService {
         List<ReviewRanking> reviewsRanking = review.getReviewRankings();
         reviewsRanking.add(new ReviewRanking(false));
         reviewRepository.save(review);
+    }
+
+    @Override
+    public Review createTemporalReview(ReviewDTO reviewDTO, Media media) {
+        Review review = new Review();
+        review.setShortText(reviewDTO.shortText);
+        review.setLongText(reviewDTO.longText);
+        review.setOriginalPlatform(reviewDTO.originalPlatform);
+        review.setLanguage(reviewDTO.language);
+        review.setCritic(reviewDTO.isCritic);
+        review.setHasSpoilers(reviewDTO.hasSpoilers);
+        review.setRegion(reviewDTO.region);
+        review.setMediaReview(media);
+
+        return review;
     }
 }

@@ -52,11 +52,6 @@ jacoco {
 test {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
-/*	jacoco {
-		exclude("ar.edu.unq.desapp.grupof012021.backenddesappapi.SecurityConfiguration")
-		exclude("ServletInitializer")
-		exclude("src/main/java/ar/edu/unq/desapp/grupof012021/backenddesappapi/BackendDesappApiApplication.java")
-	}*/
 }
 
 jacocoTestReport {
@@ -66,5 +61,7 @@ jacocoTestReport {
 			.filter({file -> !file.name.contains('BackendDesappApiApplication')})
 			.filter({file -> !file.name.contains('SecurityConfiguration')})
 			.filter({file -> !file.name.contains('ServletInitializer')})
+			.filter({file -> !file.name.contains('DTO')})
+			.filter({file -> !file.name.contains('Controller')})
 	)
 }
