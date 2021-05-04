@@ -2,7 +2,6 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType;
 import com.sun.istack.NotNull;
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class Genre implements Serializable {
 
     @NotNull
     @Column(name = "primaryTitle")
-    private MediaGenreType genreName;
+    private final MediaGenreType genreName;
 
     @ManyToMany
     private List<Media> mediaList;

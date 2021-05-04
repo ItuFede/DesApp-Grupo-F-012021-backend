@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.dataHelper.ReviewDataHelper;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
