@@ -27,6 +27,7 @@ KNOWN ISSUES
 * Métodos de ReviewController y MediaController no responden mensajes de error apropiados
 según el caso (Ej. no validan que el body de las requests sea correcto, en lugar de retornar
 Not Found en caso de que no matchee con un elemento retorna Forbidden).
+* 5 Issues menores de code style marcados por Codacy, pendientes de revisión.
 
 BACKLOG
 1. Buscar reseñas de una película o serie usando el id de IMDB. Se debe poder filtrar por
