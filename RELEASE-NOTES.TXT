@@ -15,9 +15,12 @@ sin estar autenticado (pendiente para futuras releases).
 
 CI/CD
 * Build en Travis: https://travis-ci.com/github/ItuFede/DesApp-Grupo-F-012021-backend
-* Backend deployado en Heroku:
+* Backend deployado en Heroku: https://desappgrupof.herokuapp.com/
 * Codacy asociado al proyecto: https://app.codacy.com/gh/ItuFede/DesApp-Grupo-F-012021-backend/dashboard
 * Reporte de coverage generado por JaCoCo:
+  - General: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/release-notes/coverage-general.png
+  - Modelos: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/release-notes/coverage-entity.png
+  - Logica de negocio: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/release-notes/coverage-service-implementations.png
 * Coverage actual: 93%
 
 KNOWN ISSUES
