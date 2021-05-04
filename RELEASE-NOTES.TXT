@@ -1,35 +1,36 @@
----------------------------------------------------------------------
-TAG ENTREGA 1
----------------------------------------------------------------------
+___
+# TAG ENTREGA 1
+___
 
-NEW FEATURES
+## NEW FEATURES
 * Agregar una reseña
 * Valorar una reseña
 * Ver todas las reseñas de una película
 
-IMPLEMENTATION NOTES
+## IMPLEMENTATION NOTES
 * Creado el modelo de entidades completo, aunque no se utilicen en este release.
+* Entidad que representa al usuario de la aplicación y todas sus referencias en los modelos se omitieron para esta entrega.
 * Configuración muy básica del módulo de Security para permitir acceso a cualquier endpoint
 sin estar autenticado (pendiente para futuras releases).
 * Esta entrega se limita a testing unitario sin tests de integración presentes.
 
-CI/CD
+## CI / CD
 * Build en Travis: https://travis-ci.com/github/ItuFede/DesApp-Grupo-F-012021-backend
 * Backend deployado en Heroku: https://desappgrupof.herokuapp.com/
 * Codacy asociado al proyecto: https://app.codacy.com/gh/ItuFede/DesApp-Grupo-F-012021-backend/dashboard
 * Reporte de coverage generado por JaCoCo:
-  - General: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/release-notes/coverage-general.png
-  - Modelos: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/release-notes/coverage-entity.png
-  - Logica de negocio: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/release-notes/coverage-service-implementations.png
+  - General: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/dev/coverage-general.png
+  - Modelos: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/dev/coverage-entity.png
+  - Logica de negocio: https://raw.githubusercontent.com/ItuFede/DesApp-Grupo-F-012021-backend/dev/coverage-service-implementations.png
 * Coverage actual: 93%
 
-KNOWN ISSUES
+## KNOWN ISSUES
 * Métodos de ReviewController y MediaController no responden mensajes de error apropiados
 según el caso (Ej. no validan que el body de las requests sea correcto, en lugar de retornar
 Not Found en caso de que no matchee con un elemento retorna Forbidden).
 * 5 Issues menores de code style marcados por Codacy, pendientes de revisión.
 
-BACKLOG
+## BACKLOG
 1. Buscar reseñas de una película o serie usando el id de IMDB. Se debe poder filtrar por
 plataforma, spoiler alert, tipo (review o crítica), idioma y país. Además que se pueda
 ordenar por rating y/o fecha, y que el orden sea ascendente o descendente. Además,
@@ -48,7 +49,7 @@ espera de nuevas reseñas de un cierto título.
 masivamente por todas las plataformas: que dado un título devuelva datos básicos del
 título, el rating promedio y la cantidad de reviews.
 
-APP STATUS
+## APP STATUS
 1. Busca todas las reseñas de una película, sin filtros, sin orden y sin paginación.
 2. Backend completo.
 3. Backend completo.
