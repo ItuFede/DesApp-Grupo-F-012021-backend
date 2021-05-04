@@ -18,7 +18,9 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
+import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.MISTERY;
+import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.SCIFI;
+import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.DRAMA;
 import static org.mockito.Mockito.mock;
 
 public class ReviewServiceTestCase {

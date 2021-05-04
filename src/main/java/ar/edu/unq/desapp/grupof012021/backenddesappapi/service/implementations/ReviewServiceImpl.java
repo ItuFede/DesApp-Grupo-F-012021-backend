@@ -8,8 +8,6 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReposit
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
-
 import java.util.List;
 
 @Service("reviewService")

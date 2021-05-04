@@ -6,9 +6,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaReposito
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service("mediaService")
 public class MediaServiceImpl implements MediaService {
