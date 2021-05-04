@@ -1,10 +1,8 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;

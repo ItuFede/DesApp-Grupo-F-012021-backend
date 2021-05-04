@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.lang.Nullable;
 

@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -68,10 +67,10 @@ public class Review implements Serializable {
 
     @OneToMany(mappedBy="review_reviewRanking")
     @Getter
-    private List<ReviewRanking> reviewRankings;
+    private final List<ReviewRanking> reviewRankings;
 
     @OneToMany(mappedBy="reviewReportMotive")
-    private List<ReportMotive> reportMotives;
+    private final List<ReportMotive> reportMotives;
 
     @Nullable
     @Column(name = "hasSpoilers")

@@ -14,7 +14,7 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     public ReviewServiceImpl(ReviewRepository reviewRepositoryMock) {
         this.reviewRepository = reviewRepositoryMock;

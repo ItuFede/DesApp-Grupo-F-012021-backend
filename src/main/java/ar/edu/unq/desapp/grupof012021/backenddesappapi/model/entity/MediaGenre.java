@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
-import lombok.Data;
-
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.EmbeddedId;
