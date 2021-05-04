@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoF012021.backenddesappapi;
+package ar.edu.unq.desapp.grupof012021.backenddesappapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class BackendDesappApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BackendDesappApiApplication.class, args);
 	}
-
 }
