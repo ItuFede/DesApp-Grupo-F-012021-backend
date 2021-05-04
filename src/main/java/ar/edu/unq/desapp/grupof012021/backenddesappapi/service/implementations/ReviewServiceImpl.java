@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReposit
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import java.util.List;
 
@@ -21,21 +22,24 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepositoryMock;
     }
 
-    public Review getReviewById(long reviewId)
-    {
+    public Review getReviewById(long reviewId) {
         return reviewRepository.findById(reviewId);
     }
 
     //For now we add N'times positive votes until we have the user id.
     @Override
-    public void upvoteReview(Review review) {
+    public void upvoteReview(long reviewId) {
+        Review review = this.getReviewById(reviewId);
         List<ReviewRanking> reviewsRanking = review.getReviewRankings();
         reviewsRanking.add(new ReviewRanking(true));
+        reviewRepository.save(review);
     }
 
     @Override
-    public void downvoteReview(Review review) {
+    public void downvoteReview(long reviewId) {
+        Review review = this.getReviewById(reviewId);
         List<ReviewRanking> reviewsRanking = review.getReviewRankings();
         reviewsRanking.add(new ReviewRanking(false));
+        reviewRepository.save(review);
     }
 }
