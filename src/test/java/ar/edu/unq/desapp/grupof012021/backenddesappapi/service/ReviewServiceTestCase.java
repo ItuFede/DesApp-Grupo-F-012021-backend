@@ -47,6 +47,7 @@ public class ReviewServiceTestCase {
         donnieDarkoGenres.add(new Genre(MISTERY));
 
         donnieDarko = new Media(
+                "tt0246578",
                 "donnieDarko",
                 "donnieDarko",
                 Year.of(2001),

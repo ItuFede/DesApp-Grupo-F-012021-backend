@@ -22,12 +22,17 @@ public class Actor implements Serializable {
     private long id;
 
     @NotNull
+    @Column(unique = true, name = "idStringActor")
+    private String idStringActor;
+
+    @NotNull
     @Column(name = "name")
     @Getter
     private String name;
 
-    public Actor(String name)
+    public Actor(String idStringActor, String name)
     {
+        this.idStringActor = idStringActor;
         this.name = name;
     }
 
