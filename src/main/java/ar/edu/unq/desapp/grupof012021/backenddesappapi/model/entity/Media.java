@@ -7,13 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Year;
@@ -32,6 +26,10 @@ public class Media implements Serializable {
     @Getter
     @Setter
     private long id;
+
+    @NotNull
+    @Column(unique = true, name = "idStringMedia")
+    private String idStringMedia;
 
     @NotNull
     @Column(name = "primaryTitle")
@@ -63,16 +61,17 @@ public class Media implements Serializable {
     @ManyToMany
     private List<Genre> genres;
 
-    @OneToMany(mappedBy="mediaReview")
+    @OneToMany(mappedBy="mediaReview", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
     private List<Review> reviews;
 
     public Media(){}
 
-    public Media(String primaryTitle, String originalTitle, Year year,
+    public Media(String idStringMedia, String primaryTitle, String originalTitle, Year year,
                  Year endYear, Integer runtimeMinutes, MediaType mediaType,
                  List<Episode> episodes, List<Genre> genres) {
+        this.idStringMedia = idStringMedia;
         this.primaryTitle = primaryTitle;
         this.originalTitle = originalTitle;
         this.year = year;

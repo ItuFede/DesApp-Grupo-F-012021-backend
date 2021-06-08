@@ -24,11 +24,13 @@ public class Genre implements Serializable {
     private long id;
 
     @NotNull
-    @Column(name = "primaryTitle")
-    private final MediaGenreType genreName;
+    @Column(name = "primaryTitle", unique = true)
+    private MediaGenreType genreName;
 
     @ManyToMany
     private List<Media> mediaList;
+
+    public Genre(){}
 
     public Genre(MediaGenreType genreName) {
         this.genreName = genreName;
