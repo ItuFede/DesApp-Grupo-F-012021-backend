@@ -23,8 +23,9 @@ public class ActorServiceTestCase {
 
     @Test
     public void whenValidName_thenActorShouldBeFound() {
+        String idTitle = "nm000001";
         String name = "Robert de niro";
-        Actor anActor = new Actor(name);
+        Actor anActor = new Actor(idTitle, name);
         Mockito.when(repositoryMock.findByName(name)).thenReturn(anActor);
         Actor actorByName = actorService.getActorByName(name);
         Assertions.assertThat(actorByName.getName()).isEqualTo(name);
