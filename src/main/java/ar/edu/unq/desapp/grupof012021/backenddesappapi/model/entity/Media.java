@@ -34,6 +34,10 @@ public class Media implements Serializable {
     private long id;
 
     @NotNull
+    @Column(unique = true, name = "idStringMedia")
+    private String idStringMedia;
+
+    @NotNull
     @Column(name = "primaryTitle")
     private String primaryTitle;
 
@@ -70,9 +74,10 @@ public class Media implements Serializable {
 
     public Media(){}
 
-    public Media(String primaryTitle, String originalTitle, Year year,
+    public Media(String idStringMedia, String primaryTitle, String originalTitle, Year year,
                  Year endYear, Integer runtimeMinutes, MediaType mediaType,
                  List<Episode> episodes, List<Genre> genres) {
+        this.idStringMedia = idStringMedia;
         this.primaryTitle = primaryTitle;
         this.originalTitle = originalTitle;
         this.year = year;
