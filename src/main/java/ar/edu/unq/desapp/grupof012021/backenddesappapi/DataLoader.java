@@ -3,10 +3,12 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private GenreRepository genreRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Your application started with option names : {}", args.getOptionNames());
@@ -44,6 +49,8 @@ public class DataLoader implements ApplicationRunner {
         addGenre();
         logger.info("Creating Media");
         addMedia();
+        logger.info("Creating Review");
+        addReview();
     }
 
     private void addActor(){
@@ -87,6 +94,28 @@ public class DataLoader implements ApplicationRunner {
         );
         mediaRepository.save(aMedia);
         logger.info("Media name: {}", mediaRepository.findById(aMedia.getId()).getId());
+    }
+
+    private void addReview(){
+        Media aMedia = mediaRepository.findByIdStringMedia("tt0246578");
+        Review aReview = new Review(
+                "ShortText",
+                "LongText",
+                "Netflix",
+                "EN",
+                false,
+                false,
+                "EN_US",
+                5.0
+        );
+        aReview.setMediaReview(aMedia);
+        reviewRepository.save(aReview);
+        logger.info("Save Review id: {}", reviewRepository.findById(aReview.getId()).getId());
+        List<Review> aListOfReviews = new ArrayList<>();
+        aListOfReviews.add(aReview);
+        aMedia.setReviews(aListOfReviews);
+        mediaRepository.save(aMedia);
+        logger.info("Media Review: {}", mediaRepository.findById(aMedia.getId()).getReviews());
     }
 
 }
