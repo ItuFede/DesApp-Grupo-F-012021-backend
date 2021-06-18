@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +24,15 @@ import java.security.Principal;
 @RequestMapping("/auth/")
 @ComponentScan
 public class UserIdentityController {
-
-    @Autowired
-    private final AuthenticationManager authenticationManager;
-
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     private UserIdentityService userIdentityService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     public UserIdentityController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
-        this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
@@ -56,19 +56,16 @@ public class UserIdentityController {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody @Valid UserCredentialsDto userLoginCredentialsDto) throws Exception {
         try {
-            UserIdentity user = (UserIdentity) userIdentityService.loadUserByUsername(userLoginCredentialsDto.getUsername());
-            Authentication authenticated = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getAuthorities()
-                ) // aca falla
-            );
-            final UserIdentity authenticatedUser = (UserIdentity) authenticated.getPrincipal();
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginCredentialsDto.getUsername(), userLoginCredentialsDto.getPassword()));
+            final UserIdentity authenticatedUser = (UserIdentity) userIdentityService.loadUserByUsername(userLoginCredentialsDto.getUsername());
             return ResponseEntity.ok().header(
-                        HttpHeaders.AUTHORIZATION,
-                        jwtTokenUtil.generateToken(authenticatedUser)
-                    ).body(authenticatedUser);
+                    HttpHeaders.AUTHORIZATION,
+                    jwtTokenUtil.generateToken(authenticatedUser)
+            ).body(authenticatedUser);
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
         } catch (Exception err) {
             return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
         }

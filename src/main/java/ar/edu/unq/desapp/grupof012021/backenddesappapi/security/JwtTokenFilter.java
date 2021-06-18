@@ -22,15 +22,11 @@ import static org.hibernate.internal.util.StringHelper.isEmpty;
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private final JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private final UserIdentityService userIdentityService;
-
-    public JwtTokenFilter(JwtTokenUtil jwtTokenUtil, UserIdentityService userIdentityService) {
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userIdentityService = userIdentityService;
-    }
+    private UserIdentityService userIdentityService;
 
     @Override
     protected void doFilterInternal(

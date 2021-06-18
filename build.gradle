@@ -11,7 +11,7 @@ compileTestJava.options.encoding = 'utf-8'
 
 group = 'ar.edu.unq.desapp.grupof012021'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = "1.9"
 
 repositories {
 	mavenLocal()

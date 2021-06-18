@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,9 @@ public class UserIdentityService implements UserDetailsService {
 
     @Autowired
     private UserEntityService userEntityService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,7 +33,9 @@ public class UserIdentityService implements UserDetailsService {
 
     public UserIdentity register(UserCredentialsDto userRegisterCredentialsDto) {
         try {
+            userRegisterCredentialsDto.setPassword(passwordEncoder.encode(userRegisterCredentialsDto.getPassword()));
             userEntityService.saveUser(userRegisterCredentialsDto);
+
             return (UserIdentity) this.loadUserByUsername(userRegisterCredentialsDto.getUsername());
         } catch (Exception ex) {
             throw new RuntimeException("Something went wrong, couldn't create user " + userRegisterCredentialsDto.getUsername());

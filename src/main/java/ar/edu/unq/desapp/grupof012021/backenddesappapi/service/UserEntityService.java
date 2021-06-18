@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class UserEntityService {
+
     @Autowired
     UserEntityRepository repository;
 
@@ -19,6 +20,7 @@ public class UserEntityService {
 
     public Optional<UserEntity> saveUser(UserCredentialsDto userRegisterCredentialsDto) {
         UserEntity user = new UserEntity(userRegisterCredentialsDto);
+        user.setPassword(userRegisterCredentialsDto.getPassword());
         repository.save(user);
         return this.findByUsername(user.getUsername());
     }

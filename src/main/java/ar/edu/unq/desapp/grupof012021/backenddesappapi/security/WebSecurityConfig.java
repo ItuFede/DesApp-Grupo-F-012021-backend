@@ -20,8 +20,6 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static java.lang.String.format;
-
 @EnableWebSecurity
 @ComponentScan
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -37,7 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userIdentityService); // ::castUserIdentityByUsername
+        auth.userDetailsService(userIdentityService)
+                .passwordEncoder(passwordEncoder());// ::castUserIdentityByUsername
     }
 
     @Override
