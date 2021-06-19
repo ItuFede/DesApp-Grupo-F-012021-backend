@@ -44,7 +44,7 @@ public class UserIdentityController {
     public @ResponseBody
     ResponseEntity<Object> register(@Valid @RequestBody UserCredentialsDto userRegisterCredentialsDto) {
         try {
-            UserIdentity user = userIdentityService.register(userRegisterCredentialsDto);
+            userIdentityService.register(userRegisterCredentialsDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("");
         }
         catch (Exception err) {

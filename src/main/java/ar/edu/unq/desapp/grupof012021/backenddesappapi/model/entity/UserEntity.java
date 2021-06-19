@@ -25,8 +25,6 @@ public class UserEntity {
     @Column(nullable = false, length = 10)
     private String authority;
 
-    private String secret;
-
     public UserEntity(UserCredentialsDto dto) {
         username = dto.getUsername();
         password = dto.getPassword();
