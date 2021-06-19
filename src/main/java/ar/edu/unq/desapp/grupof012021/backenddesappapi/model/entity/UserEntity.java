@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDto;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -25,7 +25,7 @@ public class UserEntity {
     @Column(nullable = false, length = 10)
     private String authority;
 
-    public UserEntity(UserCredentialsDto dto) {
+    public UserEntity(UserCredentialsDTO dto) {
         username = dto.getUsername();
         password = dto.getPassword();
         authority = "ROLE_USER";

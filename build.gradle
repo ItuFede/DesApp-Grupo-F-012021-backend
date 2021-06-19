@@ -72,5 +72,10 @@ jacocoTestReport {
 			.filter({file -> !file.name.contains('ServletInitializer')})
 			.filter({file -> !file.name.contains('DTO')})
 			.filter({file -> !file.name.contains('Controller')})
+			.filter({file -> !file.name.contains('JwtAuthEntryPoint')})
+			.filter({file -> !file.name.contains('JwtTokenFilter')})
+			.filter({file -> !file.name.contains('JwtTokenUtil')})
+			.filter({file -> !file.name.contains('WebSecurityConfig')})
+
 	)
 }

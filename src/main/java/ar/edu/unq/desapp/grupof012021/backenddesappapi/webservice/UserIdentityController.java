@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDto;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserIdentity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.UserIdentityService;
@@ -42,7 +42,7 @@ public class UserIdentityController {
 
     @PostMapping("register")
     public @ResponseBody
-    ResponseEntity<Object> register(@Valid @RequestBody UserCredentialsDto userRegisterCredentialsDto) {
+    ResponseEntity<Object> register(@Valid @RequestBody UserCredentialsDTO userRegisterCredentialsDto) {
         try {
             userIdentityService.register(userRegisterCredentialsDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("");
@@ -53,7 +53,7 @@ public class UserIdentityController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserCredentialsDto userLoginCredentialsDto) {
+    public ResponseEntity<?> login(@RequestBody @Valid UserCredentialsDTO userLoginCredentialsDto) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginCredentialsDto.getUsername(), userLoginCredentialsDto.getPassword()));
             final UserIdentity authenticatedUser = (UserIdentity) userIdentityService.loadUserByUsername(userLoginCredentialsDto.getUsername());
