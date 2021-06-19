@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.security;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.UserIdentityService;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.UserIdentityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,10 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private final UserIdentityService userIdentityService;
+    private final UserIdentityServiceImpl userIdentityService;
     private final JwtTokenFilter jwtTokenFilter;
 
-    public WebSecurityConfig(UserIdentityService userIdentityService, JwtTokenFilter jwtTokenFilter) {
+    public WebSecurityConfig(UserIdentityServiceImpl userIdentityService, JwtTokenFilter jwtTokenFilter) {
         this.userIdentityService = userIdentityService;
         this.jwtTokenFilter = jwtTokenFilter;
     }
