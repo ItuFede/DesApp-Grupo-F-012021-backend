@@ -1,7 +1,12 @@
 language: java
+sudo: required
+jdk:
+  - oraclejdk9
+
+dist: trusty
 
 before_install:
-  – chmod +x gradlew
+  - chmod +x gradlew
 
-jdk:
-  – oraclejdk8
+script:
+  - ./gradlew build --scan -s
