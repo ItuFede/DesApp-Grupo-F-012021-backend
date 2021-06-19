@@ -33,13 +33,13 @@ public class UserEntity {
     @Column(nullable = false)
     private String location;
 
-    @OneToMany(mappedBy="reviewReportMotive")
+    @OneToMany
     private List<ReportMotive> reportMotives;
 
-    @OneToMany(mappedBy="review")
+    @OneToMany
     private List<ReportMotive> reviews;
 
-    @OneToMany(mappedBy="reviewRanking")
+    @OneToMany
     private List<ReviewRanking> reviewRankings;
 
     public UserEntity(UserCredentialsDTO dto) {
