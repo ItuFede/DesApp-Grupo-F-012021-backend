@@ -31,7 +31,13 @@ public class UserIdentityController {
 
     @GetMapping("user")
     public ResponseEntity<Object> authenticatedUser(@RequestHeader(value="Authorization") String token) {
-        return ResponseEntity.ok(jwtTokenUtil.getUsernameFromToken(token));
+        try {
+            return ResponseEntity.ok(
+                    jwtTokenUtil.getUsernameFromToken(jwtTokenUtil.getTokenFromHeader(token))
+            );
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
     @PostMapping("register")
