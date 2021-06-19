@@ -48,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setLongText(reviewDTO.longText);
         review.setOriginalPlatform(reviewDTO.originalPlatform);
         review.setLanguage(reviewDTO.language);
-        review.setCritic(reviewDTO.isCritic);
+        review.setPremium(reviewDTO.isPremium);
         review.setHasSpoilers(reviewDTO.hasSpoilers);
         review.setRegion(reviewDTO.region);
         review.setMediaReview(media);

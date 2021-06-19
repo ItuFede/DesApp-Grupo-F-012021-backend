@@ -31,6 +31,10 @@ public class ReviewRanking implements Serializable {
     @JoinColumn(name = "idReview", referencedColumnName = "id")
     private Review review_reviewRanking;
 
+    @ManyToOne
+    @JoinColumn(name = "user_entity_id", referencedColumnName = "id")
+    private UserEntity userEntity;
+
     public ReviewRanking(){}
 
     public ReviewRanking(boolean isPositiveVote)
