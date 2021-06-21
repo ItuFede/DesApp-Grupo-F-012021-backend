@@ -1,30 +1,42 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReportMotiveDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.ReportMotive;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewReportService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/review/")
 public class ReviewController {
 
     @Autowired
-    ReviewService service;
+    ReviewService reviewService;
+
+    @Autowired
+    ReviewReportService reviewReportService;
 
     @PostMapping("{id}/upvote")
     public ResponseEntity<?> upvote(@PathVariable long id) {
-            service.upvoteReview(id);
-            return ResponseEntity.status(HttpStatus.OK).build();
+        reviewService.upvoteReview(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("{id}/downvote")
     public ResponseEntity<?> downvote(@PathVariable long id) {
-            service.downvoteReview(id);
-            return ResponseEntity.status(HttpStatus.OK).build();
+        reviewService.downvoteReview(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("{id}/report")
+    public ResponseEntity<?> report(@Valid @RequestBody ReportMotiveDTO reportMotiveDTO, @PathVariable long id) {
+        reviewReportService.reportReview(id, reportMotiveDTO.getReviewReportText(), Long.valueOf(reportMotiveDTO.getUserId()));
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -62,7 +62,8 @@ public class MediaServiceTestCase {
                 false,
                 false,
                 "ES_AR",
-                5.0
+                5.0,
+                donnieDarko
         );
 
         anotherReview = new Review(
@@ -73,7 +74,8 @@ public class MediaServiceTestCase {
                 false,
                 false,
                 "ES_AR",
-                1.0
+                1.0,
+                donnieDarko
         );
     }
 

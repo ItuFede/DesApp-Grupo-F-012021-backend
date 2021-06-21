@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface MediaRepository extends CrudRepository<Media, Long> {
 
     Media findById(long id);
+
+    Media findByIdStringMedia(String idStringMedia);
 }

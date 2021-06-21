@@ -63,6 +63,7 @@ public class Review implements Serializable {
     private final List<ReviewRanking> reviewRankings;
 
     @OneToMany(mappedBy="reviewReportMotive")
+    @Getter
     private final List<ReportMotive> reportMotives;
 
     @Nullable
@@ -91,7 +92,7 @@ public class Review implements Serializable {
 
     public Review(String shortText, String longText,
                   String originalPlatform, String language, boolean isCritic,
-                  boolean hasSpoilers, String region, Double score) {
+                  boolean hasSpoilers, String region, Double score, Media mediaReview) {
         this.shortText = shortText;
         this.longText = longText;
         this.date = new Date();
@@ -103,5 +104,6 @@ public class Review implements Serializable {
         this.reportMotives = new ArrayList<ReportMotive>();
         this.reviewRankings = new ArrayList<ReviewRanking>();
         this.score = score;
+        this.mediaReview = mediaReview;
     }
 }

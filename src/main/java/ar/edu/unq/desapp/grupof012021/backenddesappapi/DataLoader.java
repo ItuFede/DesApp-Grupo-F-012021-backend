@@ -1,12 +1,8 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi;
 
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreRepository;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
@@ -35,6 +30,12 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private GenreRepository genreRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ReviewReportRepository reviewReportRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Your application started with option names : {}", args.getOptionNames());
@@ -44,6 +45,12 @@ public class DataLoader implements ApplicationRunner {
         addGenre();
         logger.info("Creating Media");
         addMedia();
+        logger.info("Add Review");
+        addReview();
+        logger.info("Add ReportMotive");
+        addReportMotive();
+
+        logger.info("DataLoader Success");
     }
 
     private void addActor(){
@@ -87,6 +94,37 @@ public class DataLoader implements ApplicationRunner {
         );
         mediaRepository.save(aMedia);
         logger.info("Media name: {}", mediaRepository.findById(aMedia.getId()).getId());
+    }
+
+    private void addReview(){
+        Media donnieDarkoMedia = mediaRepository.findByIdStringMedia("tt0246578");
+        List<Review> reviews =donnieDarkoMedia.getReviews();
+
+        Review aReview = new Review(
+                "Bizarre, but oh so great!",
+                "Donnie Darko is a truly fascinating film experience. It's not a perfect film, but it's an ambitious one, and for the most part, it fulfills its ambition.",
+                "Netflix",
+                "EN_US",
+                false,
+                false,
+                "EE.UU",
+                4.0,
+                donnieDarkoMedia
+        );
+        reviews.add(aReview);
+        donnieDarkoMedia.setReviews(reviews);
+        mediaRepository.save(donnieDarkoMedia);
+
+    }
+
+    private void addReportMotive(){
+        Review donnieDarkoReview = reviewRepository.findById(15); //TODO: refactor reviewId
+        ReportMotive aReportMotive = new ReportMotive(
+                "It's perfect",
+                donnieDarkoReview,
+                null
+        );
+        reviewReportRepository.save(aReportMotive);
     }
 
 }
