@@ -1,13 +1,12 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.ReviewRanking;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service("reviewService")
@@ -48,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setLongText(reviewDTO.longText);
         review.setOriginalPlatform(reviewDTO.originalPlatform);
         review.setLanguage(reviewDTO.language);
-        review.setCritic(reviewDTO.isCritic);
+        review.setPremium(reviewDTO.isPremium);
         review.setHasSpoilers(reviewDTO.hasSpoilers);
         review.setRegion(reviewDTO.region);
         review.setMediaReview(media);

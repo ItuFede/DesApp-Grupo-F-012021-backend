@@ -12,7 +12,7 @@ public class ReviewDataHelper {
         review.setLongText("Like i said, gooooooood movie");
         review.setOriginalPlatform("Netflix");
         review.setLanguage("ENGLISH");
-        review.setCritic(true);
+        review.setPremium(true);
         review.setMediaReview(new Media());
         review.setHasSpoilers(false);
         review.setRegion("EN_US");

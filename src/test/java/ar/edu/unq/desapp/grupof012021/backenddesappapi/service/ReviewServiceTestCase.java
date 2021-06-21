@@ -108,7 +108,7 @@ public class ReviewServiceTestCase {
         reviewDTO.longText = "LongText";
         reviewDTO.originalPlatform = "Netflix";
         reviewDTO.language = "EN";
-        reviewDTO.isCritic = false;
+        reviewDTO.isPremium = false;
         reviewDTO.hasSpoilers = false;
         reviewDTO.region = "EN_US";
 
