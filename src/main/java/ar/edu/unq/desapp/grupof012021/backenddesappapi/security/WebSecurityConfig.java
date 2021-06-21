@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.security;
 
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.UserIdentityService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.UserIdentityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @EnableWebSecurity
 @ComponentScan
@@ -36,38 +36,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userIdentityService)
-                .passwordEncoder(passwordEncoder());// ::castUserIdentityByUsername
+        auth.userDetailsService(userIdentityService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Enable CORS and disable CSRF
-        http = http.cors().and().csrf().disable();
+        http.csrf().disable();
+        http.cors().configurationSource(corsConfigurationSource());
 
-        // Set session management to stateless
-        http = http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+        http.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and();
 
-        // Set unauthorized requests exception handler
-        http = http
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                    (request, response, err) -> {
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, err.getMessage());
-                    })
-                .and();
+        http.exceptionHandling()
+            .authenticationEntryPoint(
+                (request, response, err) -> {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, err.getMessage());
+                })
+            .and();
 
-        // Set permissions on endpoints
         http.authorizeRequests()
-                // Our public endpoints
-                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/customer/findall").permitAll()
-                // Our private endpoints
-                .anyRequest().authenticated();
+            .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+            .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
+            .anyRequest().authenticated();
 
         // Add JWT token filter
         http.addFilterBefore(
@@ -82,16 +73,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"));
+        configuration.setAllowCredentials(false);
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Override @Bean
