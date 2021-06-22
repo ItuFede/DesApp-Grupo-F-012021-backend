@@ -31,6 +31,8 @@ public class ReportMotive implements Serializable {
     @JoinColumn(name = "user_entity_id", referencedColumnName = "id")
     private UserEntity userEntity;
 
+    public ReportMotive(){}
+
     public ReportMotive(String motiveText, Review reviewReportMotive, UserEntity userEntity) {
         this.motiveText = motiveText;
         this.reviewReportMotive = reviewReportMotive;

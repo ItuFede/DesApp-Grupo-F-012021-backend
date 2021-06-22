@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 
@@ -10,6 +11,8 @@ public interface MediaService {
     void addReviewTo(long id, Review aReview);
 
     List<Review> findAllReviewsFrom(long idMedia);
+
+    List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, long idMedia);
 
     Media findById(long mediaId);
 }

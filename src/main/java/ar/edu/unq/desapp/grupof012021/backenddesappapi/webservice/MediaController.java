@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,9 +28,9 @@ public class MediaController {
     private ReviewService reviewService;
 
     @RequestMapping(value = "{idMedia}/review", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviewsFromMedia(@PathVariable long idMedia) {
-        List<Review> reviews = mediaService.findAllReviewsFrom(idMedia);
-        return ResponseEntity.status(HttpStatus.OK).body(reviews);
+    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable long idMedia) {
+        List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idMedia);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{idMedia}/review", method = RequestMethod.POST)

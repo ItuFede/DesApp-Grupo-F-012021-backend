@@ -39,4 +39,5 @@ public class ReviewController {
         reviewReportService.reportReview(id, reportMotiveDTO.getReviewReportText(), Long.valueOf(reportMotiveDTO.getUserId()));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
 }
