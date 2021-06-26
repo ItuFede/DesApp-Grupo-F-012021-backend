@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.PlatformType;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -28,10 +29,7 @@ public class UserEntity {
     private String authority;
 
     @Column(nullable = false)
-    private Boolean isCriticUser;
-
-    @Column(nullable = false)
-    private String location;
+    private Platform platformType;
 
     @OneToMany
     private List<ReportMotive> reportMotives;
@@ -42,11 +40,10 @@ public class UserEntity {
     @OneToMany
     private List<ReviewRanking> reviewRankings;
 
-    public UserEntity(UserCredentialsDTO dto) {
+    public UserEntity(UserCredentialsDTO dto) throws Exception {
         username = dto.getUsername();
         password = dto.getPassword();
-        isCriticUser = dto.getIsCriticUser();
-        location = dto.getLocation();
+        platformType = new Platform(dto.getPlatform());
         authority = "ROLE_USER";
     }
 
