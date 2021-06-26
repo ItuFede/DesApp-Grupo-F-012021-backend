@@ -6,6 +6,6 @@ import lombok.Data;
 public class UserCredentialsDTO {
     String username;
     String password;
-    Boolean isCriticUser;
+    String platform;
     String location;
 }
