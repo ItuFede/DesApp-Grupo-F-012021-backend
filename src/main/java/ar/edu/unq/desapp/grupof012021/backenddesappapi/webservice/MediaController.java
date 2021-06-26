@@ -8,11 +8,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,9 +23,9 @@ public class MediaController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping(value = "{idMedia}/review", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable long idMedia) {
-        List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idMedia);
+    @RequestMapping(value = "{idMedia}/review/page", method = RequestMethod.GET)
+    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable long idMedia, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) {
+        List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idMedia, offset, limit);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 

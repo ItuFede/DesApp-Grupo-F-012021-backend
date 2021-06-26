@@ -48,7 +48,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, long idMedia) {
+    public List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, long idMedia, int offset, int limit) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Review> cq = cb.createQuery(Review.class);
@@ -76,6 +76,9 @@ public class MediaServiceImpl implements MediaService {
 
         cq.where(predicates.toArray(new Predicate[0]));
         Query query = entityManager.createQuery(cq);
+
+        query.setFirstResult((offset - 1) * limit);
+        query.setMaxResults(limit);
 
         return query.getResultList();
     }

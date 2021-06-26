@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public interface UserIdentityService {
 
-    UserIdentity register(UserCredentialsDTO userRegisterCredentialsDto);
+    UserIdentity register(UserCredentialsDTO userRegisterCredentialsDto) throws Exception;
 
     UserDetails loadUserByUsername(String username);
 }

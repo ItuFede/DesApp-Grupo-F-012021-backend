@@ -1,14 +1,12 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.PlatformType;
-import com.sun.istack.NotNull;
-import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
+@Entity
+@Table(name = "platform")
 public class Platform {
     private static final long serialVersionUID = -2343243243242432341L;
     @javax.persistence.Id
@@ -19,6 +17,9 @@ public class Platform {
     @NotNull
     @Column(unique = true, name = "platformType")
     private PlatformType platformType;
+
+    @OneToOne(mappedBy = "platform")
+    private UserEntity userEntity;
 
     public Platform(String platformName) throws Exception {
         switch (platformName) {
@@ -40,6 +41,6 @@ public class Platform {
     public Platform() { }
 
     public String getName() {
-        return this.platformType.toString();
+        return this.platformType.platformString;
     }
 }

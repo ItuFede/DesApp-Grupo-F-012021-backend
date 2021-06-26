@@ -13,5 +13,5 @@ public interface UserEntityService {
 
     Optional<UserEntity> findByUsername(String username);
 
-    Optional<UserEntity> saveUser(UserCredentialsDTO userRegisterCredentialsDto);
+    Optional<UserEntity> saveUser(UserCredentialsDTO userRegisterCredentialsDto) throws Exception;
 }

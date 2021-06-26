@@ -7,5 +7,4 @@ public class UserCredentialsDTO {
     String username;
     String password;
     String platform;
-    String location;
 }

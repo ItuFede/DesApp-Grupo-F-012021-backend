@@ -48,7 +48,10 @@ public class UserIdentityController {
             return ResponseEntity.status(HttpStatus.CREATED).body("");
         }
         catch (Exception err) {
-            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+            if (err.getMessage() == "Invalid platform name.")
+                return ResponseEntity.status(402).body("Invalid platform name.");
+            else
+                return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }
     }
 

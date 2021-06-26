@@ -19,7 +19,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         return repository.findUserEntityByUsername(username);
     }
 
-    public Optional<UserEntity> saveUser(UserCredentialsDTO userRegisterCredentialsDto) {
+    public Optional<UserEntity> saveUser(UserCredentialsDTO userRegisterCredentialsDto) throws Exception {
         UserEntity user = new UserEntity(userRegisterCredentialsDto);
         user.setPassword(userRegisterCredentialsDto.getPassword());
         repository.save(user);

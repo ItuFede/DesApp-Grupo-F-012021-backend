@@ -28,8 +28,9 @@ public class UserEntity {
     @Column(nullable = false, length = 10)
     private String authority;
 
-    @Column(nullable = false)
-    private Platform platformType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "platformTypeId", referencedColumnName = "id")
+    private Platform platform;
 
     @OneToMany
     private List<ReportMotive> reportMotives;
@@ -43,7 +44,7 @@ public class UserEntity {
     public UserEntity(UserCredentialsDTO dto) throws Exception {
         username = dto.getUsername();
         password = dto.getPassword();
-        platformType = new Platform(dto.getPlatform());
+        platform = new Platform(dto.getPlatform());
         authority = "ROLE_USER";
     }
 

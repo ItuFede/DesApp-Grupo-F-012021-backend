@@ -32,13 +32,9 @@ public class UserIdentityServiceImpl implements UserIdentityService, UserDetails
         }
     }
 
-    public UserIdentity register(UserCredentialsDTO userRegisterCredentialsDto) {
-        try {
-            userRegisterCredentialsDto.setPassword(passwordEncoder.encode(userRegisterCredentialsDto.getPassword()));
-            userEntityService.saveUser(userRegisterCredentialsDto);
-            return (UserIdentity) this.loadUserByUsername(userRegisterCredentialsDto.getUsername());
-        } catch (Exception ex) {
-            throw new RuntimeException("Something went wrong, couldn't create user " + userRegisterCredentialsDto.getUsername());
-        }
+    public UserIdentity register(UserCredentialsDTO userRegisterCredentialsDto) throws Exception {
+        userRegisterCredentialsDto.setPassword(passwordEncoder.encode(userRegisterCredentialsDto.getPassword()));
+        userEntityService.saveUser(userRegisterCredentialsDto);
+        return (UserIdentity) this.loadUserByUsername(userRegisterCredentialsDto.getUsername());
     }
 }

@@ -31,6 +31,9 @@ public class DataLoader implements ApplicationRunner {
     private GenreRepository genreRepository;
 
     @Autowired
+    private PlatformRepository platformRepository;
+
+    @Autowired
     private ReviewRepository reviewRepository;
 
     @Autowired
@@ -45,10 +48,16 @@ public class DataLoader implements ApplicationRunner {
         addGenre();
         logger.info("Creating Media");
         addMedia();
-        logger.info("Add Review");
-        addReview();
+        logger.info("Add 5 Review");
+        addReview("Review 1");
+        addReview("Review 2");
+        addReview("Review 3");
+        addReview("Review 4");
+        addReview("Review 5");
         logger.info("Add ReportMotive");
         addReportMotive();
+        logger.info("Add Platform");
+        addPlatform();
 
         logger.info("DataLoader Success");
     }
@@ -96,12 +105,12 @@ public class DataLoader implements ApplicationRunner {
         logger.info("Media name: {}", mediaRepository.findById(aMedia.getId()).getId());
     }
 
-    private void addReview(){
+    private void addReview(String numberReview){
         Media donnieDarkoMedia = mediaRepository.findByIdStringMedia("tt0246578");
         List<Review> reviews =donnieDarkoMedia.getReviews();
 
         Review aReview = new Review(
-                "Bizarre, but oh so great!",
+                numberReview,
                 "Donnie Darko is a truly fascinating film experience. It's not a perfect film, but it's an ambitious one, and for the most part, it fulfills its ambition.",
                 "Netflix",
                 "EN_US",
@@ -125,6 +134,14 @@ public class DataLoader implements ApplicationRunner {
                 null
         );
         reviewReportRepository.save(aReportMotive);
+    }
+
+    private void addPlatform() throws Exception {
+        List<Platform> platforms = new ArrayList<Platform>();
+        platforms.add(new Platform("Netflix"));
+        platforms.add(new Platform("Disney Plus"));
+        platforms.add(new Platform("Amazon Prime"));
+        platformRepository.saveAll(platforms);
     }
 
 }
