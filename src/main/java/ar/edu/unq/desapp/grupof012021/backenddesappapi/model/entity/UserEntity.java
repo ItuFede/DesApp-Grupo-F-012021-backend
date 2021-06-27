@@ -49,4 +49,8 @@ public class UserEntity {
     }
 
     public UserEntity() {}
+
+    public String getPlatform() {
+        return this.platform.getPlatformType().getPlatformString();
+    }
 }

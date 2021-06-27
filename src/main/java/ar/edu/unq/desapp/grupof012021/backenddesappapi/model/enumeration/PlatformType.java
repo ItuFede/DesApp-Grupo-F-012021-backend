@@ -10,4 +10,8 @@ public enum PlatformType {
     PlatformType(String platformType) {
         this.platformString = platformType;
     }
+
+    public String getPlatformString() {
+        return this.platformString;
+    }
 }
