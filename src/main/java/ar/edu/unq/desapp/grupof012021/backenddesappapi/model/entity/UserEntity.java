@@ -41,11 +41,11 @@ public class UserEntity {
     @OneToMany
     private List<ReviewRanking> reviewRankings;
 
-    public UserEntity(UserCredentialsDTO dto, Platform platform) throws Exception {
-        username = dto.getUsername();
-        password = dto.getPassword();
-        platform = platform;
-        authority = "ROLE_USER";
+    public UserEntity(UserCredentialsDTO dto, Platform platformData) throws Exception {
+        this.username = dto.getUsername();
+        this.password = dto.getPassword();
+        this.platform = platformData;
+        this.authority = "ROLE_USER";
     }
 
     public UserEntity() {}
