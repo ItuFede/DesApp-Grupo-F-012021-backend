@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -17,7 +18,7 @@ public class PlatformController {
     @Autowired
     PlatformService service;
 
-    @GetMapping()
+    @RequestMapping(method = RequestMethod.GET)
     ResponseEntity<Collection<Platform>> getPlatforms() {
         Collection<Platform> platforms = this.service.findAll();
         return ResponseEntity.ok(platforms);
