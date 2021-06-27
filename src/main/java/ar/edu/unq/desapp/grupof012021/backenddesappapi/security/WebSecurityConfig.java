@@ -58,6 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
             .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
+            .antMatchers(HttpMethod.GET, "/platform").permitAll()
+            .antMatchers(HttpMethod.GET, "/health").permitAll()
             .anyRequest().authenticated();
 
         // Add JWT token filter
