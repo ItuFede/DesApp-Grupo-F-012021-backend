@@ -29,7 +29,7 @@ public class UserIdentityController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("user")
+    @RequestMapping(value = "user", method = RequestMethod.GET)
     public ResponseEntity<Object> authenticatedUser(@RequestHeader(value="Authorization") String token) {
         try {
             return ResponseEntity.ok(
@@ -40,7 +40,7 @@ public class UserIdentityController {
         }
     }
 
-    @PostMapping("register")
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<Object> register(@Valid @RequestBody UserCredentialsDTO userRegisterCredentialsDto) {
         try {
@@ -55,7 +55,7 @@ public class UserIdentityController {
         }
     }
 
-    @PostMapping("login")
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody @Valid UserCredentialsDTO userLoginCredentialsDto) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginCredentialsDto.getUsername(), userLoginCredentialsDto.getPassword()));

@@ -22,19 +22,19 @@ public class ReviewController {
     @Autowired
     ReviewReportService reviewReportService;
 
-    @PostMapping("{id}/upvote")
+    @RequestMapping(value = "{id}/upvote", method = RequestMethod.POST)
     public ResponseEntity<?> upvote(@PathVariable long id) {
         reviewService.upvoteReview(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("{id}/downvote")
+    @RequestMapping(value = "{id}/downvote", method = RequestMethod.POST)
     public ResponseEntity<?> downvote(@PathVariable long id) {
         reviewService.downvoteReview(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("{id}/report")
+    @RequestMapping(value = "{id}/report", method = RequestMethod.POST)
     public ResponseEntity<?> report(@Valid @RequestBody ReportMotiveDTO reportMotiveDTO, @PathVariable long id) {
         reviewReportService.reportReview(id, reportMotiveDTO.getReviewReportText(), Long.valueOf(reportMotiveDTO.getUserId()));
         return ResponseEntity.status(HttpStatus.OK).build();
