@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(nullable = false, length = 10)
     private String authority;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "platformTypeId", referencedColumnName = "id")
     private Platform platform;
 
@@ -41,10 +41,10 @@ public class UserEntity {
     @OneToMany
     private List<ReviewRanking> reviewRankings;
 
-    public UserEntity(UserCredentialsDTO dto) throws Exception {
+    public UserEntity(UserCredentialsDTO dto, Platform platform) throws Exception {
         username = dto.getUsername();
         password = dto.getPassword();
-        platform = new Platform(dto.getPlatform());
+        platform = platform;
         authority = "ROLE_USER";
     }
 

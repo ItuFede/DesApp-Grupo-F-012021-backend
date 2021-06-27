@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.PlatformType;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ public class Platform {
 
     @NotNull
     @Column(unique = true, name = "platformType")
+    @Getter
     private PlatformType platformType;
 
     @OneToOne(mappedBy = "platform")
