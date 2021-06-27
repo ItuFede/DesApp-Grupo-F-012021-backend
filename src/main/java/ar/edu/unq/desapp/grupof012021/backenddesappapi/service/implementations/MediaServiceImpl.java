@@ -72,6 +72,16 @@ public class MediaServiceImpl implements MediaService {
         }
         if (reviewDTO.hasSpoilers){
             predicates.add(cb.isTrue(reviewRoot.get("hasSpoilers")));
+
+        }
+        if (validOrderType(reviewDTO.isOrdererType)){
+            String orderBy = reviewDTO.isOrdererType == "score" ? "score" : "date";
+            if(reviewDTO.isOrderAsc){
+                cq.orderBy(cb.asc(reviewRoot.get(orderBy)));
+            }
+            else{
+                cq.orderBy(cb.desc(reviewRoot.get(orderBy)));
+            }
         }
 
         cq.where(predicates.toArray(new Predicate[0]));
@@ -81,6 +91,10 @@ public class MediaServiceImpl implements MediaService {
         query.setMaxResults(limit);
 
         return query.getResultList();
+    }
+
+    private boolean validOrderType(String isOrdererType) {
+        return ("date".equals(isOrdererType) || "score".equals(isOrdererType)) ? true : false;
     }
 
     public Media findById(long mediaId) {

@@ -14,5 +14,7 @@ public class ReviewDTO {
     public boolean isPremium;
     public boolean hasSpoilers;
     public String region;
+    public String isOrdererType;
+    public boolean isOrderAsc;
 
 }
