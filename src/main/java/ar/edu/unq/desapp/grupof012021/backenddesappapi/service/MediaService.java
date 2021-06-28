@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
@@ -15,4 +16,6 @@ public interface MediaService {
     List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, long idMedia, int offset, int limit);
 
     Media findById(long mediaId);
+
+    List<Media> findAllMediaFilter(MediaDTO mediaDTO, int offset, int limit) throws Exception;
 }

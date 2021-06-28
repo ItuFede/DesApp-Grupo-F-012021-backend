@@ -50,7 +50,7 @@ public class ReviewServiceTestCase {
                 "tt0246578",
                 "donnieDarko",
                 "donnieDarko",
-                Year.of(2001),
+                2001,
                 null,
                 113,
                 MediaType.MOVIE,

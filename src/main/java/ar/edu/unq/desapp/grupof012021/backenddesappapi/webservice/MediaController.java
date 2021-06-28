@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
@@ -21,6 +23,12 @@ public class MediaController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @RequestMapping(value = "page", method = RequestMethod.GET)
+    public ResponseEntity<List<Media>> getMediaFilter(@Valid @RequestBody MediaDTO mediaDTO, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) throws Exception {
+        List<Media> medias = mediaService.findAllMediaFilter(mediaDTO, offset, limit);
+        return new ResponseEntity<>(medias, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "{idMedia}/review/page", method = RequestMethod.GET)
     public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable long idMedia, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) {

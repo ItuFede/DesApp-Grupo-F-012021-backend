@@ -7,9 +7,9 @@ public class MediaDTO {
 
     private String idStringMedia;
     private String primaryTitle;
-    private Year year;
-    private Year endYear;
+    public Integer year;
+    public Integer endYear;
     private Integer runtimeMinutes;
-    private Genre genre;
+    public String genre;
 
 }
