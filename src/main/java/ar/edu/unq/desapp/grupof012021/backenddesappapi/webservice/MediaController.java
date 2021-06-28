@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/media/")
+@RequestMapping("/media")
 public class MediaController {
 
     @Autowired
@@ -24,13 +24,13 @@ public class MediaController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping(value = "page", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Media>> getMediaFilter(@Valid @RequestBody MediaDTO mediaDTO, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) throws Exception {
         List<Media> medias = mediaService.findAllMediaFilter(mediaDTO, offset, limit);
         return new ResponseEntity<>(medias, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{idMedia}/review/page", method = RequestMethod.GET)
+    @RequestMapping(value = "{idMedia}/review", method = RequestMethod.GET)
     public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable long idMedia, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) {
         List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idMedia, offset, limit);
         return new ResponseEntity<>(reviews, HttpStatus.OK);

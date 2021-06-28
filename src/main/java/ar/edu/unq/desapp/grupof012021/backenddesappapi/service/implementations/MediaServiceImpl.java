@@ -19,8 +19,6 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.DRAMA;
-
 @Service("mediaService")
 public class MediaServiceImpl implements MediaService {
 
@@ -100,7 +98,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     private boolean validOrderType(String isOrdererType) {
-        return ("date".equals(isOrdererType) || "score".equals(isOrdererType)) ? true : false;
+        return "date".equals(isOrdererType) || "score".equals(isOrdererType);
     }
 
     public Media findById(long mediaId) {
@@ -122,35 +120,15 @@ public class MediaServiceImpl implements MediaService {
             predicates.add(cb.equal(mediaRoot.get("endYear"), mediaDTO.endYear));
         }
 
-        Genre genre = genreRepository.findByGenreName(DRAMA);
-
         MediaGenreType mediaGenreType = null;
         if (mediaDTO.genre != null){
             mediaGenreType = Genre.getMediaGenreTypeFromString(mediaDTO.genre);
-            //Join<Media,Genre> genreJoin = mediaRoot.join("genre");
-            //predicates.add(cb.equal(mediaRoot.get("genres"), new ArrayList<Genre>()));
         }
-        /*
-        if (validOrderType(reviewDTO.isOrdererType)){
-            String orderBy = reviewDTO.isOrdererType == "score" ? "score" : "date";
-            if(reviewDTO.isOrderAsc){
-                cq.orderBy(cb.asc(reviewRoot.get(orderBy)));
-            }
-            else{
-                cq.orderBy(cb.desc(reviewRoot.get(orderBy)));
-            }
-        }
-        */
+
         cq.where(predicates.toArray(new Predicate[0]));
-        //Query query = entityManager.createQuery(cq);
         Query query = entityManager.createQuery(
                 "FROM Media m LEFT JOIN m.genres mg WHERE mg.genreName = :nameGenre")
                 .setParameter("nameGenre", mediaGenreType);
-
-        /*
-        query.setFirstResult((offset - 1) * limit);
-        query.setMaxResults(limit);
-        */
 
         return query.getResultList();
     }
