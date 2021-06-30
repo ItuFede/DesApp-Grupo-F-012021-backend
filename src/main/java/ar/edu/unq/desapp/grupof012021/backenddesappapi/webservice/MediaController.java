@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaRedisDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
@@ -43,4 +44,9 @@ public class MediaController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @RequestMapping(value = "{idMedia}", method = RequestMethod.GET)
+    public ResponseEntity<MediaRedisDTO> getMediaRedis(@PathVariable long idMedia) {
+        MediaRedisDTO media = mediaService.findMediaRedis(idMedia);
+        return new ResponseEntity<>(media, HttpStatus.OK);
+    }
 }

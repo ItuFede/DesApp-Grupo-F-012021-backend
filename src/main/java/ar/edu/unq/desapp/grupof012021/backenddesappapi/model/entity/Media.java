@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;

@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaRedisDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
@@ -10,6 +11,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreReposito
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Query;
@@ -132,4 +134,17 @@ public class MediaServiceImpl implements MediaService {
 
         return query.getResultList();
     }
+
+    @Override
+    @Cacheable(value = "mediaData")
+    public MediaRedisDTO findMediaRedis(long idMedia) {
+        MediaRedisDTO mediaRedisDTO = new MediaRedisDTO();
+        Media media = repository.findById(idMedia);
+        mediaRedisDTO.idStringMedia = media.getIdStringMedia();
+        mediaRedisDTO.originalTitle = media.getOriginalTitle();
+        mediaRedisDTO.reviewAmount = media.getReviews().size();
+        mediaRedisDTO.averageScore = media.getReviews().stream().mapToDouble(x -> x.getScore()).average().orElse(0);
+        return mediaRedisDTO;
+    }
+
 }
