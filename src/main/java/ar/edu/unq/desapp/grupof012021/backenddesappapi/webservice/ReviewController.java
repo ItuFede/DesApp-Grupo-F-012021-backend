@@ -1,14 +1,16 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReportMotiveDTO;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.ReportMotive;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewReportService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.spring.web.json.Json;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 

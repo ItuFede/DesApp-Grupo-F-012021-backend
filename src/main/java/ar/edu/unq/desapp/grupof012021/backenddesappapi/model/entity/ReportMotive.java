@@ -3,10 +3,14 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 import com.sun.istack.NotNull;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 
 @Entity
 @Table(name = "reportMotive")

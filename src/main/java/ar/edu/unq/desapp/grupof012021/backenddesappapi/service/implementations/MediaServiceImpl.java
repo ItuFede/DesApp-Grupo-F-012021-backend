@@ -15,9 +15,12 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,13 +128,29 @@ public class MediaServiceImpl implements MediaService {
         MediaGenreType mediaGenreType = null;
         if (mediaDTO.genre != null){
             mediaGenreType = Genre.getMediaGenreTypeFromString(mediaDTO.genre);
+            //Join<Media,Genre> genreJoin = mediaRoot.join("genre");
+            //predicates.add(cb.equal(mediaRoot.get("genres"), new ArrayList<Genre>()));
         }
-
+        /*
+        if (validOrderType(reviewDTO.isOrdererType)){
+            String orderBy = reviewDTO.isOrdererType == "score" ? "score" : "date";
+            if(reviewDTO.isOrderAsc){
+                cq.orderBy(cb.asc(reviewRoot.get(orderBy)));
+            }
+            else{
+                cq.orderBy(cb.desc(reviewRoot.get(orderBy)));
+            }
+        }
+        */
         cq.where(predicates.toArray(new Predicate[0]));
+        //Query query = entityManager.createQuery(cq);
         Query query = entityManager.createQuery(
                 "FROM Media m LEFT JOIN m.genres mg WHERE mg.genreName = :nameGenre")
                 .setParameter("nameGenre", mediaGenreType);
-
+        /*
+        query.setFirstResult((offset - 1) * limit);
+        query.setMaxResults(limit);
+        */
         return query.getResultList();
     }
 

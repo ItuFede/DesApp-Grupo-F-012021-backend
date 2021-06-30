@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

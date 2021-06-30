@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserIdentity;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
