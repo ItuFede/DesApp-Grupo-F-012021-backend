@@ -44,9 +44,9 @@ public class MediaController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @RequestMapping(value = "{idMedia}", method = RequestMethod.GET)
-    public ResponseEntity<MediaRedisDTO> getMediaRedis(@PathVariable long idMedia) {
-        MediaRedisDTO media = mediaService.findMediaRedis(idMedia);
+    @RequestMapping(value = "{idStringMedia}", method = RequestMethod.GET)
+    public ResponseEntity<MediaRedisDTO> getMediaRedis(@PathVariable String idStringMedia) {
+        MediaRedisDTO media = mediaService.findMediaRedis(idStringMedia);
         return new ResponseEntity<>(media, HttpStatus.OK);
     }
 }

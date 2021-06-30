@@ -20,5 +20,5 @@ public interface MediaService {
 
     List<Media> findAllMediaFilter(MediaDTO mediaDTO, int offset, int limit) throws Exception;
 
-    MediaRedisDTO findMediaRedis(long idMedia);
+    MediaRedisDTO findMediaRedis(String idStringMedia);
 }

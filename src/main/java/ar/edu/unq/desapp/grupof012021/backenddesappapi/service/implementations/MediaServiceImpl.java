@@ -137,9 +137,9 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     @Cacheable(value = "mediaData")
-    public MediaRedisDTO findMediaRedis(long idMedia) {
+    public MediaRedisDTO findMediaRedis(String idStringMedia) {
         MediaRedisDTO mediaRedisDTO = new MediaRedisDTO();
-        Media media = repository.findById(idMedia);
+        Media media = repository.findByIdStringMedia(idStringMedia);
         mediaRedisDTO.idStringMedia = media.getIdStringMedia();
         mediaRedisDTO.originalTitle = media.getOriginalTitle();
         mediaRedisDTO.reviewAmount = media.getReviews().size();
