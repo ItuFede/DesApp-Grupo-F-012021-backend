@@ -48,11 +48,12 @@ public class DataLoader implements ApplicationRunner {
         logger.info("Creating Media");
         addMedia();
         logger.info("Add 5 Review");
-        addReview("Review 1");
-        addReview("Review 2");
-        addReview("Review 3");
-        addReview("Review 4");
-        addReview("Review 5");
+        addReviewDonnieDarko("Review 1");
+        addReviewDonnieDarko("Review 2");
+        addReviewDonnieDarko("Review 3");
+        addReviewDonnieDarko("Review 4");
+        addReviewDonnieDarko("Review 5");
+        addReviewShrek();
         logger.info("Add ReportMotive");
         addReportMotive();
         logger.info("Add Platform");
@@ -63,10 +64,16 @@ public class DataLoader implements ApplicationRunner {
 
     private void addActor(){
         List<Actor> actors = new ArrayList<Actor>();
+        //DONNIE DARKO
         actors.add(new Actor("nm0350453", "Jake Gyllenhaal"));
         actors.add(new Actor("nm0651660", "Holmes Osborne"));
         actors.add(new Actor("nm0540441", "Jena Malone"));
         actors.add(new Actor("nm0001521", "Mary McDonnell"));
+        //SHREK
+        actors.add(new Actor("nm0000196", "Mike Myers"));
+        actors.add(new Actor("nm0000552", "Eddie Murphy"));
+        actors.add(new Actor("nm0001475", "John Lithgow"));
+        actors.add(new Actor("nm0000139", "Cameron Diaz"));
         actorRepository.saveAll(actors);
         logger.info("Actors added");
     }
@@ -86,17 +93,17 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void addMedia(){
-        List<Genre> genres = new ArrayList<Genre>();
-        genres.add(genreRepository.findByGenreName(DRAMA));
-        genres.add(genreRepository.findByGenreName(MISTERY));
+        List<Genre> genresDonnieDarko = new ArrayList<Genre>();
+        genresDonnieDarko.add(genreRepository.findByGenreName(DRAMA));
+        genresDonnieDarko.add(genreRepository.findByGenreName(MISTERY));
 
-        List<Actor> actors = new ArrayList<Actor>();
-        actors.add(actorRepository.findByName("Jake Gyllenhaal"));
-        actors.add(actorRepository.findByName("Holmes Osborne"));
-        actors.add(actorRepository.findByName("Jena Malone"));
-        actors.add(actorRepository.findByName("Mary McDonnell"));
+        List<Actor> actorsDonnieDarko = new ArrayList<Actor>();
+        actorsDonnieDarko.add(actorRepository.findByName("Jake Gyllenhaal"));
+        actorsDonnieDarko.add(actorRepository.findByName("Holmes Osborne"));
+        actorsDonnieDarko.add(actorRepository.findByName("Jena Malone"));
+        actorsDonnieDarko.add(actorRepository.findByName("Mary McDonnell"));
 
-        Media aMedia = new Media(
+        Media donnieDarkoMedia = new Media(
                 "tt0246578",
                 "donnieDarko",
                 "donnieDarko",
@@ -105,14 +112,40 @@ public class DataLoader implements ApplicationRunner {
                 113,
                 MediaType.MOVIE,
                 null,
-                genres,
-                actors
+                genresDonnieDarko,
+                actorsDonnieDarko
         );
-        mediaRepository.save(aMedia);
-        logger.info("Media name: {}", mediaRepository.findById(aMedia.getId()).getId());
+        mediaRepository.save(donnieDarkoMedia);
+        logger.info("Media name: {}", mediaRepository.findById(donnieDarkoMedia.getId()).getId());
+
+        List<Genre> genresShrek = new ArrayList<Genre>();
+        genresShrek.add(genreRepository.findByGenreName(ADVENTURE));
+        genresShrek.add(genreRepository.findByGenreName(ANIMATION));
+        genresShrek.add(genreRepository.findByGenreName(COMEDY));
+
+        List<Actor> actorsShrek = new ArrayList<Actor>();
+        actorsShrek.add(actorRepository.findByName("Mike Myers"));
+        actorsShrek.add(actorRepository.findByName("Eddie Murphy"));
+        actorsShrek.add(actorRepository.findByName("John Lithgow"));
+        actorsShrek.add(actorRepository.findByName("Cameron Diaz"));
+
+        Media shrekMedia = new Media(
+                "tt0126029",
+                "shrek",
+                "shrek",
+                2001,
+                null,
+                90,
+                MediaType.MOVIE,
+                null,
+                genresShrek,
+                actorsShrek
+        );
+        mediaRepository.save(shrekMedia);
+        logger.info("Media name: {}", mediaRepository.findById(shrekMedia.getId()).getId());
     }
 
-    private void addReview(String numberReview){
+    private void addReviewDonnieDarko(String numberReview){
         Media donnieDarkoMedia = mediaRepository.findByIdStringMedia("tt0246578");
         List<Review> reviews =donnieDarkoMedia.getReviews();
 
@@ -130,7 +163,26 @@ public class DataLoader implements ApplicationRunner {
         reviews.add(aReview);
         donnieDarkoMedia.setReviews(reviews);
         mediaRepository.save(donnieDarkoMedia);
+    }
 
+    private void addReviewShrek(){
+        Media shrekMedia = mediaRepository.findByIdStringMedia("tt0126029");
+        List<Review> reviews = shrekMedia.getReviews();
+
+        Review aReview = new Review(
+                "Great movie.",
+                "Shrek is life.",
+                "Amazon Prime",
+                "EN_US",
+                false,
+                true,
+                "EE.UU",
+                5.0,
+                shrekMedia
+        );
+        reviews.add(aReview);
+        shrekMedia.setReviews(reviews);
+        mediaRepository.save(shrekMedia);
     }
 
     private void addReportMotive(){
