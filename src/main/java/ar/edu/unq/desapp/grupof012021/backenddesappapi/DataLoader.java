@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.*;
@@ -38,6 +39,9 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private ReviewReportRepository reviewReportRepository;
 
+    @Autowired
+    private UserEntityRepository userEntityRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Your application started with option names : {}", args.getOptionNames());
@@ -45,6 +49,10 @@ public class DataLoader implements ApplicationRunner {
         addActor();
         logger.info("Creating Genres");
         addGenre();
+        logger.info("Add Platform");
+        addPlatform();
+        logger.info("Add Fake user");
+        addUser();
         logger.info("Creating Media");
         addMedia();
         logger.info("Add 5 Review");
@@ -56,8 +64,6 @@ public class DataLoader implements ApplicationRunner {
         addReviewShrek();
         logger.info("Add ReportMotive");
         addReportMotive();
-        logger.info("Add Platform");
-        addPlatform();
 
         logger.info("DataLoader Success");
     }
@@ -149,6 +155,8 @@ public class DataLoader implements ApplicationRunner {
         Media donnieDarkoMedia = mediaRepository.findByIdStringMedia("tt0246578");
         List<Review> reviews =donnieDarkoMedia.getReviews();
 
+        UserEntity userEntity = userEntityRepository.findByUsername("Pepe");
+
         Review aReview = new Review(
                 numberReview,
                 "Donnie Darko is a truly fascinating film experience. It's not a perfect film, but it's an ambitious one, and for the most part, it fulfills its ambition.",
@@ -158,7 +166,8 @@ public class DataLoader implements ApplicationRunner {
                 false,
                 "EE.UU",
                 4.0,
-                donnieDarkoMedia
+                donnieDarkoMedia,
+                userEntity
         );
         reviews.add(aReview);
         donnieDarkoMedia.setReviews(reviews);
@@ -169,6 +178,8 @@ public class DataLoader implements ApplicationRunner {
         Media shrekMedia = mediaRepository.findByIdStringMedia("tt0126029");
         List<Review> reviews = shrekMedia.getReviews();
 
+        UserEntity userEntity = userEntityRepository.findByUsername("Pepe");
+
         Review aReview = new Review(
                 "Great movie.",
                 "Shrek is life.",
@@ -178,7 +189,8 @@ public class DataLoader implements ApplicationRunner {
                 true,
                 "EE.UU",
                 5.0,
-                shrekMedia
+                shrekMedia,
+                userEntity
         );
         reviews.add(aReview);
         shrekMedia.setReviews(reviews);
@@ -186,11 +198,13 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void addReportMotive(){
-        Review donnieDarkoReview = reviewRepository.findById(15); //TODO: refactor reviewId
+        Review donnieDarkoReview = reviewRepository.findAll().iterator().next();
+        UserEntity userEntity = userEntityRepository.findByUsername("Pepe");
+
         ReportMotive aReportMotive = new ReportMotive(
                 "It's perfect",
                 donnieDarkoReview,
-                null
+                userEntity
         );
         reviewReportRepository.save(aReportMotive);
     }
@@ -201,6 +215,17 @@ public class DataLoader implements ApplicationRunner {
         platforms.add(new Platform("Disney Plus"));
         platforms.add(new Platform("Amazon Prime"));
         platformRepository.saveAll(platforms);
+    }
+
+    private  void addUser() throws Exception {
+        UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO();
+        userCredentialsDTO.setUsername("Pepe");
+        userCredentialsDTO.setPassword("1234");
+
+        Platform platform = platformRepository.findByPlatformType(new Platform("Netflix").getPlatformType());
+
+        UserEntity userEntity = new UserEntity(userCredentialsDTO, platform);
+        userEntityRepository.save(userEntity);
     }
 
 }

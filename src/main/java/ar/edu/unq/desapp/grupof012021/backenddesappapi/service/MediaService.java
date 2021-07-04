@@ -14,7 +14,7 @@ public interface MediaService {
 
     List<Review> findAllReviewsFrom(long idMedia);
 
-    List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, long idMedia, int offset, int limit);
+    List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, String idStringMedia, int offset, int limit);
 
     Media findById(long mediaId);
 

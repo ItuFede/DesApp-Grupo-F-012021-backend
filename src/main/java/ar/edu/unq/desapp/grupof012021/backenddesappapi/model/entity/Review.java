@@ -5,14 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.lang.Nullable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -74,10 +68,12 @@ public class Review implements Serializable {
 
     @OneToMany(mappedBy="review_reviewRanking")
     @Getter
+    @Setter
     private final List<ReviewRanking> reviewRankings;
 
     @OneToMany(mappedBy="reviewReportMotive")
     @Getter
+    @Setter
     private final List<ReportMotive> reportMotives;
 
     @Nullable
@@ -94,6 +90,7 @@ public class Review implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_entity_id", referencedColumnName = "id")
+    @Getter
     private UserEntity userEntity;
 
     public Review()
@@ -109,7 +106,7 @@ public class Review implements Serializable {
 
     public Review(String shortText, String longText,
                   String originalPlatform, String language, boolean isCritic,
-                  boolean hasSpoilers, String region, Double score, Media mediaReview) {
+                  boolean hasSpoilers, String region, Double score, Media mediaReview, UserEntity userEntity) {
         this.shortText = shortText;
         this.longText = longText;
         this.date = new Date();
@@ -122,5 +119,6 @@ public class Review implements Serializable {
         this.reviewRankings = new ArrayList<ReviewRanking>();
         this.score = score;
         this.mediaReview = mediaReview;
+        this.userEntity = userEntity;
     }
 }

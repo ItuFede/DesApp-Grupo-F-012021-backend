@@ -57,7 +57,9 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, long idMedia, int offset, int limit) {
+    public List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, String idStringMedia, int offset, int limit) {
+
+        long idMedia = repository.findByIdStringMedia(idStringMedia).getId();
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Review> cq = cb.createQuery(Review.class);

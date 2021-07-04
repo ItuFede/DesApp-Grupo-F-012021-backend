@@ -31,9 +31,9 @@ public class MediaController {
         return new ResponseEntity<>(medias, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{idMedia}/review", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable long idMedia, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) {
-        List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idMedia, offset, limit);
+    @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.GET)
+    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable String idStringMedia, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) {
+        List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idStringMedia, offset, limit);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
