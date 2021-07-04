@@ -89,6 +89,13 @@ public class DataLoader implements ApplicationRunner {
         List<Genre> genres = new ArrayList<Genre>();
         genres.add(genreRepository.findByGenreName(DRAMA));
         genres.add(genreRepository.findByGenreName(MISTERY));
+
+        List<Actor> actors = new ArrayList<Actor>();
+        actors.add(actorRepository.findByName("Jake Gyllenhaal"));
+        actors.add(actorRepository.findByName("Holmes Osborne"));
+        actors.add(actorRepository.findByName("Jena Malone"));
+        actors.add(actorRepository.findByName("Mary McDonnell"));
+
         Media aMedia = new Media(
                 "tt0246578",
                 "donnieDarko",
@@ -98,7 +105,8 @@ public class DataLoader implements ApplicationRunner {
                 113,
                 MediaType.MOVIE,
                 null,
-                genres
+                genres,
+                actors
         );
         mediaRepository.save(aMedia);
         logger.info("Media name: {}", mediaRepository.findById(aMedia.getId()).getId());

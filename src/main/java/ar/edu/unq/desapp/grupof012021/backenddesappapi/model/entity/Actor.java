@@ -4,12 +4,9 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "actor")
@@ -23,12 +20,16 @@ public class Actor implements Serializable {
 
     @NotNull
     @Column(unique = true, name = "idStringActor")
+    @Getter
     private String idStringActor;
 
     @NotNull
     @Column(name = "name")
     @Getter
     private String name;
+
+    @ManyToMany
+    private List<Media> mediaList;
 
     public Actor(String idStringActor, String name)
     {
