@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/platform").permitAll()
             .antMatchers(HttpMethod.GET, "/health").permitAll()
             .antMatchers(HttpMethod.GET, "/health/error").permitAll()
+            .antMatchers(HttpMethod.GET, "/swagger-ui.html/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
             .anyRequest().authenticated();
 
         // Add JWT token filter

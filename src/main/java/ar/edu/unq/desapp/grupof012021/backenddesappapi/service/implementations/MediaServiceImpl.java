@@ -9,6 +9,8 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.FirebaseService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,8 +23,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 @Service("mediaService")
 public class MediaServiceImpl implements MediaService {
@@ -36,6 +40,12 @@ public class MediaServiceImpl implements MediaService {
     @Autowired
     GenreRepository genreRepository;
 
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    FirebaseService firebaseService;
+
     public MediaServiceImpl() { }
 
     public MediaServiceImpl(MediaRepository repository) {
@@ -48,6 +58,19 @@ public class MediaServiceImpl implements MediaService {
         aReview.setMediaReview(aMedia);
         aMedia.getReviews().add(aReview);
         repository.save(aMedia);
+
+    /*
+        subscribedMedia = firebaseService.get("subscribedMedia");
+        if ("media esta en la collection de subscribedMedia") {
+            String username = jwtTokenUtil.getUsernameFromToken(accessToken);
+            HashMap<String, Object> notification = new HashMap<>();
+            notification.put("reviewShortText", aReview.getShortText());
+            notification.put("reviewLongText", aReview.getLongText());
+            notification.put("reviewScore", aReview.getScore());
+            notification.put("author", username);
+            firebaseService.post("notifications", notification);
+        }
+     */
     }
 
     @Override
@@ -171,4 +194,12 @@ public class MediaServiceImpl implements MediaService {
         return mediaRedisDTO;
     }
 
+    @Override
+    public void subscribeForNotifications(long idMedia, String accessToken) throws ExecutionException, InterruptedException {
+        String username = jwtTokenUtil.getUsernameFromToken(accessToken);
+        HashMap<String, Object> subscription = new HashMap<>();
+        subscription.put("username", username);
+        subscription.put("mediaId", idMedia);
+        firebaseService.post("subscriptions", subscription);
+    }
 }
