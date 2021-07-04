@@ -2,11 +2,14 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ActorServiceImpl;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,6 +31,8 @@ public class ReviewServiceTestCase {
     //Services
     private static ReviewService reviewService;
     private static ReviewRepository reviewRepositoryMock;
+    private static ActorService actorService;
+    private static ActorRepository actorRepositoryMock;
 
     //Constants
     private static final Long REVIEW_ID = Long.valueOf(1);
@@ -41,10 +46,19 @@ public class ReviewServiceTestCase {
         reviewRepositoryMock = mock(ReviewRepository.class);
         reviewService = new ReviewServiceImpl(reviewRepositoryMock);
 
+        actorRepositoryMock = mock(ActorRepository.class);
+        actorService = new ActorServiceImpl(actorRepositoryMock);
+
         List<Genre> donnieDarkoGenres = new ArrayList<Genre>();
         donnieDarkoGenres.add(new Genre(SCIFI));
         donnieDarkoGenres.add(new Genre(DRAMA));
         donnieDarkoGenres.add(new Genre(MISTERY));
+
+        List<Actor> actorsDonnieDarko = new ArrayList<Actor>();
+        actorsDonnieDarko.add(new Actor("nm0000196", "Mike Myers"));
+        actorsDonnieDarko.add(new Actor("nm0000552", "Eddie Murphy"));
+        actorsDonnieDarko.add(new Actor("nm0001475", "John Lithgow"));
+        actorsDonnieDarko.add(new Actor("nm0000139", "Cameron Diaz"));
 
         donnieDarko = new Media(
                 "tt0246578",
@@ -55,7 +69,8 @@ public class ReviewServiceTestCase {
                 113,
                 MediaType.MOVIE,
                 null,
-                donnieDarkoGenres
+                donnieDarkoGenres,
+                actorsDonnieDarko
         );
     }
 

@@ -73,6 +73,12 @@ public class Media implements Serializable {
     @Setter
     private List<Genre> genres;
 
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Getter
+    @Setter
+    private List<Actor> actors;
+
     @OneToMany(mappedBy="mediaReview", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
@@ -82,7 +88,7 @@ public class Media implements Serializable {
 
     public Media(String idStringMedia, String primaryTitle, String originalTitle, Integer year,
                  Integer endYear, Integer runtimeMinutes, MediaType mediaType,
-                 List<Episode> episodes, List<Genre> genres) {
+                 List<Episode> episodes, List<Genre> genres, List<Actor> actors) {
         this.idStringMedia = idStringMedia;
         this.primaryTitle = primaryTitle;
         this.originalTitle = originalTitle;
@@ -91,6 +97,7 @@ public class Media implements Serializable {
         this.runtimeMinutes = runtimeMinutes;
         this.mediaType = mediaType;
         this.genres = genres;
+        this.actors = actors;
         this.reviews = new ArrayList<>();
     }
 }

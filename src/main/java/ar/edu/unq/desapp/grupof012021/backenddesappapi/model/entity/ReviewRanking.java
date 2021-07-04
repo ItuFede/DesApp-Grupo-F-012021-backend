@@ -23,7 +23,7 @@ public class ReviewRanking implements Serializable {
     private long id;
 
     @NotNull
-    @Column(name = "ranking")
+    @Column(name = "isPositiveVote")
     @Getter
     private boolean isPositiveVote;
 

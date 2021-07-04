@@ -1,17 +1,13 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -24,25 +20,34 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     @Column(nullable = false, length = 50, unique = true)
+    @Getter
     private String username;
 
+    @NotNull
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false, length = 10)
+    @JsonIgnore
     private String authority;
 
-    @OneToOne
+    @NotNull
+    @ManyToOne
     @JoinColumn(name = "platformTypeId", referencedColumnName = "id")
     private Platform platform;
 
+    @JsonIgnore
     @OneToMany
     private List<ReportMotive> reportMotives;
 
+    @JsonIgnore
     @OneToMany
     private List<ReportMotive> reviews;
 
+    @JsonIgnore
     @OneToMany
     private List<ReviewRanking> reviewRankings;
 

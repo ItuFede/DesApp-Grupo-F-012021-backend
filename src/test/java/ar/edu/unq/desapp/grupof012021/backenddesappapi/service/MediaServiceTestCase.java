@@ -48,7 +48,8 @@ public class MediaServiceTestCase {
                 113,
                 MediaType.MOVIE,
                 null,
-                donnieDarkoGenres
+                donnieDarkoGenres,
+                null
         );
 
         donnieDarko.setId(1);
@@ -62,7 +63,8 @@ public class MediaServiceTestCase {
                 false,
                 "ES_AR",
                 5.0,
-                donnieDarko
+                donnieDarko,
+                null
         );
 
         anotherReview = new Review(
@@ -74,7 +76,8 @@ public class MediaServiceTestCase {
                 false,
                 "ES_AR",
                 1.0,
-                donnieDarko
+                donnieDarko,
+                null
         );
     }
 

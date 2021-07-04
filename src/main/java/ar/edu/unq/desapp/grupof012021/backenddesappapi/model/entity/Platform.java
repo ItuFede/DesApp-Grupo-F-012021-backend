@@ -3,12 +3,8 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.PlatformType;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -25,7 +21,7 @@ public class Platform {
     @Getter
     private PlatformType platformType;
 
-    @OneToOne(mappedBy = "platform")
+    @ManyToOne
     private UserEntity userEntity;
 
     public Platform(String platformName) throws Exception {
