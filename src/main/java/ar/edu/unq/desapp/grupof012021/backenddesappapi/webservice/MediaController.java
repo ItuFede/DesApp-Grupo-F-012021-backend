@@ -10,12 +10,14 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/media")
 public class MediaController {
 
@@ -32,9 +34,9 @@ public class MediaController {
     }
 
     @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable String idStringMedia, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) {
-        List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idStringMedia, offset, limit);
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable String idStringMedia, @RequestParam(value = "offset", defaultValue = "1") @Min(1) int offset, @RequestParam(value = "limit", defaultValue = "1") @Min(0) int limit) {
+            List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idStringMedia, offset, limit);
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{idMedia}/review", method = RequestMethod.POST)
