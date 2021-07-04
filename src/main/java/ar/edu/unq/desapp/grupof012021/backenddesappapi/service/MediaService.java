@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface MediaService {
 
@@ -21,4 +22,6 @@ public interface MediaService {
     List<Media> findAllMediaFilter(MediaDTO mediaDTO, int offset, int limit) throws Exception;
 
     MediaRedisDTO findMediaRedis(String idStringMedia);
+
+    void subscribeForNotifications(long idMedia, String accessToken) throws ExecutionException, InterruptedException;
 }

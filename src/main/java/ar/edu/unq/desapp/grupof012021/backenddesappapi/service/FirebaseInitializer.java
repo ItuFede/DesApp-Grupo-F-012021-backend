@@ -13,7 +13,7 @@ public class FirebaseInitializer {
     @PostConstruct
     public void initialize() {
         try {
-            FileInputStream refreshToken = new FileInputStream("./../../resources/firebaseServiceAccount.json");
+            FileInputStream refreshToken = new FileInputStream("./src/main/resources/firebaseServiceAccount.json");
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(refreshToken))
