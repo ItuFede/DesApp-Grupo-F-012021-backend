@@ -48,7 +48,8 @@ public class MediaServiceTestCase {
                 113,
                 MediaType.MOVIE,
                 null,
-                donnieDarkoGenres
+                donnieDarkoGenres,
+                null
         );
 
         donnieDarko.setId(1);
