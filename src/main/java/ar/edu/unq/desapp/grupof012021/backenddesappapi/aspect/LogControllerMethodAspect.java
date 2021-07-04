@@ -1,9 +1,11 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.aspect;
 
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.FirebaseService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,12 +16,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Aspect
 @Component
 @Order(0)
 public class LogControllerMethodAspect {
+
+    @Autowired
+    FirebaseService firebaseService;
 
     @Around("execution(* ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice..*(..))")
     public Object logMethodCall(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -51,6 +57,24 @@ public class LogControllerMethodAspect {
                 ", executed in " + execTime + "ms, called by user: \"" +
                 username + "\", called with: " + argsParams;
         System.out.println(log);
+        if (username != "NOT AUTHENTICATED") {
+            this.generateMetric(log, username);
+        }
+    }
+
+    private void generateMetric(String log, String username) {
+        HashMap<String, Object> metric = new HashMap<>();
+        metric.put("log", log);
+        metric.put("user", username);
+        try {
+            firebaseService.post("metrics", metric);
+        } catch (Exception e) {
+            String errTimestamp = this.getCurrentTime();
+            String firePostLog = "[" + errTimestamp + "] [FAILED] [Firebase] failed to post metric to metrics collection. Original log: {{{ " +
+            log + " }}}";
+            System.out.println(firePostLog);
+            e.printStackTrace();
+        }
     }
 
     private String getCurrentTime() {
