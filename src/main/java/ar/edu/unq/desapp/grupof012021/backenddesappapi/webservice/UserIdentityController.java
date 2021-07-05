@@ -54,9 +54,9 @@ public class UserIdentityController {
             userIdentityService.register(userRegisterCredentialsDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("");
         } catch (Exception err) {
-            if (err.getMessage() == "Invalid platform name.")
+            if (err.getMessage().equals("Invalid platform name."))
                 return ResponseEntity.status(402).body("Invalid platform name.");
-            if (err.getCause().getMessage() == "could not execute statement")
+            if (err.getCause().getMessage().equals("could not execute statement"))
                 return ResponseEntity.status(400).body("Username already exists.");
             else
                 err.printStackTrace();

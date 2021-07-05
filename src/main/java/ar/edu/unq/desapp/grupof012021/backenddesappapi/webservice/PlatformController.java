@@ -18,7 +18,7 @@ public class PlatformController {
     private PlatformService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    ResponseEntity<?> getPlatforms() {
+    public ResponseEntity<?> getPlatforms() {
         try {
             Collection<Platform> platforms = this.service.findAll();
             return ResponseEntity.ok(platforms);

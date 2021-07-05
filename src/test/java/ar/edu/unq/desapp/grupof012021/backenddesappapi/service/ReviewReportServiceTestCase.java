@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReportRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;

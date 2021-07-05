@@ -23,10 +23,10 @@ import javax.validation.constraints.NotNull;
 public class ReviewController {
 
     @Autowired
-    ReviewService reviewService;
+    private ReviewService reviewService;
 
     @Autowired
-    ReviewReportService reviewReportService;
+    private ReviewReportService reviewReportService;
 
     @RequestMapping(value = "{idReview}/upvote", method = RequestMethod.POST)
     public ResponseEntity<?> upvote(@PathVariable @Min(1) long idReview) {

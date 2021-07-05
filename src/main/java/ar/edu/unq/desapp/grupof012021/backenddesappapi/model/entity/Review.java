@@ -70,7 +70,7 @@ public class Review implements Serializable {
     @JoinColumn(name = "idMedia", referencedColumnName = "id")
     @Setter
     @Getter
-    Media mediaReview;
+    private Media mediaReview;
 
     @OneToMany(mappedBy="review_reviewRanking")
     @Getter

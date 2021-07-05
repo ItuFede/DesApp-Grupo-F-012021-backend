@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class LogControllerMethodAspect {
 
     @Autowired
-    FirebaseService firebaseService;
+    private FirebaseService firebaseService;
 
     @Around("execution(* ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice..*(..))")
     public Object logMethodCall(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -108,7 +108,7 @@ public class LogControllerMethodAspect {
             methodArguments[0] += "(" + argParam.get("type") + ") " + argParam.get("param") + " ${ " + argParam.get("arg") + " }; ";
         });
 
-        if (methodArguments[0] == "") {
+        if (methodArguments[0].equals("")) {
             return "NO ARGUMENTS";
         } else {
             return methodArguments[0];
