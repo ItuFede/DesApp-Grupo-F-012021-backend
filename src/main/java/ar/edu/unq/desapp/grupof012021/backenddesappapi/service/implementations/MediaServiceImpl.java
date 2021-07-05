@@ -7,22 +7,21 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewFilterDTO
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.FirebaseService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import javax.persistence.Query;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -33,7 +32,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service("mediaService")
 public class MediaServiceImpl implements MediaService {

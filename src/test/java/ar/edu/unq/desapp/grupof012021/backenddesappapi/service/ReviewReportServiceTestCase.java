@@ -10,7 +10,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.R
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 import static org.mockito.Mockito.mock;
 
 public class ReviewReportServiceTestCase {

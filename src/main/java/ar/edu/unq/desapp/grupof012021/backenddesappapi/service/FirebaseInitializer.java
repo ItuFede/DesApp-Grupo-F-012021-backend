@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
-import com.google.api.client.json.Json;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -11,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 
 @Service
 public class FirebaseInitializer {

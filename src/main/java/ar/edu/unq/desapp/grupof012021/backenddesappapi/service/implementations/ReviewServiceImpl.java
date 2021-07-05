@@ -9,7 +9,6 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReposit
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
-import com.google.api.client.json.webtoken.JsonWebToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +21,10 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Autowired
-    private UserEntityRepository userEntityRepository;
+    private final UserEntityRepository userEntityRepository;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public ReviewServiceImpl(ReviewRepository reviewRepositoryMock, UserEntityRepository userEntityRepository, JwtTokenUtil jwtTokenUtil) {
         this.reviewRepository = reviewRepositoryMock;

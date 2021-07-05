@@ -28,13 +28,16 @@ public class Platform {
         switch (platformName) {
             case "Netflix": {
                 this.platformType = PlatformType.NETFLIX;
-            }; break;
+            }
+            break;
             case "Amazon Prime": {
                 this.platformType = PlatformType.AMAZON_PRIME;
-            }; break;
+            }
+            break;
             case "Disney Plus": {
                 this.platformType = PlatformType.DISNEY_PLUS;
-            }; break;
+            }
+            break;
             default: {
                 throw new Exception("Invalid platform name.");
             }

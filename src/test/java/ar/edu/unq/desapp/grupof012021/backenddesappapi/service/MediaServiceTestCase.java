@@ -2,9 +2,9 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
@@ -17,12 +17,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.MISTERY;
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.SCIFI;
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.DRAMA;
+import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
