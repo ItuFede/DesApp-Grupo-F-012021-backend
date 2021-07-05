@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaRedisDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewFilterDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
@@ -93,7 +94,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public List<Review> findAllReviewsFilter(ReviewDTO reviewDTO, String idStringMedia, int offset, int limit) {
+    public List<Review> findAllReviewsFilter(ReviewFilterDTO reviewFilterDTO, String idStringMedia, int offset, int limit) {
 
         long idMedia = repository.findByIdStringMedia(idStringMedia).getId();
 
@@ -105,25 +106,25 @@ public class MediaServiceImpl implements MediaService {
 
         predicates.add(cb.equal(reviewRoot.get("mediaReview"), idMedia));
 
-        if (reviewDTO.isPremium){
+        if (reviewFilterDTO.isPremium){
             predicates.add(cb.isTrue(reviewRoot.get("isPremium")));
         }
-        if (reviewDTO.originalPlatform != null){
-            predicates.add(cb.equal(reviewRoot.get("originalPlatform"), reviewDTO.originalPlatform));
+        if (reviewFilterDTO.originalPlatform != null){
+            predicates.add(cb.equal(reviewRoot.get("originalPlatform"), reviewFilterDTO.originalPlatform));
         }
-        if (reviewDTO.region != null){
-            predicates.add(cb.equal(reviewRoot.get("region"), reviewDTO.region));
+        if (reviewFilterDTO.region != null){
+            predicates.add(cb.equal(reviewRoot.get("region"), reviewFilterDTO.region));
         }
-        if (reviewDTO.language != null){
-            predicates.add(cb.equal(reviewRoot.get("language"), reviewDTO.language));
+        if (reviewFilterDTO.language != null){
+            predicates.add(cb.equal(reviewRoot.get("language"), reviewFilterDTO.language));
         }
-        if (reviewDTO.hasSpoilers){
+        if (reviewFilterDTO.hasSpoilers){
             predicates.add(cb.isTrue(reviewRoot.get("hasSpoilers")));
 
         }
-        if (validOrderType(reviewDTO.isOrdererType)){
-            String orderBy = reviewDTO.isOrdererType == "score" ? "score" : "date";
-            if(reviewDTO.isOrderAsc){
+        if (validOrderType(reviewFilterDTO.isOrdererType)){
+            String orderBy = reviewFilterDTO.isOrdererType == "score" ? "score" : "date";
+            if(reviewFilterDTO.isOrderAsc){
                 cq.orderBy(cb.asc(reviewRoot.get(orderBy)));
             }
             else{

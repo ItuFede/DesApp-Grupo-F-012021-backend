@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.webservice;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaRedisDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewFilterDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/media/")
+@RequestMapping("/media")
 @Validated
 public class MediaController {
 
@@ -35,9 +36,9 @@ public class MediaController {
     }
 
     @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviewsFromMedia(@Valid @RequestBody ReviewDTO reviewDTO, @PathVariable String idStringMedia, @RequestParam(value = "offset", defaultValue = "1") @Min(1) int offset, @RequestParam(value = "limit", defaultValue = "1") @Min(0) int limit) {
-            List<Review> reviews = mediaService.findAllReviewsFilter(reviewDTO, idStringMedia, offset, limit);
-            return new ResponseEntity<>(reviews, HttpStatus.OK);
+    public ResponseEntity<List<Review>> getReviewsFromMedia(@RequestBody ReviewFilterDTO reviewFilterDTO, @PathVariable String idStringMedia, @RequestParam(value = "offset", defaultValue = "1") @Min(1) int offset, @RequestParam(value = "limit", defaultValue = "1") @Min(0) int limit) {
+        List<Review> reviews = mediaService.findAllReviewsFilter(reviewFilterDTO, idStringMedia, offset, limit);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.POST)
