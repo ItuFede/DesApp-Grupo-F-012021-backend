@@ -17,4 +17,8 @@ public class PlatformServiceImpl implements PlatformService {
     public Collection<Platform> findAll() {
         return this.repository.findAll();
     }
+
+    public PlatformServiceImpl(PlatformRepository platformRepository) {
+        this.repository = platformRepository;
+    }
 }

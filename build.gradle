@@ -85,5 +85,6 @@ jacocoTestReport {
 			.filter({file -> !file.name.contains('SwaggerConfig')})
 			.filter({file -> !file.name.contains('Exception')})
 			.filter({file -> !file.name.contains('FirebaseInitializer')})
+			.filter({file -> !file.name.contains('FirebaseServiceImpl')})
 	)
 }
