@@ -38,10 +38,11 @@ public class MediaController {
     }
 
     @RequestMapping(value = "{idMedia}/review", method = RequestMethod.POST)
-    public ResponseEntity<?> addReviewsToMedia(@PathVariable long idMedia, @RequestBody ReviewDTO reviewDTO) {
+
+    public ResponseEntity<?> addReviewsToMedia(@PathVariable String idMedia, @RequestBody ReviewDTO reviewDTO, @RequestHeader(value="Authorization") String token) {
         try {
-            Review addReview = reviewService.createTemporalReview(reviewDTO, mediaService.findById(idMedia));
-            mediaService.addReviewTo(idMedia, addReview);
+            Review addReview = reviewService.createTemporalReview(reviewDTO, mediaService.findByStringId(idMedia));
+            mediaService.addReviewTo(idMedia, addReview, token.replace("Bearer ", ""));
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
@@ -55,7 +56,7 @@ public class MediaController {
     }
 
     @RequestMapping(value = "{idMedia}/subscribe", method = RequestMethod.POST)
-    public ResponseEntity<?> subscribeForNotifications(@PathVariable long idMedia, @RequestHeader(value="Authorization") String token) {
+    public ResponseEntity<?> subscribeForNotifications(@PathVariable String idMedia, @RequestHeader(value="Authorization") String token) {
         try {
             mediaService.subscribeForNotifications(idMedia, token);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

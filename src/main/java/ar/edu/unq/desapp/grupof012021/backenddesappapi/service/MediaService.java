@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface MediaService {
 
-    void addReviewTo(long id, Review aReview);
+    void addReviewTo(String id, Review aReview, String accessToken) throws ExecutionException, InterruptedException;
 
     List<Review> findAllReviewsFrom(long idMedia);
 
@@ -19,9 +19,12 @@ public interface MediaService {
 
     Media findById(long mediaId);
 
+    Media findByStringId(String mediaId);
+
     List<Media> findAllMediaFilter(MediaDTO mediaDTO, int offset, int limit) throws Exception;
 
     MediaRedisDTO findMediaRedis(String idStringMedia);
 
-    void subscribeForNotifications(long idMedia, String accessToken) throws ExecutionException, InterruptedException;
+    void subscribeForNotifications(String idMedia, String accessToken) throws ExecutionException, InterruptedException;
+
 }

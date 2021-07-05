@@ -12,6 +12,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaReposito
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.FirebaseService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service("mediaService")
 public class MediaServiceImpl implements MediaService {
@@ -53,24 +56,22 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public void addReviewTo(long mediaId, Review aReview) {
-        Media aMedia = this.findById(mediaId);
+    public void addReviewTo(String mediaId, Review aReview, String accessToken) throws ExecutionException, InterruptedException {
+        Media aMedia = this.findByStringId(mediaId);
         aReview.setMediaReview(aMedia);
         aMedia.getReviews().add(aReview);
-        repository.save(aMedia);
+//        repository.save(aMedia);
 
-    /*
-        subscribedMedia = firebaseService.get("subscribedMedia");
-        if ("media esta en la collection de subscribedMedia") {
+        if (this.isSubscribedForNotifications(mediaId)) {
             String username = jwtTokenUtil.getUsernameFromToken(accessToken);
             HashMap<String, Object> notification = new HashMap<>();
             notification.put("reviewShortText", aReview.getShortText());
             notification.put("reviewLongText", aReview.getLongText());
             notification.put("reviewScore", aReview.getScore());
             notification.put("author", username);
+            notification.put("mediaId", mediaId);
             firebaseService.post("notifications", notification);
         }
-     */
     }
 
     @Override
@@ -135,6 +136,10 @@ public class MediaServiceImpl implements MediaService {
         return repository.findById(mediaId);
     }
 
+    public Media findByStringId(String mediaId) {
+        return repository.findByIdStringMedia(mediaId);
+    }
+
     @Override
     public List<Media> findAllMediaFilter(MediaDTO mediaDTO, int offset, int limit) throws Exception {
 
@@ -195,11 +200,18 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public void subscribeForNotifications(long idMedia, String accessToken) throws ExecutionException, InterruptedException {
-        String username = jwtTokenUtil.getUsernameFromToken(accessToken);
+    public void subscribeForNotifications(String idMedia, String accessToken) throws ExecutionException, InterruptedException {
+        String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
         HashMap<String, Object> subscription = new HashMap<>();
         subscription.put("username", username);
         subscription.put("mediaId", idMedia);
         firebaseService.post("subscriptions", subscription);
+    }
+
+    private boolean isSubscribedForNotifications(String mediaId) throws ExecutionException, InterruptedException {
+        List<QueryDocumentSnapshot> subscriptions = firebaseService.get("subscriptions");
+        List<Object> mediaIds = subscriptions.stream().map((sub) -> sub.get("mediaId")).collect(Collectors.toList());
+        Boolean result = mediaIds.contains(mediaId);
+        return result;
     }
 }
