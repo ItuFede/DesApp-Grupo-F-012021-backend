@@ -55,13 +55,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
             .and();
 
+        http.headers().frameOptions().disable();
+
         http.authorizeRequests()
             .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
             .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
+            .antMatchers(HttpMethod.POST,"/h2-console/**").permitAll()
             .antMatchers(HttpMethod.GET, "/platform").permitAll()
             .antMatchers(HttpMethod.GET, "/health").permitAll()
             .antMatchers(HttpMethod.GET, "/health/error").permitAll()
-            .antMatchers(HttpMethod.GET, "/swagger-ui.html/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/swagger-ui.html/**", "/configuration/**", "/swagger-resources/**", "/v2/api-docs","/webjars/**", "/h2-console/**").permitAll()
             .anyRequest().authenticated();
 
         // Add JWT token filter
