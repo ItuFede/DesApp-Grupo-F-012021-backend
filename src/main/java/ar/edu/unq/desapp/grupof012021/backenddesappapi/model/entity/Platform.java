@@ -3,8 +3,12 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.PlatformType;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity

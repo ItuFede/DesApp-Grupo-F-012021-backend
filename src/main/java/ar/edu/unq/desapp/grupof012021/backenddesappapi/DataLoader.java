@@ -1,9 +1,22 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
+
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Platform;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.ReportMotive;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.*;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.PlatformRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReportRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
