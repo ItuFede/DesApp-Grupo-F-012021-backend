@@ -27,8 +27,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepositoryMock) {
+    public ReviewServiceImpl(ReviewRepository reviewRepositoryMock, UserEntityRepository userEntityRepository, JwtTokenUtil jwtTokenUtil) {
         this.reviewRepository = reviewRepositoryMock;
+        this.userEntityRepository = userEntityRepository;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     public Review getReviewById(long reviewId) {

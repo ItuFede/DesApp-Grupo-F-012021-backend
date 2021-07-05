@@ -1,10 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto;
 
-import lombok.Data;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ReviewDTO {

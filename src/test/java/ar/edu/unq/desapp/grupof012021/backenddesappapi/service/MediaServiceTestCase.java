@@ -1,12 +1,17 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.MediaServiceImpl;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,7 +29,13 @@ import static org.mockito.Mockito.times;
 public class MediaServiceTestCase {
 
     private static MediaService mediaService;
-    private static MediaRepository repositoryMock;
+    private static MediaRepository mediaRepositoryMock;
+
+    private static ReviewService reviewService;
+    private static ReviewRepository reviewRepositoryMock;
+    private static UserEntityRepository userEntityRepositoryMock;
+    private static JwtTokenUtil jwtTokenUtilMock;
+
     private static Media donnieDarko;
 
     private static Review aReview;
@@ -32,8 +43,15 @@ public class MediaServiceTestCase {
 
     @BeforeAll
     public static void setUp() {
-        repositoryMock = mock(MediaRepository.class);
-        mediaService = new MediaServiceImpl(repositoryMock);
+
+        reviewRepositoryMock = mock(ReviewRepository.class);
+        userEntityRepositoryMock = mock(UserEntityRepository.class);
+        jwtTokenUtilMock = mock(JwtTokenUtil.class);
+        reviewService = new ReviewServiceImpl(reviewRepositoryMock, userEntityRepositoryMock, jwtTokenUtilMock);
+
+        mediaRepositoryMock = mock(MediaRepository.class);
+        mediaService = new MediaServiceImpl(mediaRepositoryMock, reviewService, jwtTokenUtilMock);
+
         List<Genre> donnieDarkoGenres = new ArrayList<Genre>();
         donnieDarkoGenres.add(new Genre(SCIFI));
         donnieDarkoGenres.add(new Genre(DRAMA));
@@ -88,20 +106,26 @@ public class MediaServiceTestCase {
 
     @Test
     public void givenMedia_whenAddReviewById_mediaHasReview() {
-        Review unaReview = ReviewDataHelper.getReview();
-        Mockito.when(repositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
-        //mediaService.addReviewTo(donnieDarko.getId(), unaReview);
+        ReviewDTO unaReviewDTO = ReviewDataHelper.getReviewDTO("Good movie");
+        Mockito.when(mediaRepositoryMock.findByIdStringMedia(donnieDarko.getIdStringMedia())).thenReturn(donnieDarko);
 
-        Mockito.verify(repositoryMock, times(1)).save(donnieDarko);
+        mediaService.addReviewTo(donnieDarko.getIdStringMedia(), unaReviewDTO, "");
+
+        Mockito.verify(mediaRepositoryMock, times(1)).save(donnieDarko);
         Assertions.assertThat(donnieDarko.getReviews().size()).isEqualTo(1);
     }
 
     @Test
     public void givenMedia_whenSearchingForReviews_findAllReviewsByMediaId() {
-        Mockito.when(repositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
+        ReviewDTO unaReviewDTO = ReviewDataHelper.getReviewDTO("test1");
+        ReviewDTO otraReviewDTO = ReviewDataHelper.getReviewDTO("test2");
 
-        //mediaService.addReviewTo(donnieDarko.getId(), aReview);
-        //mediaService.addReviewTo(donnieDarko.getId(), anotherReview);
+        Mockito.when(mediaRepositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
+        Mockito.when(mediaRepositoryMock.findByIdStringMedia(donnieDarko.getIdStringMedia())).thenReturn(donnieDarko);
+
+
+        mediaService.addReviewTo(donnieDarko.getIdStringMedia(), unaReviewDTO, "");
+        mediaService.addReviewTo(donnieDarko.getIdStringMedia(), otraReviewDTO, "");
 
         List<Review> allReviews = mediaService.findAllReviewsFrom(donnieDarko.getId());
         Assertions.assertThat(allReviews.size()).isEqualTo(2);
@@ -110,6 +134,6 @@ public class MediaServiceTestCase {
     @AfterEach
     public void teardown() {
         donnieDarko.setReviews(new ArrayList<Review>());
-        Mockito.reset(repositoryMock);
+        Mockito.reset(mediaRepositoryMock);
     }
 }

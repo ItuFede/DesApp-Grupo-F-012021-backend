@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReportRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewReportServiceImpl;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,14 +21,17 @@ public class ReviewReportServiceTestCase {
     private static ReviewReportService reviewReportService;
     private static ReviewReportRepository reviewReportRepositoryMock;
     private static UserEntityRepository userEntityRepositoryMock;
+    private static JwtTokenUtil jwtTokenUtilMock;
 
     @BeforeAll
     public static void setUp()
     {
-        reviewRepositoryMock = mock(ReviewRepository.class);
-        reviewService = new ReviewServiceImpl(reviewRepositoryMock);
-        reviewReportRepositoryMock = mock(ReviewReportRepository.class);
         userEntityRepositoryMock = mock(UserEntityRepository.class);
+        reviewRepositoryMock = mock(ReviewRepository.class);
+        reviewReportRepositoryMock = mock(ReviewReportRepository.class);
+        jwtTokenUtilMock = mock(JwtTokenUtil.class);
+
+        reviewService = new ReviewServiceImpl(reviewRepositoryMock, userEntityRepositoryMock, jwtTokenUtilMock);
         reviewReportService = new ReviewReportServiceImpl(reviewRepositoryMock, reviewReportRepositoryMock, userEntityRepositoryMock);
     }
 

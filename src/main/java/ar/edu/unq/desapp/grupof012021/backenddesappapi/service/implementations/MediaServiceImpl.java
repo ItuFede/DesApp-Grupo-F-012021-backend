@@ -58,6 +58,12 @@ public class MediaServiceImpl implements MediaService {
         this.repository = repository;
     }
 
+    public MediaServiceImpl(MediaRepository repository, ReviewService reviewService, JwtTokenUtil jwtTokenUtil) {
+        this.repository = repository;
+        this.reviewService = reviewService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
     @Override
     public void addReviewTo(String idMediaString, ReviewDTO reviewDTO, String accessToken) {
         Review aReview = reviewService.createReview(reviewDTO, accessToken);
