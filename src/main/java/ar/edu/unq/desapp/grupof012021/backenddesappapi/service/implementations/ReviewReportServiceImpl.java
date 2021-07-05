@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewReportRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class ReviewReportServiceImpl implements ReviewReportService {
     @Autowired
     private final UserEntityRepository userEntityRepository;
 
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
     public ReviewReportServiceImpl(ReviewRepository reviewRepository, ReviewReportRepository reviewReportRepository, UserEntityRepository userEntityRepository) {
         this.reviewRepository = reviewRepository;
         this.reviewReportRepository = reviewReportRepository;
@@ -34,9 +38,11 @@ public class ReviewReportServiceImpl implements ReviewReportService {
     }
 
     @Override
-    public void reportReview(long reviewId, String reportMotiveText, long userId) {
+    public void reportReview(long reviewId, String reportMotiveText, String accessToken) {
         Review review = reviewRepository.findById(reviewId);
-        UserEntity userEntity = userEntityRepository.findById(userId);
+        String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
+        UserEntity userEntity = userEntityRepository.findByUsername(username);
+
         ReportMotive reportMotive = new ReportMotive(reportMotiveText, review, userEntity);
         reviewReportRepository.save(reportMotive);
     }

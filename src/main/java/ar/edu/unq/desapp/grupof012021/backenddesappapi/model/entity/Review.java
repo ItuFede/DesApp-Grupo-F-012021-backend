@@ -88,9 +88,11 @@ public class Review implements Serializable {
     @Getter
     private String region;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_entity_id", referencedColumnName = "id")
     @Getter
+    @Setter
     private UserEntity userEntity;
 
     public Review()

@@ -14,4 +14,6 @@ public interface ReviewService
     void downvoteReview(long reviewId);
 
     Review createTemporalReview(ReviewDTO reviewDTO, Media media);
+
+    Review createReview(ReviewDTO reviewDTO, String accessToken);
 }

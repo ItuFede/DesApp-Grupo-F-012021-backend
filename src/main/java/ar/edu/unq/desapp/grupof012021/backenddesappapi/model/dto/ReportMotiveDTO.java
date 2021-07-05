@@ -10,6 +10,8 @@ public class ReportMotiveDTO {
     @NotNull(message = "reviewReportText can't be null")
     String reviewReportText;
 
+    /*
     @NotNull(message = "userId can't be null")
     String userId;
+    */
 }

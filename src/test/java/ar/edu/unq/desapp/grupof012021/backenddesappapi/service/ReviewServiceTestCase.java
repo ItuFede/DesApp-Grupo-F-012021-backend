@@ -9,6 +9,8 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ActorServiceImpl;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -33,6 +35,8 @@ public class ReviewServiceTestCase {
     private static ReviewRepository reviewRepositoryMock;
     private static ActorService actorService;
     private static ActorRepository actorRepositoryMock;
+    private static UserEntityRepository userEntityRepositoryMock;
+    private static JwtTokenUtil jwtTokenUtilMock;
 
     //Constants
     private static final Long REVIEW_ID = Long.valueOf(1);
@@ -44,7 +48,9 @@ public class ReviewServiceTestCase {
     public static void setUp()
     {
         reviewRepositoryMock = mock(ReviewRepository.class);
-        reviewService = new ReviewServiceImpl(reviewRepositoryMock);
+        userEntityRepositoryMock = mock(UserEntityRepository.class);
+        jwtTokenUtilMock = mock(JwtTokenUtil.class);
+        reviewService = new ReviewServiceImpl(reviewRepositoryMock, userEntityRepositoryMock, jwtTokenUtilMock);
 
         actorRepositoryMock = mock(ActorRepository.class);
         actorService = new ActorServiceImpl(actorRepositoryMock);
