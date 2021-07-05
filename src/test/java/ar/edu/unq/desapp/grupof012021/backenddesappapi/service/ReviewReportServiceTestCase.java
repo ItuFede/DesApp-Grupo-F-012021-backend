@@ -36,7 +36,7 @@ public class ReviewReportServiceTestCase {
 
     @Test
     public void reviewWithoutReports_reportReview_reviewWithReport() {
-        Review review = ReviewDataHelper.getReview();
+        //Review review = ReviewDataHelper.getReview();
         //Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
         //reviewReportService.reportReview(review.getId(), "Didn't like the review", "0");

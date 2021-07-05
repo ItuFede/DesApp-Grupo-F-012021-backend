@@ -12,7 +12,7 @@ import java.util.Collection;
 public class PlatformServiceImpl implements PlatformService {
 
     @Autowired
-    PlatformRepository repository;
+    private PlatformRepository repository;
 
     public Collection<Platform> findAll() {
         return this.repository.findAll();

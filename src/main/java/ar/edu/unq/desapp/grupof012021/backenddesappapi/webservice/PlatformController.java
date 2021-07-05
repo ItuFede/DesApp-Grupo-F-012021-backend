@@ -15,7 +15,7 @@ import java.util.Collection;
 public class PlatformController {
 
     @Autowired
-    PlatformService service;
+    private PlatformService service;
 
     @RequestMapping(method = RequestMethod.GET)
     ResponseEntity<?> getPlatforms() {

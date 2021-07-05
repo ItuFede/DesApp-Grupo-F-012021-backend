@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class ReportMotiveDTO {
 
     @NotNull(message = "reviewReportText can't be null")
-    String reviewReportText;
+    private String reviewReportText;
 
     /*
     @NotNull(message = "userId can't be null")

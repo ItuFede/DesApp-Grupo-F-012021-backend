@@ -29,7 +29,7 @@ public class ReviewReportServiceImpl implements ReviewReportService {
     private final UserEntityRepository userEntityRepository;
 
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
 
     public ReviewReportServiceImpl(ReviewRepository reviewRepository, ReviewReportRepository reviewReportRepository, UserEntityRepository userEntityRepository) {
         this.reviewRepository = reviewRepository;

@@ -40,19 +40,19 @@ public class MediaServiceImpl implements MediaService {
     private EntityManager entityManager;
 
     @Autowired
-    MediaRepository repository;
+    private MediaRepository repository;
 
     @Autowired
-    GenreRepository genreRepository;
+    private GenreRepository genreRepository;
 
     @Autowired
-    ReviewService reviewService;
+    private ReviewService reviewService;
 
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    FirebaseService firebaseService;
+    private FirebaseService firebaseService;
 
     public MediaServiceImpl() { }
 

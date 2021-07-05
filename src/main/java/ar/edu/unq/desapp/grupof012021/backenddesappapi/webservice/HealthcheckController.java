@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/health")
 public class HealthcheckController {
+
     @Autowired
-    FirebaseServiceImpl firebaseService;
+    private FirebaseServiceImpl firebaseService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> health() {

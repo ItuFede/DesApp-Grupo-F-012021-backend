@@ -96,15 +96,21 @@ public class Media implements Serializable {
     public Media(String idStringMedia, String primaryTitle, String originalTitle, Integer year,
                  Integer endYear, Integer runtimeMinutes, MediaType mediaType,
                  List<Episode> episodes, List<Genre> genres, List<Actor> actors) {
+
+        ArrayList<Episode> episodesList = new ArrayList<Episode>();
+        if (episodes != null)
+            episodesList.addAll(episodes);
+
         this.idStringMedia = idStringMedia;
         this.primaryTitle = primaryTitle;
         this.originalTitle = originalTitle;
         this.year = year;
-        this.endYear = year;
+        this.endYear = endYear;
         this.runtimeMinutes = runtimeMinutes;
         this.mediaType = mediaType;
         this.genres = genres;
         this.actors = actors;
         this.reviews = new ArrayList<>();
+        this.episodes = episodesList;
     }
 }

@@ -101,16 +101,16 @@ public class Review implements Serializable {
     @Setter
     private UserEntity userEntity;
 
+    @NotNull
+    @Column(name = "score")
+    @Getter
+    private Double score;
+
     public Review()
     {
         this.reviewRankings = new ArrayList<ReviewRanking>();
         this.reportMotives = new ArrayList<ReportMotive>();
     }
-    
-    @NotNull
-    @Column(name = "score")
-    @Getter
-    private Double score;
 
     public Review(String shortText, String longText,
                   String originalPlatform, String language, boolean isCritic,

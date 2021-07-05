@@ -57,7 +57,7 @@ public class LogControllerMethodAspect {
                 ", executed in " + execTime + "ms, called by user: \"" +
                 username + "\", called with: " + argsParams;
         System.out.println(log);
-        if (username != "NOT AUTHENTICATED") {
+        if (!username.equals("NOT AUTHENTICATED")) {
             this.generateMetric(log, username);
         }
     }

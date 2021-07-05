@@ -15,10 +15,10 @@ import java.util.Optional;
 public class UserEntityServiceImpl implements UserEntityService {
 
     @Autowired
-    UserEntityRepository repository;
+    private UserEntityRepository repository;
 
     @Autowired
-    PlatformRepository platformRepository;
+    private PlatformRepository platformRepository;
 
     public Optional<UserEntity> findByUsername(String username) {
         return repository.findUserEntityByUsername(username);
