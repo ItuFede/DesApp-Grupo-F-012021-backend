@@ -44,7 +44,8 @@ public class Platform {
         }
     }
 
-    public Platform() { }
+    public Platform() {
+    }
 
     public String getName() {
         return this.platformType.platformString;

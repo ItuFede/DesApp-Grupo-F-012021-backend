@@ -68,7 +68,7 @@ public class DataLoader implements ApplicationRunner {
         logger.info("DataLoader Success");
     }
 
-    private void addActor(){
+    private void addActor() {
         List<Actor> actors = new ArrayList<Actor>();
         //DONNIE DARKO
         actors.add(new Actor("nm0350453", "Jake Gyllenhaal"));
@@ -84,7 +84,7 @@ public class DataLoader implements ApplicationRunner {
         logger.info("Actors added");
     }
 
-    private void addGenre(){
+    private void addGenre() {
         List<Genre> genres = new ArrayList<Genre>();
         genres.add(new Genre(ACTION));
         genres.add(new Genre(COMEDY));
@@ -98,7 +98,7 @@ public class DataLoader implements ApplicationRunner {
         genreRepository.saveAll(genres);
     }
 
-    private void addMedia(){
+    private void addMedia() {
         List<Genre> genresDonnieDarko = new ArrayList<Genre>();
         genresDonnieDarko.add(genreRepository.findByGenreName(DRAMA));
         genresDonnieDarko.add(genreRepository.findByGenreName(MISTERY));
@@ -151,9 +151,9 @@ public class DataLoader implements ApplicationRunner {
         logger.info("Media name: {}", mediaRepository.findById(shrekMedia.getId()).getId());
     }
 
-    private void addReviewDonnieDarko(String numberReview){
+    private void addReviewDonnieDarko(String numberReview) {
         Media donnieDarkoMedia = mediaRepository.findByIdStringMedia("tt0246578");
-        List<Review> reviews =donnieDarkoMedia.getReviews();
+        List<Review> reviews = donnieDarkoMedia.getReviews();
 
         UserEntity userEntity = userEntityRepository.findByUsername("Pepe");
 
@@ -174,7 +174,7 @@ public class DataLoader implements ApplicationRunner {
         mediaRepository.save(donnieDarkoMedia);
     }
 
-    private void addReviewShrek(){
+    private void addReviewShrek() {
         Media shrekMedia = mediaRepository.findByIdStringMedia("tt0126029");
         List<Review> reviews = shrekMedia.getReviews();
 
@@ -197,7 +197,7 @@ public class DataLoader implements ApplicationRunner {
         mediaRepository.save(shrekMedia);
     }
 
-    private void addReportMotive(){
+    private void addReportMotive() {
         Review donnieDarkoReview = reviewRepository.findAll().iterator().next();
         UserEntity userEntity = userEntityRepository.findByUsername("Pepe");
 
@@ -217,7 +217,7 @@ public class DataLoader implements ApplicationRunner {
         platformRepository.saveAll(platforms);
     }
 
-    private  void addUser() throws Exception {
+    private void addUser() throws Exception {
         UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO();
         userCredentialsDTO.setUsername("Pepe");
         userCredentialsDTO.setPassword("1234");

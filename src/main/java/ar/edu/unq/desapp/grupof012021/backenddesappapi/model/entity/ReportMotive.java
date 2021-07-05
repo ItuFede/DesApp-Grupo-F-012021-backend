@@ -33,7 +33,8 @@ public class ReportMotive implements Serializable {
     @Getter
     private UserEntity userEntity;
 
-    public ReportMotive(){}
+    public ReportMotive() {
+    }
 
     public ReportMotive(String motiveText, Review reviewReportMotive, UserEntity userEntity) {
         this.motiveText = motiveText;

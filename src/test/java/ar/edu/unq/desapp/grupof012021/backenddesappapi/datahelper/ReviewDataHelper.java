@@ -6,8 +6,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 
 public class ReviewDataHelper {
 
-    public static Review getReview()
-    {
+    public static Review getReview() {
         Review review = new Review();
         review.setShortText("Good movie");
         review.setLongText("Like i said, gooooooood movie");
@@ -21,8 +20,7 @@ public class ReviewDataHelper {
         return review;
     }
 
-    public static ReviewDTO getReviewDTO(String shortText)
-    {
+    public static ReviewDTO getReviewDTO(String shortText) {
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.shortText = shortText;
         reviewDTO.shortText = "Like i said, gooooooood movie";

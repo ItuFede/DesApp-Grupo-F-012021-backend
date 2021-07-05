@@ -14,15 +14,15 @@ import java.time.Duration;
 @EnableCaching
 public class BackendDesappApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackendDesappApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BackendDesappApiApplication.class, args);
+    }
 
-	@Bean
-	public RedisCacheConfiguration cacheConfiguration() {
-		return RedisCacheConfiguration.defaultCacheConfig()
-				.entryTtl(Duration.ofMinutes(15))
-				.disableCachingNullValues()
-				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-	}
+    @Bean
+    public RedisCacheConfiguration cacheConfiguration() {
+        return RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofMinutes(15))
+                .disableCachingNullValues()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+    }
 }

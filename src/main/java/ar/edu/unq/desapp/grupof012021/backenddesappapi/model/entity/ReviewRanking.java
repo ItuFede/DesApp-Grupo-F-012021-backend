@@ -30,10 +30,10 @@ public class ReviewRanking implements Serializable {
     @JoinColumn(name = "user_entity_id", referencedColumnName = "id")
     private UserEntity userEntity;
 
-    public ReviewRanking(){}
+    public ReviewRanking() {
+    }
 
-    public ReviewRanking(boolean isPositiveVote)
-    {
+    public ReviewRanking(boolean isPositiveVote) {
         this.isPositiveVote = isPositiveVote;
     }
 }

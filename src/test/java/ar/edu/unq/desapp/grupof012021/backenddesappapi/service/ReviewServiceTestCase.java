@@ -26,6 +26,9 @@ import static org.mockito.Mockito.mock;
 
 public class ReviewServiceTestCase {
 
+    //Constants
+    private static final Long REVIEW_ID = Long.valueOf(1);
+    
     //Services
     private static ReviewService reviewService;
     private static ReviewRepository reviewRepositoryMock;
@@ -33,16 +36,11 @@ public class ReviewServiceTestCase {
     private static ActorRepository actorRepositoryMock;
     private static UserEntityRepository userEntityRepositoryMock;
     private static JwtTokenUtil jwtTokenUtilMock;
-
-    //Constants
-    private static final Long REVIEW_ID = Long.valueOf(1);
-
     //Entity
     private static Media donnieDarko;
 
     @BeforeAll
-    public static void setUp()
-    {
+    public static void setUp() {
         reviewRepositoryMock = mock(ReviewRepository.class);
         userEntityRepositoryMock = mock(UserEntityRepository.class);
         jwtTokenUtilMock = mock(JwtTokenUtil.class);
@@ -77,16 +75,14 @@ public class ReviewServiceTestCase {
     }
 
     @Test
-    public void reviewNotExits_findById_null()
-    {
+    public void reviewNotExits_findById_null() {
         Review review = reviewService.getReviewById(REVIEW_ID);
 
         Assertions.assertNull(review);
     }
 
     @Test
-    public void review_findById_getTheReview()
-    {
+    public void review_findById_getTheReview() {
         Review review = ReviewDataHelper.getReview();
 
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
@@ -95,8 +91,7 @@ public class ReviewServiceTestCase {
     }
 
     @Test
-    public void reviewWithoutRanking_upvoteReview_reviewPositive()
-    {
+    public void reviewWithoutRanking_upvoteReview_reviewPositive() {
         Review review = ReviewDataHelper.getReview();
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
@@ -107,8 +102,7 @@ public class ReviewServiceTestCase {
     }
 
     @Test
-    public void reviewWithoutRanking_downvoteReview_reviewNegative()
-    {
+    public void reviewWithoutRanking_downvoteReview_reviewNegative() {
         Review review = ReviewDataHelper.getReview();
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
@@ -129,7 +123,7 @@ public class ReviewServiceTestCase {
         reviewDTO.hasSpoilers = false;
         reviewDTO.region = "EN_US";
 
-        Review review = reviewService.createTemporalReview(reviewDTO,donnieDarko);
+        Review review = reviewService.createTemporalReview(reviewDTO, donnieDarko);
 
         Assertions.assertEquals(review.getMediaReview().getId(), donnieDarko.getId());
     }

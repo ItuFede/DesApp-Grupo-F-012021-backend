@@ -49,7 +49,7 @@ public class ReviewController {
     @RequestMapping(value = "{idReview}/report", method = RequestMethod.POST)
     public ResponseEntity<?> report(@Valid @RequestBody ReportMotiveDTO reportMotiveDTO,
                                     @PathVariable @Min(1) long idReview,
-                                    @RequestHeader(value="Authorization") @NotNull String token) {
+                                    @RequestHeader(value = "Authorization") @NotNull String token) {
         try {
             reviewReportService.reportReview(idReview, reportMotiveDTO.getReviewReportText(), token);
             return ResponseEntity.status(HttpStatus.OK).build();

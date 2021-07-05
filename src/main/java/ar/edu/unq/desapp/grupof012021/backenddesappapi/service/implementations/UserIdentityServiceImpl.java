@@ -25,7 +25,7 @@ public class UserIdentityServiceImpl implements UserIdentityService, UserDetails
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> user = userEntityService.findByUsername(username);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             return new UserIdentity(user.get());
         } else {
             throw new UsernameNotFoundException("User not found");

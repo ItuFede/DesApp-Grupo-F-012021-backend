@@ -31,11 +31,11 @@ public class Actor implements Serializable {
     @ManyToMany
     private List<Media> mediaList;
 
-    public Actor(String idStringActor, String name)
-    {
+    public Actor(String idStringActor, String name) {
         this.idStringActor = idStringActor;
         this.name = name;
     }
 
-    public Actor() { }
+    public Actor() {
+    }
 }

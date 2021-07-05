@@ -18,7 +18,7 @@ public class HealthcheckController {
     public ResponseEntity<?> health() {
         try {
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }
@@ -33,7 +33,7 @@ public class HealthcheckController {
     public ResponseEntity<?> authenticated() {
         try {
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }

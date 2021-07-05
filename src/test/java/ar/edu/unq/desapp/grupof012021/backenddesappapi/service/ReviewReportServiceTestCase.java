@@ -24,8 +24,7 @@ public class ReviewReportServiceTestCase {
     private static JwtTokenUtil jwtTokenUtilMock;
 
     @BeforeAll
-    public static void setUp()
-    {
+    public static void setUp() {
         userEntityRepositoryMock = mock(UserEntityRepository.class);
         reviewRepositoryMock = mock(ReviewRepository.class);
         reviewReportRepositoryMock = mock(ReviewReportRepository.class);
@@ -36,8 +35,7 @@ public class ReviewReportServiceTestCase {
     }
 
     @Test
-    public void reviewWithoutReports_reportReview_reviewWithReport()
-    {
+    public void reviewWithoutReports_reportReview_reviewWithReport() {
         Review review = ReviewDataHelper.getReview();
         //Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 

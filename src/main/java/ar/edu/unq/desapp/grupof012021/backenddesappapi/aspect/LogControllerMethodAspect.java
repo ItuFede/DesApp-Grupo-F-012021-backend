@@ -36,15 +36,15 @@ public class LogControllerMethodAspect {
         long execTime = System.currentTimeMillis() - execStartTime;
 
         this.log(
-            this.getModel(signature),
-            this.getHttpHeader(signature),
-            signature.getMethod().getName(),
-            Long.toString(execTime),
-            this.getAuthenticatedUsername(),
-            this.getMethodArguments(
-                    joinPoint.getArgs(), signature.getParameterNames(), signature.getParameterTypes()
-            ),
-            this.getExecStatusText(proceed)
+                this.getModel(signature),
+                this.getHttpHeader(signature),
+                signature.getMethod().getName(),
+                Long.toString(execTime),
+                this.getAuthenticatedUsername(),
+                this.getMethodArguments(
+                        joinPoint.getArgs(), signature.getParameterNames(), signature.getParameterTypes()
+                ),
+                this.getExecStatusText(proceed)
         );
         return proceed;
     }
@@ -71,7 +71,7 @@ public class LogControllerMethodAspect {
         } catch (Exception e) {
             String errTimestamp = this.getCurrentTime();
             String firePostLog = "[" + errTimestamp + "] [FAILED] [Firebase] failed to post metric to metrics collection. Original log: {{{ " +
-            log + " }}}";
+                    log + " }}}";
             System.out.println(firePostLog);
             e.printStackTrace();
         }
@@ -82,21 +82,21 @@ public class LogControllerMethodAspect {
         long s = seconds % 60;
         long m = (seconds / 60) % 60;
         long h = (seconds / (60 * 60)) % 24;
-        return String.format("%d:%02d:%02d", h,m,s);
+        return String.format("%d:%02d:%02d", h, m, s);
     }
 
     private String getModel(MethodSignature signature) {
         String methodPath = signature.toString();
         String[] packages = methodPath.split("\\.");
         String model = packages[packages.length - 2];
-        return model.replace("Controller","");
+        return model.replace("Controller", "");
     }
 
     private String getMethodArguments(Object[] args, String[] paramNames, Class[] paramTypes) {
         List<Map<String, String>> argsParams = Arrays.stream(args).map(argument -> {
             Map<String, String> argParam = new HashMap<>();
             String[] paramTypePackages = paramTypes[Arrays.asList(args).indexOf(argument)].getName().split("\\.");
-            argParam.put("type", paramTypePackages[paramTypePackages.length-1]);
+            argParam.put("type", paramTypePackages[paramTypePackages.length - 1]);
             argParam.put("param", paramNames[Arrays.asList(args).indexOf(argument)]);
             argParam.put("arg", String.valueOf(argument));
             return argParam;
@@ -108,7 +108,7 @@ public class LogControllerMethodAspect {
             methodArguments[0] += "(" + argParam.get("type") + ") " + argParam.get("param") + " ${ " + argParam.get("arg") + " }; ";
         });
 
-        if(methodArguments[0] == "") {
+        if (methodArguments[0] == "") {
             return "NO ARGUMENTS";
         } else {
             return methodArguments[0];

@@ -30,12 +30,12 @@ public class UserIdentityController {
     private AuthenticationManager authenticationManager;
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
-    public ResponseEntity<Object> authenticatedUser(@RequestHeader(value="Authorization") String token) {
+    public ResponseEntity<Object> authenticatedUser(@RequestHeader(value = "Authorization") String token) {
         try {
             return ResponseEntity.ok(
                     jwtTokenUtil.getUsernameFromToken(jwtTokenUtil.getTokenFromHeader(token))
             );
-        } catch(Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
         }
@@ -47,15 +47,14 @@ public class UserIdentityController {
         try {
             userIdentityService.register(userRegisterCredentialsDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("");
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             if (err.getMessage() == "Invalid platform name.")
                 return ResponseEntity.status(402).body("Invalid platform name.");
             if (err.getCause().getMessage() == "could not execute statement")
                 return ResponseEntity.status(400).body("Username already exists.");
             else
                 err.printStackTrace();
-                return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }
     }
 

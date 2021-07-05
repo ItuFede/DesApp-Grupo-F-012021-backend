@@ -42,7 +42,7 @@ public class FirebaseInitializer {
                     .build();
 
             FirebaseApp.initializeApp(options);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

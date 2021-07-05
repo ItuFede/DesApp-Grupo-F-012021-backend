@@ -62,7 +62,7 @@ public class Media implements Serializable {
     @Getter
     private MediaType mediaType;
 
-    @OneToMany(mappedBy="tvSerieMedia")
+    @OneToMany(mappedBy = "tvSerieMedia")
     @Getter
     private List<Episode> episodes;
 
@@ -78,12 +78,13 @@ public class Media implements Serializable {
     @Setter
     private List<Actor> actors;
 
-    @OneToMany(mappedBy="mediaReview", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mediaReview", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
     private List<Review> reviews;
 
-    public Media(){}
+    public Media() {
+    }
 
     public Media(String idStringMedia, String primaryTitle, String originalTitle, Integer year,
                  Integer endYear, Integer runtimeMinutes, MediaType mediaType,

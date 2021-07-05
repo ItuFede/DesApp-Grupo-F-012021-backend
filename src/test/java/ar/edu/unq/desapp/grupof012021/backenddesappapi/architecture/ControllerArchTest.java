@@ -1,4 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.architecture;//package ar.edu.unq.desapp.grupof012021.backenddesappapi.architecture;//package ar.edu.unq.desapp.grupof012021.backenddesappapi.architecture;
+
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchRule;
@@ -16,7 +17,7 @@ public class ControllerArchTest {
         JavaClasses importedClasses = new ClassFileImporter().importPackages("ar.edu.unq.desapp.grupof012021.backenddesappapi");
 
         ArchRule rule = classes().that().resideInAPackage("..webservice..")
-        .should().beAnnotatedWith(RestController.class);
+                .should().beAnnotatedWith(RestController.class);
 
         rule.check(importedClasses);
     }

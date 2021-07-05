@@ -58,7 +58,8 @@ public class UserEntity {
         this.authority = "ROLE_USER";
     }
 
-    public UserEntity() {}
+    public UserEntity() {
+    }
 
     public String getPlatform() {
         return this.platform.getPlatformType().getPlatformString();
