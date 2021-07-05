@@ -90,7 +90,7 @@ public class MediaServiceTestCase {
     public void givenMedia_whenAddReviewById_mediaHasReview() {
         Review unaReview = ReviewDataHelper.getReview();
         Mockito.when(repositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
-        mediaService.addReviewTo(donnieDarko.getId(), unaReview);
+        //mediaService.addReviewTo(donnieDarko.getId(), unaReview);
 
         Mockito.verify(repositoryMock, times(1)).save(donnieDarko);
         Assertions.assertThat(donnieDarko.getReviews().size()).isEqualTo(1);
@@ -100,8 +100,8 @@ public class MediaServiceTestCase {
     public void givenMedia_whenSearchingForReviews_findAllReviewsByMediaId() {
         Mockito.when(repositoryMock.findById(donnieDarko.getId())).thenReturn(donnieDarko);
 
-        mediaService.addReviewTo(donnieDarko.getId(), aReview);
-        mediaService.addReviewTo(donnieDarko.getId(), anotherReview);
+        //mediaService.addReviewTo(donnieDarko.getId(), aReview);
+        //mediaService.addReviewTo(donnieDarko.getId(), anotherReview);
 
         List<Review> allReviews = mediaService.findAllReviewsFrom(donnieDarko.getId());
         Assertions.assertThat(allReviews.size()).isEqualTo(2);

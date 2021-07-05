@@ -4,8 +4,12 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.ReviewRanking;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
+import com.google.api.client.json.webtoken.JsonWebToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private final ReviewRepository reviewRepository;
+
+    @Autowired
+    private UserEntityRepository userEntityRepository;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     public ReviewServiceImpl(ReviewRepository reviewRepositoryMock) {
         this.reviewRepository = reviewRepositoryMock;
@@ -53,6 +63,27 @@ public class ReviewServiceImpl implements ReviewService {
         review.setHasSpoilers(reviewDTO.hasSpoilers);
         review.setRegion(reviewDTO.region);
         review.setMediaReview(media);
+
+        return review;
+    }
+
+    @Override
+    public Review createReview(ReviewDTO reviewDTO, String accessToken) {
+        String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
+        UserEntity userEntity = userEntityRepository.findByUsername(username);
+
+        Review review = new Review(
+                reviewDTO.shortText,
+                reviewDTO.longText,
+                reviewDTO.originalPlatform,
+                reviewDTO.language,
+                reviewDTO.isPremium,
+                reviewDTO.hasSpoilers,
+                reviewDTO.region,
+                reviewDTO.score,
+                null,
+                userEntity
+        );
 
         return review;
     }

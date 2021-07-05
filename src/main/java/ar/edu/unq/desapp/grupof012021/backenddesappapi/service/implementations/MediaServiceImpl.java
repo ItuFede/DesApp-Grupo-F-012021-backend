@@ -6,12 +6,15 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.GenreRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.MediaRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.FirebaseService;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.MediaService;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -41,6 +44,9 @@ public class MediaServiceImpl implements MediaService {
     GenreRepository genreRepository;
 
     @Autowired
+    ReviewService reviewService;
+
+    @Autowired
     JwtTokenUtil jwtTokenUtil;
 
     @Autowired
@@ -53,8 +59,9 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public void addReviewTo(long mediaId, Review aReview) {
-        Media aMedia = this.findById(mediaId);
+    public void addReviewTo(String idMediaString, ReviewDTO reviewDTO, String accessToken) {
+        Review aReview = reviewService.createReview(reviewDTO, accessToken);
+        Media aMedia = repository.findByIdStringMedia(idMediaString);
         aReview.setMediaReview(aMedia);
         aMedia.getReviews().add(aReview);
         repository.save(aMedia);

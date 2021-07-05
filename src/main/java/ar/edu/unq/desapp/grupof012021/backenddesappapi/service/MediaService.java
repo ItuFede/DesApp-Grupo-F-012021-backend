@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 public interface MediaService {
 
-    void addReviewTo(long id, Review aReview);
+    void addReviewTo(String idMediaString, ReviewDTO reviewDTO, String token);
 
     List<Review> findAllReviewsFrom(long idMedia);
 

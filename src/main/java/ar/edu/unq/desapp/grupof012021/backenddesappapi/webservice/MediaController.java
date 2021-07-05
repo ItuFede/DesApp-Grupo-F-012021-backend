@@ -14,11 +14,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
+@RequestMapping("/media/")
 @Validated
-@RequestMapping("/media")
 public class MediaController {
 
     @Autowired
@@ -39,13 +40,12 @@ public class MediaController {
             return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{idMedia}/review", method = RequestMethod.POST)
-    public ResponseEntity<?> addReviewsToMedia(@PathVariable long idMedia, @RequestBody ReviewDTO reviewDTO) {
+    @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.POST)
+    public ResponseEntity<?> addReviewsToMedia(@PathVariable @NotNull String idStringMedia, @Valid @RequestBody ReviewDTO reviewDTO, @RequestHeader(value="Authorization") @NotNull String token) {
         try {
-            Review addReview = reviewService.createTemporalReview(reviewDTO, mediaService.findById(idMedia));
-            mediaService.addReviewTo(idMedia, addReview);
+            mediaService.addReviewTo(idStringMedia, reviewDTO, token);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (Exception e) {
+        } catch (Exception err) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
         }
     }
@@ -61,7 +61,7 @@ public class MediaController {
         try {
             mediaService.subscribeForNotifications(idMedia, token);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
+        } catch (Exception err) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
         }
     }
