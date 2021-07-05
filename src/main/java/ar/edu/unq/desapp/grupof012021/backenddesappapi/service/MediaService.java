@@ -20,8 +20,6 @@ public interface MediaService {
 
     Media findById(long mediaId);
 
-    Media findByStringId(String mediaId);
-
     List<Media> findAllMediaFilter(MediaDTO mediaDTO, int offset, int limit) throws Exception;
 
     MediaRedisDTO findMediaRedis(String idStringMedia);

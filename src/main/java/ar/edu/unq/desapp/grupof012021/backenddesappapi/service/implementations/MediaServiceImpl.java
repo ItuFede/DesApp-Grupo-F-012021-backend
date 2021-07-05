@@ -76,15 +76,19 @@ public class MediaServiceImpl implements MediaService {
         aMedia.getReviews().add(aReview);
         repository.save(aMedia);
 
-        if (this.isSubscribedForNotifications(mediaId)) {
-            String username = jwtTokenUtil.getUsernameFromToken(accessToken);
-            HashMap<String, Object> notification = new HashMap<>();
-            notification.put("reviewShortText", aReview.getShortText());
-            notification.put("reviewLongText", aReview.getLongText());
-            notification.put("reviewScore", aReview.getScore());
-            notification.put("author", username);
-            notification.put("mediaId", mediaId);
-            firebaseService.post("notifications", notification);
+        try {
+            if (this.isSubscribedForNotifications(idMediaString)) {
+                String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
+                HashMap<String, Object> notification = new HashMap<>();
+                notification.put("reviewShortText", aReview.getShortText());
+                notification.put("reviewLongText", aReview.getLongText());
+                notification.put("reviewScore", aReview.getScore());
+                notification.put("author", username);
+                notification.put("mediaId", idMediaString);
+                firebaseService.post("notifications", notification);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -148,10 +152,6 @@ public class MediaServiceImpl implements MediaService {
 
     public Media findById(long mediaId) {
         return repository.findById(mediaId);
-    }
-
-    public Media findByStringId(String mediaId) {
-        return repository.findByIdStringMedia(mediaId);
     }
 
     @Override
