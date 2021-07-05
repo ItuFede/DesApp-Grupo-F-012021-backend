@@ -40,7 +40,8 @@ public class UserIdentityController {
             return ResponseEntity.ok(
                     jwtTokenUtil.getUsernameFromToken(jwtTokenUtil.getTokenFromHeader(token))
             );
-        } catch(Exception e) {
+        } catch(Exception err) {
+            err.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
         }
     }
@@ -58,6 +59,7 @@ public class UserIdentityController {
             if (err.getCause().getMessage() == "could not execute statement")
                 return ResponseEntity.status(400).body("Username already exists.");
             else
+                err.printStackTrace();
                 return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }
     }
@@ -71,6 +73,7 @@ public class UserIdentityController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         } catch (Exception err) {
+            err.printStackTrace();
             return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }
     }

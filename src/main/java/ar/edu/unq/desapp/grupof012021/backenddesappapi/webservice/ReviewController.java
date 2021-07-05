@@ -26,20 +26,37 @@ public class ReviewController {
 
     @RequestMapping(value = "{idReview}/upvote", method = RequestMethod.POST)
     public ResponseEntity<?> upvote(@PathVariable @Min(1) long idReview) {
-        reviewService.upvoteReview(idReview);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        try {
+            reviewService.upvoteReview(idReview);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception err) {
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
     @RequestMapping(value = "{idReview}/downvote", method = RequestMethod.POST)
     public ResponseEntity<?> downvote(@PathVariable @Min(1) long idReview) {
-        reviewService.downvoteReview(idReview);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        try {
+            reviewService.downvoteReview(idReview);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception err) {
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
     @RequestMapping(value = "{idReview}/report", method = RequestMethod.POST)
-    public ResponseEntity<?> report(@Valid @RequestBody ReportMotiveDTO reportMotiveDTO, @PathVariable @Min(1) long idReview, @RequestHeader(value="Authorization") @NotNull String token) {
-        reviewReportService.reportReview(idReview, reportMotiveDTO.getReviewReportText(), token);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<?> report(@Valid @RequestBody ReportMotiveDTO reportMotiveDTO,
+                                    @PathVariable @Min(1) long idReview,
+                                    @RequestHeader(value="Authorization") @NotNull String token) {
+        try {
+            reviewReportService.reportReview(idReview, reportMotiveDTO.getReviewReportText(), token);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception err) {
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
 }

@@ -30,31 +30,54 @@ public class MediaController {
     private ReviewService reviewService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Media>> getMediaFilter(@Valid @RequestBody MediaDTO mediaDTO, @RequestParam(value = "offset") int offset, @RequestParam(value = "limit") int limit) throws Exception {
-        List<Media> medias = mediaService.findAllMediaFilter(mediaDTO, offset, limit);
-        return new ResponseEntity<>(medias, HttpStatus.OK);
+    public ResponseEntity<?> getMediaFilter(@Valid @RequestBody MediaDTO mediaDTO,
+                                                      @RequestParam(value = "offset") int offset,
+                                                      @RequestParam(value = "limit") int limit) {
+        try {
+            List<Media> medias = mediaService.findAllMediaFilter(mediaDTO, offset, limit);
+            return new ResponseEntity<>(medias, HttpStatus.OK);
+        } catch (Exception err) {
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
     @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.GET)
-    public ResponseEntity<List<Review>> getReviewsFromMedia(@RequestBody ReviewFilterDTO reviewFilterDTO, @PathVariable String idStringMedia, @RequestParam(value = "offset", defaultValue = "1") @Min(1) int offset, @RequestParam(value = "limit", defaultValue = "1") @Min(0) int limit) {
-        List<Review> reviews = mediaService.findAllReviewsFilter(reviewFilterDTO, idStringMedia, offset, limit);
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    public ResponseEntity<?> getReviewsFromMedia(@RequestBody ReviewFilterDTO reviewFilterDTO,
+                                                            @PathVariable String idStringMedia,
+                                                            @RequestParam(value = "offset", defaultValue = "1") @Min(1) int offset,
+                                                            @RequestParam(value = "limit", defaultValue = "1") @Min(0) int limit) {
+        try {
+            List<Review> reviews = mediaService.findAllReviewsFilter(reviewFilterDTO, idStringMedia, offset, limit);
+            return new ResponseEntity<>(reviews, HttpStatus.OK);
+        } catch (Exception err) {
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
     @RequestMapping(value = "{idStringMedia}/review", method = RequestMethod.POST)
-    public ResponseEntity<?> addReviewsToMedia(@PathVariable @NotNull String idStringMedia, @Valid @RequestBody ReviewDTO reviewDTO, @RequestHeader(value="Authorization") @NotNull String token) {
+    public ResponseEntity<?> addReviewsToMedia(@PathVariable @NotNull String idStringMedia,
+                                               @Valid @RequestBody ReviewDTO reviewDTO,
+                                               @RequestHeader(value="Authorization") @NotNull String token) {
         try {
             mediaService.addReviewTo(idStringMedia, reviewDTO, token);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception err) {
+            err.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
         }
     }
 
     @RequestMapping(value = "{idStringMedia}", method = RequestMethod.GET)
-    public ResponseEntity<MediaRedisDTO> getMediaRedis(@PathVariable String idStringMedia) {
-        MediaRedisDTO media = mediaService.findMediaRedis(idStringMedia);
-        return new ResponseEntity<>(media, HttpStatus.OK);
+    public ResponseEntity<?> getMediaRedis(@PathVariable String idStringMedia) {
+        try {
+            MediaRedisDTO media = mediaService.findMediaRedis(idStringMedia);
+            return new ResponseEntity<>(media, HttpStatus.OK);
+        } catch (Exception err) {
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+        }
     }
 
     @RequestMapping(value = "{idMedia}/subscribe", method = RequestMethod.POST)
@@ -63,7 +86,8 @@ public class MediaController {
             mediaService.subscribeForNotifications(idMedia, token);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception err) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred. Please try again later.");
+            err.printStackTrace();
+            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
         }
     }
 }
