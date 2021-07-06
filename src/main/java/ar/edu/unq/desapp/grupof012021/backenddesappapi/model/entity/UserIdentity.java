@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
-
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
 public class UserIdentity implements UserDetails {
+    @Getter
     private final UserEntity associatedUserEntity;
 
     public UserIdentity(UserEntity user) {

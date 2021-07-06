@@ -37,4 +37,9 @@ public class UserIdentityServiceImpl implements UserIdentityService, UserDetails
         userEntityService.saveUser(userRegisterCredentialsDto);
         return (UserIdentity) this.loadUserByUsername(userRegisterCredentialsDto.getUsername());
     }
+
+    public UserIdentityServiceImpl(UserEntityService userEntityService, PasswordEncoder passwordEncoder) {
+        this.userEntityService = userEntityService;
+        this.passwordEncoder = passwordEncoder;
+    }
 }
