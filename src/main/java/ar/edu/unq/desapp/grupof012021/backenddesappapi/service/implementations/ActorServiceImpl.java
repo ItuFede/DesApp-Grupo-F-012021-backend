@@ -12,9 +12,6 @@ public class ActorServiceImpl implements ActorService {
     @Autowired
     private ActorRepository actorRepository;
 
-    public ActorServiceImpl() {
-    }
-
     public ActorServiceImpl(ActorRepository repositoryMock) {
         this.actorRepository = repositoryMock;
     }
