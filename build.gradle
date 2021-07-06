@@ -51,10 +51,10 @@ dependencies {
 }
 
 if (hasProperty('buildScan')) {
-    buildScan {
-        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-        termsOfServiceAgree = 'yes'
-    }
+	buildScan {
+		termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+		termsOfServiceAgree = 'yes'
+	}
 }
 
 jacoco {
@@ -71,32 +71,20 @@ test {
 jacocoTestReport {
 	dependsOn test
 	classDirectories.setFrom(
-		fileTree(dir: "build/classes/java/main")
-			.filter({file -> !file.name.contains('BackendDesappApiApplication')})
-			.filter({file -> !file.name.contains('SecurityConfiguration')})
-			.filter({file -> !file.name.contains('ServletInitializer')})
-			.filter({file -> !file.name.contains('DTO')})
-			.filter({file -> !file.name.contains('Controller')})
-			.filter({file -> !file.name.contains('JwtAuthEntryPoint')})
-			.filter({file -> !file.name.contains('JwtTokenFilter')})
-			.filter({file -> !file.name.contains('JwtTokenUtil')})
-			.filter({file -> !file.name.contains('WebSecurityConfig')})
-			.filter({file -> !file.name.contains('DataLoader')})
-			.filter({file -> !file.name.contains('SwaggerConfig')})
-			.filter({file -> !file.name.contains('Exception')})
-			.filter({file -> !file.name.contains('FirebaseInitializer')})
-			.filter({file -> !file.name.contains('FirebaseServiceImpl')})
-	)
-}
-
-jacocoTestReport {
-	dependsOn test
-	classDirectories.setFrom(
-		fileTree(dir: "build/classes/java/main")
-			.filter({file -> !file.name.contains('BackendDesappApiApplication')})
-			.filter({file -> !file.name.contains('SecurityConfiguration')})
-			.filter({file -> !file.name.contains('ServletInitializer')})
-			.filter({file -> !file.name.contains('DTO')})
-			.filter({file -> !file.name.contains('Controller')})
+			fileTree(dir: "build/classes/java/main")
+					.filter({file -> !file.name.contains('BackendDesappApiApplication')})
+					.filter({file -> !file.name.contains('SecurityConfiguration')})
+					.filter({file -> !file.name.contains('ServletInitializer')})
+					.filter({file -> !file.name.contains('DTO')})
+					.filter({file -> !file.name.contains('Controller')})
+					.filter({file -> !file.name.contains('JwtAuthEntryPoint')})
+					.filter({file -> !file.name.contains('JwtTokenFilter')})
+					.filter({file -> !file.name.contains('JwtTokenUtil')})
+					.filter({file -> !file.name.contains('WebSecurityConfig')})
+					.filter({file -> !file.name.contains('DataLoader')})
+					.filter({file -> !file.name.contains('SwaggerConfig')})
+					.filter({file -> !file.name.contains('Exception')})
+					.filter({file -> !file.name.contains('FirebaseInitializer')})
+					.filter({file -> !file.name.contains('FirebaseServiceImpl')})
 	)
 }
