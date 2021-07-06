@@ -31,5 +31,4 @@ public class PlatformTestCase {
         Assertions.assertEquals(netflix.getName(), "Netflix");
         Assertions.assertEquals(amazon.getName(), "Amazon Prime");
     }
-
 }
