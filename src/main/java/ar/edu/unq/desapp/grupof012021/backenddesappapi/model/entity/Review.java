@@ -111,6 +111,7 @@ public class Review implements Serializable {
     {
         this.reviewRankings = new ArrayList<ReviewRanking>();
         this.reportMotives = new ArrayList<ReportMotive>();
+        this.date = new Date();
     }
 
     public Review(String shortText, String longText,
