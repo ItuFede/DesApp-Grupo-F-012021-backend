@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentials
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "user_entity")
-@Data
 public class UserEntity {
 
     @javax.persistence.Id
@@ -29,20 +29,26 @@ public class UserEntity {
     @NotNull
     @Column(nullable = false, length = 50, unique = true)
     @Getter
+    @Setter
     private String username;
 
     @NotNull
     @Column(nullable = false)
     @JsonIgnore
+    @Getter
+    @Setter
     private String password;
 
     @Column(nullable = false, length = 10)
     @JsonIgnore
+    @Getter
+    @Setter
     private String authority;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "platformTypeId", referencedColumnName = "id")
+    @Setter
     private Platform platform;
 
     @JsonIgnore
@@ -64,8 +70,7 @@ public class UserEntity {
         this.authority = "ROLE_USER";
     }
 
-    public UserEntity() {
-    }
+    public UserEntity() {}
 
     public String getPlatform() {
         return this.platform.getPlatformType().getPlatformString();
