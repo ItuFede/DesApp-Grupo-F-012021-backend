@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.MediaDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaRedisDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
@@ -158,6 +159,36 @@ public class MediaServiceTestCase {
         List<Media> mediaList = mediaService.findAllMediaFilter(mediaDTO, 1, 1);
 
         Assertions.assertThat(mediaList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void givenFilterMediaDTOEmpty_findAllMediaFilter_querryHasNoFilter() throws Exception {
+        MediaDTO mediaDTO = new MediaDTO();
+        List<Media> medias = new ArrayList<>();
+
+        Mockito.when(entityManagerMock.createQuery("SELECT DISTINCT m FROM Media m ")).thenReturn(quaryMock);
+        Mockito.when(quaryMock.getResultList()).thenReturn(medias);
+
+        List<Media> mediaList = mediaService.findAllMediaFilter(mediaDTO, 1, 1);
+
+        Assertions.assertThat(mediaList.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void givenFilterMediaDTO_findMediaRedis_querryHasAllFilters() {
+        Media media = MediaDataHelper.getMedia();
+        List<Review> reviewList = new ArrayList<>();
+        reviewList.add(ReviewDataHelper.getReview());
+        media.setReviews(reviewList);
+
+        Mockito.when(mediaRepositoryMock.findByIdStringMedia(media.getIdStringMedia())).thenReturn(media);
+
+        MediaRedisDTO mediaRedisDTO = mediaService.findMediaRedis(media.getIdStringMedia());
+
+        Assertions.assertThat(mediaRedisDTO.idStringMedia).isEqualTo(media.getIdStringMedia());
+        Assertions.assertThat(mediaRedisDTO.originalTitle).isEqualTo(media.getOriginalTitle());
+        Assertions.assertThat(mediaRedisDTO.reviewAmount).isEqualTo(media.getReviews().size());
+        Assertions.assertThat(mediaRedisDTO.averageScore).isEqualTo(media.getReviews().stream().mapToDouble(x -> x.getScore()).average().orElse(0));
     }
 
     @AfterEach

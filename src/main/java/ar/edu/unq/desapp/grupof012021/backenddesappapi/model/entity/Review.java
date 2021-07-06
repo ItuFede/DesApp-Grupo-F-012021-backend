@@ -104,6 +104,7 @@ public class Review implements Serializable {
     @NotNull
     @Column(name = "score")
     @Getter
+    @Setter
     private Double score;
 
     public Review()

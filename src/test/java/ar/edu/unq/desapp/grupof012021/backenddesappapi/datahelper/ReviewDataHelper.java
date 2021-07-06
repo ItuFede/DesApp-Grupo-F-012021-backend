@@ -16,6 +16,7 @@ public class ReviewDataHelper {
         review.setMediaReview(new Media());
         review.setHasSpoilers(false);
         review.setRegion("EN_US");
+        review.setScore(5.0);
 
         return review;
     }
