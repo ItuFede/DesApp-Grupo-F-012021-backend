@@ -31,20 +31,23 @@ public class ReviewReportServiceImpl implements ReviewReportService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public ReviewReportServiceImpl(ReviewRepository reviewRepository, ReviewReportRepository reviewReportRepository, UserEntityRepository userEntityRepository) {
+    public ReviewReportServiceImpl(ReviewRepository reviewRepository, ReviewReportRepository reviewReportRepository, UserEntityRepository userEntityRepository, JwtTokenUtil jwtTokenUtil ) {
         this.reviewRepository = reviewRepository;
         this.reviewReportRepository = reviewReportRepository;
         this.userEntityRepository = userEntityRepository;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @Override
-    public void reportReview(long reviewId, String reportMotiveText, String accessToken) {
+    public ReportMotive reportReview(long reviewId, String reportMotiveText, String accessToken) {
         Review review = reviewRepository.findById(reviewId);
         String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
         UserEntity userEntity = userEntityRepository.findByUsername(username);
 
         ReportMotive reportMotive = new ReportMotive(reportMotiveText, review, userEntity);
         reviewReportRepository.save(reportMotive);
+
+        return reportMotive;
     }
 
 }
