@@ -2,9 +2,11 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.MediaDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewFilterDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaRedisDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewFilterDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
@@ -16,13 +18,14 @@ import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.MediaServiceImpl;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.hibernate.persister.entity.Queryable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.*;
 
 import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
@@ -45,6 +48,10 @@ public class MediaServiceTestCase {
     private static Review aReview;
     private static Review anotherReview;
     private static Query quaryMock;
+    private static TypedQuery<Review> quaryTypeMock;
+    private static CriteriaBuilder criteriaBuilderMock;
+    private static CriteriaQuery criteriaQueryMock;
+    private static Root reviewRootMock;
 
     @BeforeAll
     public static void setUp() {
@@ -105,6 +112,10 @@ public class MediaServiceTestCase {
         );
 
         quaryMock = mock(Query.class);
+        quaryTypeMock = mock(TypedQuery.class);
+        criteriaBuilderMock = mock(CriteriaBuilder.class);
+        criteriaQueryMock = mock(CriteriaQuery.class);
+        reviewRootMock = mock(Root.class);
     }
 
     @Test
@@ -175,7 +186,45 @@ public class MediaServiceTestCase {
     }
 
     @Test
-    public void givenFilterMediaDTO_findMediaRedis_querryHasAllFilters() {
+    public void givenFilterMediaDTO_findMediaRedis_findReview() {
+        Media media = MediaDataHelper.getMedia();
+        ReviewFilterDTO reviewFilterDTO = ReviewFilterDataHelper.getReviewFilterDTO();
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(ReviewDataHelper.getReview());
+
+        Mockito.when(mediaRepositoryMock.findByIdStringMedia(media.getIdStringMedia())).thenReturn(media);
+        Mockito.when(entityManagerMock.getCriteriaBuilder()).thenReturn(criteriaBuilderMock);
+        Mockito.when(criteriaBuilderMock.createQuery(Review.class)).thenReturn(criteriaQueryMock);
+        Mockito.when(criteriaQueryMock.from(Review.class)).thenReturn(reviewRootMock);
+        Mockito.when(entityManagerMock.createQuery(criteriaQueryMock)).thenReturn(quaryTypeMock);
+        Mockito.when(quaryTypeMock.getResultList()).thenReturn(reviews);
+
+        List<Review> reviewList = mediaService.findAllReviewsFilter(reviewFilterDTO, media.getIdStringMedia(), 1, 1);
+
+        Assertions.assertThat(reviewList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void givenFilterMediaDTOEmpty_findMediaRedis_noReview() {
+        Media media = MediaDataHelper.getMedia();
+        ReviewFilterDTO reviewFilterDTO = new ReviewFilterDTO();
+        reviewFilterDTO.isOrdererType = "score";
+        List<Review> reviews = new ArrayList<>();
+
+        Mockito.when(mediaRepositoryMock.findByIdStringMedia(media.getIdStringMedia())).thenReturn(media);
+        Mockito.when(entityManagerMock.getCriteriaBuilder()).thenReturn(criteriaBuilderMock);
+        Mockito.when(criteriaBuilderMock.createQuery(Review.class)).thenReturn(criteriaQueryMock);
+        Mockito.when(criteriaQueryMock.from(Review.class)).thenReturn(reviewRootMock);
+        Mockito.when(entityManagerMock.createQuery(criteriaQueryMock)).thenReturn(quaryTypeMock);
+        Mockito.when(quaryTypeMock.getResultList()).thenReturn(reviews);
+
+        List<Review> reviewList = mediaService.findAllReviewsFilter(reviewFilterDTO, media.getIdStringMedia(), 1, 1);
+
+        Assertions.assertThat(reviewList.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void givenIdStringMedia_findAllReviewsFilter_returnMediaRedisDTO() {
         Media media = MediaDataHelper.getMedia();
         List<Review> reviewList = new ArrayList<>();
         reviewList.add(ReviewDataHelper.getReview());

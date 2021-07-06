@@ -1,9 +1,7 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.MediaDTO;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 
 public class MediaDataHelper {
