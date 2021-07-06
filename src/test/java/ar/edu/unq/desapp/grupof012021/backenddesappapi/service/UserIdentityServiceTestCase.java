@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.UserDataHelper;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserEntity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.UserIdentity;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.UserIdentityServiceImpl;

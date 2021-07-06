@@ -2,7 +2,6 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.UserCredentialsDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
