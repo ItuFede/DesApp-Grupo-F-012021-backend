@@ -54,16 +54,11 @@ public class MediaServiceImpl implements MediaService {
     @Autowired
     private FirebaseService firebaseService;
 
-    public MediaServiceImpl() { }
-
-    public MediaServiceImpl(MediaRepository repository) {
-        this.repository = repository;
-    }
-
-    public MediaServiceImpl(MediaRepository repository, ReviewService reviewService, JwtTokenUtil jwtTokenUtil) {
+    public MediaServiceImpl(MediaRepository repository, ReviewService reviewService, JwtTokenUtil jwtTokenUtil, EntityManager entityManager) {
         this.repository = repository;
         this.reviewService = reviewService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.entityManager = entityManager;
     }
 
     @Override
