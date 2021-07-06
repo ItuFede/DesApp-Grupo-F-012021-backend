@@ -38,19 +38,41 @@ public class ReviewServiceImpl implements ReviewService {
 
     //For now we add N'times positive votes until we have the user id.
     @Override
-    public void upvoteReview(long reviewId) {
+    public void upvoteReview(long reviewId, String accessToken) throws Exception {
         Review review = this.getReviewById(reviewId);
+        String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
+        UserEntity userEntity = userEntityRepository.findByUsername(username);
+
         List<ReviewRanking> reviewsRanking = review.getReviewRankings();
-        reviewsRanking.add(new ReviewRanking(true));
-        reviewRepository.save(review);
+        boolean isAlreadyVoteByUser = ValidateUserNotAlreadyVoteReview(reviewsRanking, userEntity);
+        if (!isAlreadyVoteByUser) {
+            reviewsRanking.add(new ReviewRanking(true, review, userEntity));
+            reviewRepository.save(review);
+        }
+        else {
+            throw new Exception("User already vote this review");
+        }
     }
 
     @Override
-    public void downvoteReview(long reviewId) {
+    public void downvoteReview(long reviewId, String accessToken) throws Exception {
         Review review = this.getReviewById(reviewId);
+        String username = jwtTokenUtil.getUsernameFromToken(accessToken.replace("Bearer ", ""));
+        UserEntity userEntity = userEntityRepository.findByUsername(username);
+
         List<ReviewRanking> reviewsRanking = review.getReviewRankings();
-        reviewsRanking.add(new ReviewRanking(false));
-        reviewRepository.save(review);
+        boolean isAlreadyVoteByUser = ValidateUserNotAlreadyVoteReview(reviewsRanking, userEntity);
+        if (!isAlreadyVoteByUser) {
+            reviewsRanking.add(new ReviewRanking(false, review, userEntity));
+            reviewRepository.save(review);
+        }
+        else {
+            throw new Exception("User already vote this review");
+        }
+    }
+
+    private boolean ValidateUserNotAlreadyVoteReview(List<ReviewRanking> reviewsRanking, UserEntity userEntity) {
+        return reviewsRanking.stream().anyMatch(x -> x.getUserEntity().getUsername() == userEntity.getUsername());
     }
 
     @Override

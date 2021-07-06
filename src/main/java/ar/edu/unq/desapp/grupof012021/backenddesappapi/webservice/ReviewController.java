@@ -29,24 +29,38 @@ public class ReviewController {
     private ReviewReportService reviewReportService;
 
     @RequestMapping(value = "{idReview}/upvote", method = RequestMethod.POST)
-    public ResponseEntity<?> upvote(@PathVariable @Min(1) long idReview) {
+    public ResponseEntity<?> upvote(@PathVariable @Min(1) long idReview,
+                                    @RequestHeader(value = "Authorization") @NotNull String token) {
         try {
-            reviewService.upvoteReview(idReview);
+            reviewService.upvoteReview(idReview, token);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception err) {
-            err.printStackTrace();
-            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+            if (err.getMessage().equals("User already vote this review")) {
+                err.printStackTrace();
+                return ResponseEntity.status(402).body(err.getMessage());
+            }
+            else {
+                err.printStackTrace();
+                return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+            }
         }
     }
 
     @RequestMapping(value = "{idReview}/downvote", method = RequestMethod.POST)
-    public ResponseEntity<?> downvote(@PathVariable @Min(1) long idReview) {
+    public ResponseEntity<?> downvote(@PathVariable @Min(1) long idReview,
+                                      @RequestHeader(value = "Authorization") @NotNull String token) {
         try {
-            reviewService.downvoteReview(idReview);
+            reviewService.downvoteReview(idReview, token);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception err) {
-            err.printStackTrace();
-            return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+            if (err.getMessage().equals("User already vote this review")) {
+                err.printStackTrace();
+                return ResponseEntity.status(402).body(err.getMessage());
+            }
+            else {
+                err.printStackTrace();
+                return ResponseEntity.status(500).body("An unexpected error occurred. Please try again later.");
+            }
         }
     }
 

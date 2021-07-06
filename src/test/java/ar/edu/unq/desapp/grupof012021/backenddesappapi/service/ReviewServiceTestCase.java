@@ -91,22 +91,22 @@ public class ReviewServiceTestCase {
     }
 
     @Test
-    public void reviewWithoutRanking_upvoteReview_reviewPositive() {
+    public void reviewWithoutRanking_upvoteReview_reviewPositive() throws Exception {
         Review review = ReviewDataHelper.getReview();
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
-        reviewService.upvoteReview(review.getId());
+        reviewService.upvoteReview(review.getId(), "");
 
         Assertions.assertEquals(1, review.getReviewRankings().stream().count());
         Assertions.assertTrue(review.getReviewRankings().get(0).isPositiveVote());
     }
 
     @Test
-    public void reviewWithoutRanking_downvoteReview_reviewNegative() {
+    public void reviewWithoutRanking_downvoteReview_reviewNegative() throws Exception {
         Review review = ReviewDataHelper.getReview();
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
-        reviewService.downvoteReview(review.getId());
+        reviewService.downvoteReview(review.getId(), "");
 
         Assertions.assertEquals(1, review.getReviewRankings().stream().count());
         Assertions.assertFalse(review.getReviewRankings().get(0).isPositiveVote());

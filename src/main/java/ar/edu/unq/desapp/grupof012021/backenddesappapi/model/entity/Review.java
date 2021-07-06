@@ -13,6 +13,8 @@ import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public class Review implements Serializable {
     @Getter
     private Media mediaReview;
 
-    @OneToMany(mappedBy="review_reviewRanking")
+    @OneToMany(mappedBy="review_reviewRanking", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Getter
     @Setter
     private final List<ReviewRanking> reviewRankings;
