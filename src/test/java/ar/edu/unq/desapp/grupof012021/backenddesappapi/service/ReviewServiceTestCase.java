@@ -1,11 +1,9 @@
 package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.UserDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
-import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.*;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
@@ -20,6 +18,7 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
 import static org.mockito.Mockito.mock;
@@ -110,6 +109,36 @@ public class ReviewServiceTestCase {
 
         Assertions.assertEquals(1, review.getReviewRankings().stream().count());
         Assertions.assertFalse(review.getReviewRankings().get(0).isPositiveVote());
+    }
+
+    @Test
+    public void reviewWithoutRanking_upvoteReviewTwiceSameUser_throwsException() throws Exception {
+        Review review = ReviewDataHelper.getReview();
+        UserEntity userEntity = UserDataHelper.getUserEntity();
+        ReviewRanking reviewRanking = new ReviewRanking(true, review, userEntity);
+        Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
+        Mockito.when(userEntityRepositoryMock.findByUsername(null)).thenReturn(userEntity);
+
+        reviewService.upvoteReview(review.getId(), "");
+
+        Assertions.assertThrows(Exception.class, () -> {
+            reviewService.upvoteReview(review.getId(), "");
+        });
+    }
+
+    @Test
+    public void reviewWithoutRanking_downvoteReviewTwiceSameUser_throwsException() throws Exception {
+        Review review = ReviewDataHelper.getReview();
+        UserEntity userEntity = UserDataHelper.getUserEntity();
+        ReviewRanking reviewRanking = new ReviewRanking(true, review, userEntity);
+        Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
+        Mockito.when(userEntityRepositoryMock.findByUsername(null)).thenReturn(userEntity);
+
+        reviewService.downvoteReview(review.getId(), "");
+
+        Assertions.assertThrows(Exception.class, () -> {
+            reviewService.downvoteReview(review.getId(), "");
+        });
     }
 
     @Test
