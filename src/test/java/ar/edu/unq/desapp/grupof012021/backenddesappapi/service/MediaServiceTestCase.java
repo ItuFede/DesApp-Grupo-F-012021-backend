@@ -27,10 +27,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 
 public class MediaServiceTestCase {
 
@@ -42,6 +42,7 @@ public class MediaServiceTestCase {
     private static UserEntityRepository userEntityRepositoryMock;
     private static JwtTokenUtil jwtTokenUtilMock;
     private static EntityManager entityManagerMock;
+    private static FirebaseService firebaseServiceMock;
 
     private static Media donnieDarko;
 
@@ -60,10 +61,11 @@ public class MediaServiceTestCase {
         userEntityRepositoryMock = mock(UserEntityRepository.class);
         jwtTokenUtilMock = mock(JwtTokenUtil.class);
         entityManagerMock = mock(EntityManager.class);
+        firebaseServiceMock = mock(FirebaseService.class);
         reviewService = new ReviewServiceImpl(reviewRepositoryMock, userEntityRepositoryMock, jwtTokenUtilMock);
 
         mediaRepositoryMock = mock(MediaRepository.class);
-        mediaService = new MediaServiceImpl(mediaRepositoryMock, reviewService, jwtTokenUtilMock, entityManagerMock);
+        mediaService = new MediaServiceImpl(mediaRepositoryMock, reviewService, jwtTokenUtilMock, entityManagerMock, firebaseServiceMock);
 
         List<Genre> donnieDarkoGenres = new ArrayList<Genre>();
         donnieDarkoGenres.add(new Genre(SCIFI));
@@ -132,6 +134,30 @@ public class MediaServiceTestCase {
 
         Mockito.verify(mediaRepositoryMock, times(1)).save(donnieDarko);
         Assertions.assertThat(donnieDarko.getReviews().size()).isEqualTo(1);
+    }
+
+    @Test
+    public void givenMedia_subscribeForNotifications_noThrowExeption() throws ExecutionException, InterruptedException {
+        Media media = MediaDataHelper.getMedia();
+
+        Mockito.when(jwtTokenUtilMock.getUsernameFromToken("")).thenReturn("test");
+
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(() -> mediaService.subscribeForNotifications(media.getIdStringMedia(), ""));
+    }
+
+    @Test
+    public void givenMedia_subscribeForNotifications_throwExeption() throws ExecutionException, InterruptedException {
+        Media media = MediaDataHelper.getMedia();
+        HashMap<String, Object> subscription = new HashMap<>();
+        subscription.put("username", "test");
+        subscription.put("mediaId", media.getIdStringMedia());
+
+        Mockito.when(jwtTokenUtilMock.getUsernameFromToken("")).thenReturn("test");
+        Mockito.when(firebaseServiceMock.post("subscriptions", subscription)).thenThrow(ExecutionException.class);
+
+        org.junit.jupiter.api.Assertions.assertThrows(ExecutionException.class, () -> {
+            mediaService.subscribeForNotifications(media.getIdStringMedia(), "");
+        });
     }
 
     @Test
