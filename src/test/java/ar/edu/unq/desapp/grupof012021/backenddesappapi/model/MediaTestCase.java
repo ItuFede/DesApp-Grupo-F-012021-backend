@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MediaTestCase {
     @Test
-    public void givenMedia_default_gettersAndSetters() throws Exception {
+    public void givenMedia_default_gettersAndSetters() {
         Media media = MediaDataHelper.getMedia();
         media.setGenres(List.of(new Genre()));
         media.setActors(List.of(new Actor()));
