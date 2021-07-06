@@ -8,9 +8,9 @@ import org.springframework.web.client.HttpClientErrorException;
 public interface ReviewService {
     Review getReviewById(long reviewId) throws HttpClientErrorException.NotFound;
 
-    void upvoteReview(long reviewId);
+    void upvoteReview(long reviewId, String accessToken) throws Exception;
 
-    void downvoteReview(long reviewId);
+    void downvoteReview(long reviewId, String accessToken) throws Exception;
 
     Review createTemporalReview(ReviewDTO reviewDTO, Media media);
 
