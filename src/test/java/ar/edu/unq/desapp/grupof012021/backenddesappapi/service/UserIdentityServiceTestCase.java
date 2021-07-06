@@ -27,7 +27,7 @@ public class UserIdentityServiceTestCase {
     public static void setUp() {
         userEntityServiceMock = mock(UserEntityService.class);
         passwordEncoderMock = mock(PasswordEncoder.class);
-        userIdentityService = new UserIdentityServiceImpl(userEntityServiceMock, passwordEncoderMock);
+        userIdentityService = new UserIdentityServiceImpl(userEntityServiceMock);
         userEntity1 = UserDataHelper.getUserEntity();
     }
 
@@ -42,26 +42,5 @@ public class UserIdentityServiceTestCase {
     public void givenUsername_whenLoadUserByUsernameWithUnknownUsername_throwsException() {
         Mockito.when(userEntityServiceMock.findByUsername("test_dataHelper@gmail.com")).thenReturn(Optional.ofNullable(null));
         Assert.assertThrows(UsernameNotFoundException.class, () -> userIdentityService.loadUserByUsername("test_dataHelper@gmail.com"));
-    }
-
-    @Test
-    public void givenUserCredentials_whenRegister_userPersistedThroughEntityService() throws Exception {
-        String encodedPassword = "$2a$10$T3d/kyy8JcF605uF5WAU/ueZMAufCM2AXKKDL6BfjJtcvnw8D5J8q";
-        Mockito.when(passwordEncoderMock.encode("123")).thenReturn(encodedPassword);
-
-        UserCredentialsDTO userCredentials = new UserCredentialsDTO();
-        userCredentials.password = "123";
-        userCredentials.username = "username";
-        userCredentials.platform = "netflix";
-
-        UserEntity userEntity2 = UserDataHelper.getUserEntity();
-        userEntity2.setPassword(userCredentials.password);
-        userEntity2.setUsername(userCredentials.username);
-        Mockito.when(userEntityServiceMock.findByUsername("username")).thenReturn(Optional.ofNullable(userEntity2));
-        Mockito.when(userEntityServiceMock.saveUser(userCredentials)).thenReturn(Optional.ofNullable(userEntity2));
-
-        UserIdentity registeredUser = userIdentityService.register(userCredentials);
-        Assert.assertEquals(registeredUser.getAssociatedUserEntity().getUsername(), userCredentials.username);
-        Assert.assertEquals(registeredUser.getAssociatedUserEntity().getPassword(), "123");
     }
 }
