@@ -4,10 +4,10 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
-import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
@@ -23,7 +23,7 @@ public class ReviewRanking implements Serializable {
     private long id;
 
     @NotNull
-    @Column(name = "ranking")
+    @Column(name = "isPositiveVote")
     @Getter
     private boolean isPositiveVote;
 
@@ -31,10 +31,14 @@ public class ReviewRanking implements Serializable {
     @JoinColumn(name = "idReview", referencedColumnName = "id")
     private Review review_reviewRanking;
 
-    public ReviewRanking(){}
+    @ManyToOne
+    @JoinColumn(name = "user_entity_id", referencedColumnName = "id")
+    private UserEntity userEntity;
 
-    public ReviewRanking(boolean isPositiveVote)
-    {
+    public ReviewRanking() {
+    }
+
+    public ReviewRanking(boolean isPositiveVote) {
         this.isPositiveVote = isPositiveVote;
     }
 }

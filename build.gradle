@@ -11,7 +11,7 @@ compileTestJava.options.encoding = 'utf-8'
 
 group = 'ar.edu.unq.desapp.grupof012021'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = "1.9"
 
 repositories {
 	mavenLocal()
@@ -24,18 +24,28 @@ repositories {
 dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	compile 'org.aspectj:aspectjrt:1.9.7'
+	compile 'org.aspectj:aspectjweaver:1.8.9'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.google.firebase:firebase-admin:8.0.0'
+	implementation 'org.json:json:20210307'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.projectlombok:lombok:1.18.16'
-    implementation 'junit:junit:4.13.1'
-	implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	runtimeOnly('io.jsonwebtoken:jjwt-orgjson:0.11.2') {
+		exclude group: 'org.json', module: 'json' //provided by Android natively
+	}
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation('junit:junit:4.13')
+	testImplementation 'com.tngtech.archunit:archunit:0.19.0'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
@@ -56,6 +66,27 @@ jacoco {
 test {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	dependsOn test
+	classDirectories.setFrom(
+		fileTree(dir: "build/classes/java/main")
+			.filter({file -> !file.name.contains('BackendDesappApiApplication')})
+			.filter({file -> !file.name.contains('SecurityConfiguration')})
+			.filter({file -> !file.name.contains('ServletInitializer')})
+			.filter({file -> !file.name.contains('DTO')})
+			.filter({file -> !file.name.contains('Controller')})
+			.filter({file -> !file.name.contains('JwtAuthEntryPoint')})
+			.filter({file -> !file.name.contains('JwtTokenFilter')})
+			.filter({file -> !file.name.contains('JwtTokenUtil')})
+			.filter({file -> !file.name.contains('WebSecurityConfig')})
+			.filter({file -> !file.name.contains('DataLoader')})
+			.filter({file -> !file.name.contains('SwaggerConfig')})
+			.filter({file -> !file.name.contains('Exception')})
+			.filter({file -> !file.name.contains('FirebaseInitializer')})
+			.filter({file -> !file.name.contains('FirebaseServiceImpl')})
+	)
 }
 
 jacocoTestReport {

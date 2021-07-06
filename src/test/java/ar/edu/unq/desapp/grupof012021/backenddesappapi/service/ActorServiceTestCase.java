@@ -15,8 +15,7 @@ public class ActorServiceTestCase {
     private static ActorRepository repositoryMock;
 
     @BeforeAll
-    public static void setUp()
-    {
+    public static void setUp() {
         repositoryMock = mock(ActorRepository.class);
         actorService = new ActorServiceImpl(repositoryMock);
     }

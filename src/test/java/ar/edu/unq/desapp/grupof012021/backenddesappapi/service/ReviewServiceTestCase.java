@@ -2,74 +2,87 @@ package ar.edu.unq.desapp.grupof012021.backenddesappapi.service;
 
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.datahelper.ReviewDataHelper;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.dto.ReviewDTO;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Actor;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Genre;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Media;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.entity.Review;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaType;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ActorRepository;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.ReviewRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.persistence.UserEntityRepository;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.security.JwtTokenUtil;
+import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ActorServiceImpl;
 import ar.edu.unq.desapp.grupof012021.backenddesappapi.service.implementations.ReviewServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.MISTERY;
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.SCIFI;
-import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.DRAMA;
+import static ar.edu.unq.desapp.grupof012021.backenddesappapi.model.enumeration.MediaGenreType.*;
 import static org.mockito.Mockito.mock;
 
 public class ReviewServiceTestCase {
 
+    //Constants
+    private static final Long REVIEW_ID = Long.valueOf(1);
+    
     //Services
     private static ReviewService reviewService;
     private static ReviewRepository reviewRepositoryMock;
-
-    //Constants
-    private static final Long REVIEW_ID = Long.valueOf(1);
-
+    private static ActorService actorService;
+    private static ActorRepository actorRepositoryMock;
+    private static UserEntityRepository userEntityRepositoryMock;
+    private static JwtTokenUtil jwtTokenUtilMock;
     //Entity
     private static Media donnieDarko;
 
     @BeforeAll
-    public static void setUp()
-    {
+    public static void setUp() {
         reviewRepositoryMock = mock(ReviewRepository.class);
-        reviewService = new ReviewServiceImpl(reviewRepositoryMock);
+        userEntityRepositoryMock = mock(UserEntityRepository.class);
+        jwtTokenUtilMock = mock(JwtTokenUtil.class);
+        reviewService = new ReviewServiceImpl(reviewRepositoryMock, userEntityRepositoryMock, jwtTokenUtilMock);
+
+        actorRepositoryMock = mock(ActorRepository.class);
+        actorService = new ActorServiceImpl(actorRepositoryMock);
 
         List<Genre> donnieDarkoGenres = new ArrayList<Genre>();
         donnieDarkoGenres.add(new Genre(SCIFI));
         donnieDarkoGenres.add(new Genre(DRAMA));
         donnieDarkoGenres.add(new Genre(MISTERY));
 
+        List<Actor> actorsDonnieDarko = new ArrayList<Actor>();
+        actorsDonnieDarko.add(new Actor("nm0000196", "Mike Myers"));
+        actorsDonnieDarko.add(new Actor("nm0000552", "Eddie Murphy"));
+        actorsDonnieDarko.add(new Actor("nm0001475", "John Lithgow"));
+        actorsDonnieDarko.add(new Actor("nm0000139", "Cameron Diaz"));
+
         donnieDarko = new Media(
                 "tt0246578",
                 "donnieDarko",
                 "donnieDarko",
-                Year.of(2001),
+                2001,
                 null,
                 113,
                 MediaType.MOVIE,
                 null,
-                donnieDarkoGenres
+                donnieDarkoGenres,
+                actorsDonnieDarko
         );
     }
 
     @Test
-    public void reviewNotExits_findById_null()
-    {
+    public void reviewNotExits_findById_null() {
         Review review = reviewService.getReviewById(REVIEW_ID);
 
         Assertions.assertNull(review);
     }
 
     @Test
-    public void review_findById_getTheReview()
-    {
+    public void review_findById_getTheReview() {
         Review review = ReviewDataHelper.getReview();
 
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
@@ -78,8 +91,7 @@ public class ReviewServiceTestCase {
     }
 
     @Test
-    public void reviewWithoutRanking_upvoteReview_reviewPositive()
-    {
+    public void reviewWithoutRanking_upvoteReview_reviewPositive() {
         Review review = ReviewDataHelper.getReview();
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
@@ -90,8 +102,7 @@ public class ReviewServiceTestCase {
     }
 
     @Test
-    public void reviewWithoutRanking_downvoteReview_reviewNegative()
-    {
+    public void reviewWithoutRanking_downvoteReview_reviewNegative() {
         Review review = ReviewDataHelper.getReview();
         Mockito.when(reviewRepositoryMock.findById(review.getId())).thenReturn(review);
 
@@ -108,11 +119,11 @@ public class ReviewServiceTestCase {
         reviewDTO.longText = "LongText";
         reviewDTO.originalPlatform = "Netflix";
         reviewDTO.language = "EN";
-        reviewDTO.isCritic = false;
+        reviewDTO.isPremium = false;
         reviewDTO.hasSpoilers = false;
         reviewDTO.region = "EN_US";
 
-        Review review = reviewService.createTemporalReview(reviewDTO,donnieDarko);
+        Review review = reviewService.createTemporalReview(reviewDTO, donnieDarko);
 
         Assertions.assertEquals(review.getMediaReview().getId(), donnieDarko.getId());
     }
