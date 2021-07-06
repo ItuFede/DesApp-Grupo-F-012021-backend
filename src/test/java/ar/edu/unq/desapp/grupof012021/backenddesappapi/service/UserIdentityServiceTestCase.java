@@ -46,7 +46,8 @@ public class UserIdentityServiceTestCase {
 
     @Test
     public void givenUserCredentials_whenRegister_userPersistedThroughEntityService() throws Exception {
-        Mockito.when(passwordEncoderMock.encode("123")).thenReturn("$2a$10$T3d/kyy8JcF605uF5WAU/ueZMAufCM2AXKKDL6BfjJtcvnw8D5J8q");
+        String encodedPassword = "$2a$10$T3d/kyy8JcF605uF5WAU/ueZMAufCM2AXKKDL6BfjJtcvnw8D5J8q";
+        Mockito.when(passwordEncoderMock.encode("123")).thenReturn(encodedPassword);
 
         UserCredentialsDTO userCredentials = new UserCredentialsDTO();
         userCredentials.password = "123";
@@ -60,6 +61,7 @@ public class UserIdentityServiceTestCase {
         Mockito.when(userEntityServiceMock.saveUser(userCredentials)).thenReturn(Optional.ofNullable(userEntity2));
 
         UserIdentity registeredUser = userIdentityService.register(userCredentials);
-        Assert.assertEquals(registeredUser.getAssociatedUserEntity().getUsername(), "username");
+        Assert.assertEquals(registeredUser.getAssociatedUserEntity().getUsername(), userCredentials.username);
+        Assert.assertEquals(registeredUser.getAssociatedUserEntity().getPassword(), "123");
     }
 }
